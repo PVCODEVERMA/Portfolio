@@ -17,7 +17,6 @@ interface BlurFadeTextProps {
   yOffset?: number;
   animateByCharacter?: boolean;
 }
-
 const BlurFadeText = ({
   text,
   className,
@@ -31,7 +30,6 @@ const BlurFadeText = ({
     hidden: { y: yOffset, opacity: 0, filter: "blur(8px)" },
     visible: { y: -yOffset, opacity: 1, filter: "blur(0px)" },
   };
-  
   const combinedVariants = variant || defaultVariants;
   const characters = useMemo(() => Array.from(text), [text]);
 
@@ -47,11 +45,9 @@ const BlurFadeText = ({
               exit="hidden"
               variants={combinedVariants}
               transition={{
-                repeat: Infinity,
-                repeatType: "reverse",
+                yoyo: Infinity,
                 delay: delay + i * characterDelay,
                 ease: "easeOut",
-                duration: 0.5,
               }}
               className={cn("inline-block", className)}
               style={{ width: char.trim() === "" ? "0.2em" : "auto" }}
@@ -73,11 +69,9 @@ const BlurFadeText = ({
           exit="hidden"
           variants={combinedVariants}
           transition={{
-            repeat: Infinity,
-            repeatType: "reverse",
+            yoyo: Infinity,
             delay,
             ease: "easeOut",
-            duration: 0.5,
           }}
           className={cn("inline-block", className)}
         >

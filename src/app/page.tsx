@@ -51,7 +51,7 @@ export default function Page() {
               <div className="flex flex-wrap gap-3 pt-4">
                 <Button asChild className="gap-2">
                   <a
-                    href="https://drive.google.com/file/d/1euXr7MSCQfMbel_VUJ5QmjlDe7pw_Yk-/view?usp=drive_link"
+                    href="https://drive.google.com/file/d/1nTOgzWRloLaBnwXVmbBO2giebpWafL5R/view?usp=sharing"
                     target="_blank"
                     rel="noopener noreferrer"
                   >
