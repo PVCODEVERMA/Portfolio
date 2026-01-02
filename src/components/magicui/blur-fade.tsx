@@ -10,9 +10,8 @@ interface BlurFadeProps {
   duration?: number;
   delay?: number;
   yOffset?: number;
-  xOffset?: number;
   inView?: boolean;
-  inViewMargin?: string;
+  inViewMargin?: string | number;
   blur?: string;
 }
 
@@ -20,56 +19,48 @@ const BlurFade = ({
   children,
   className,
   variant,
-  duration = 0.5,
+  duration = 0.4,
   delay = 0,
-  yOffset = 10,
-  xOffset = 0,
-  inView = true,
+  yOffset = 6,
+  inView = false,
   inViewMargin = "-50px",
-  blur = "8px",
+  blur = "6px",
 }: BlurFadeProps) => {
-  const ref = useRef<HTMLDivElement>(null);
+  const ref = useRef(null);
+  const inViewResult = useInView(ref, { 
+    once: true, 
+    margin: inViewMargin as any 
+  });
   
-  const options = {
-    root: null,
-    rootMargin: inViewMargin,
-    threshold: 0.1,
-    once: true
-  };
-
-  const isInView = useInView(ref, options);
+  const isInView = !inView || inViewResult;
   
   const defaultVariants: Variants = {
     hidden: { 
-      y: yOffset,
-      x: xOffset,
-      opacity: 0,
-      filter: `blur(${blur})`,
+      y: yOffset, 
+      opacity: 0, 
+      filter: `blur(${blur})` 
     },
     visible: { 
-      y: 0,
-      x: 0,
-      opacity: 1,
-      filter: `blur(0px)`,
+      y: 0, 
+      opacity: 1, 
+      filter: `blur(0px)` 
     },
   };
-
+  
   const combinedVariants = variant || defaultVariants;
 
-  const shouldAnimate = !inView || isInView;
-
   return (
-    <AnimatePresence>
+    <AnimatePresence mode="wait">
       <motion.div
         ref={ref}
         initial="hidden"
-        animate={shouldAnimate ? "visible" : "hidden"}
+        animate={isInView ? "visible" : "hidden"}
         exit="hidden"
         variants={combinedVariants}
         transition={{
-          delay,
+          delay: delay,
           duration,
-          ease: [0.22, 1, 0.36, 1],
+          ease: "easeOut",
         }}
         className={className}
       >
