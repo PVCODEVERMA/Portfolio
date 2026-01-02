@@ -5,9 +5,11 @@ import { ProjectCard } from "@/components/project-card";
 import { ResumeCard } from "@/components/resume-card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import { DATA } from "@/data/resume";
 import Link from "next/link";
 import Markdown from "react-markdown";
+import { ExternalLink, Download, FileText } from "lucide-react";
 
 const BLUR_FADE_DELAY = 0.04;
 
@@ -30,6 +32,7 @@ export default function Page() {
                 text={DATA.description}
               />
             </div>
+
             <BlurFade delay={BLUR_FADE_DELAY}>
               <Avatar className="size-28 border">
                 <AvatarImage alt={DATA.name} src={DATA.avatarUrl} />
@@ -41,7 +44,24 @@ export default function Page() {
       </section>
       <section id="about">
         <BlurFade delay={BLUR_FADE_DELAY * 3}>
-          <h2 className="text-xl font-bold">About</h2>
+          <div className=" flex  justify-between">
+            <h2 className="text-xl font-bold">About</h2>
+            {/* Download Resume Button in Hero Section */}
+            <BlurFade delay={BLUR_FADE_DELAY * 2}>
+              <div className="flex flex-wrap gap-3 pt-4">
+                <Button asChild className="gap-2">
+                  <a
+                    href="https://drive.google.com/file/d/1euXr7MSCQfMbel_VUJ5QmjlDe7pw_Yk-/view?usp=drive_link"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <Download className="h-4 w-4" />
+                    Download Resume
+                  </a>
+                </Button>
+              </div>
+            </BlurFade>
+          </div>
         </BlurFade>
         <BlurFade delay={BLUR_FADE_DELAY * 4}>
           <Markdown className="prose max-w-full text-pretty font-sans text-sm text-muted-foreground dark:prose-invert">
@@ -152,49 +172,151 @@ export default function Page() {
           </div>
         </div>
       </section>
-      <section id="hackathons">
-        <div className="space-y-12 w-full py-12">
-          <BlurFade delay={BLUR_FADE_DELAY * 13}>
-            <div className="flex flex-col items-center justify-center space-y-4 text-center">
-              <div className="space-y-2">
-                <div className="inline-block rounded-lg bg-foreground text-background px-3 py-1 text-sm">
-                  Hackathons
-                </div>
-                <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl">
-                  I like building things
+
+      {/* Certifications Section - Fixed */}
+      <section id="certifications">
+        <div className="space-y-8 w-full py-8">
+          <BlurFade delay={BLUR_FADE_DELAY * 14}>
+            <div className="space-y-6">
+              <div className="flex items-center justify-between">
+                <h2 className="text-2xl font-bold">
+                  Certifications & Workshops
                 </h2>
-                <p className="text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-                  During my time in university, I attended{" "}
-                  {DATA.hackathons.length}+ hackathons. People from around the
-                  country would come together and build incredible things in 2-3
-                  days. It was eye-opening to see the endless possibilities
-                  brought to life by a group of motivated and passionate
-                  individuals.
-                </p>
+                <div className="text-sm text-muted-foreground">
+                  {DATA.certifications?.filter((c) => c.status === "completed")
+                    .length || 0}{" "}
+                  Completed •
+                  {DATA.certifications?.filter((c) => c.status === "ongoing")
+                    .length || 0}{" "}
+                  Ongoing
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-5">
+                {DATA.certifications?.map((cert, id) => (
+                  <BlurFade
+                    key={cert.title}
+                    delay={BLUR_FADE_DELAY * 15 + id * 0.03}
+                  >
+                    <div
+                      className={`border rounded-xl p-5 hover:shadow-lg transition-all duration-300 bg-card hover:bg-card/80 ${
+                        cert.badgeColor || "border-border"
+                      }`}
+                    >
+                      {/* Certification Header */}
+                      <div className="flex items-start justify-between mb-4">
+                        <div className="flex-1 pr-2">
+                          <h3 className="font-semibold text-lg mb-1 line-clamp-2">
+                            {cert.title}
+                          </h3>
+                          <p className="text-sm text-muted-foreground line-clamp-1">
+                            {cert.issuer}
+                          </p>
+                        </div>
+                        <div className="flex flex-col items-end gap-1.5 shrink-0">
+                          <Badge
+                            variant="outline"
+                            className="text-xs font-normal"
+                          >
+                            {cert.date}
+                          </Badge>
+                          {cert.status === "ongoing" && (
+                            <Badge
+                              variant="secondary"
+                              className="text-xs bg-yellow-500/20 text-yellow-800 dark:text-yellow-300"
+                            >
+                              In Progress
+                            </Badge>
+                          )}
+                          {cert.type === "workshop" && (
+                            <Badge variant="outline" className="text-xs">
+                              Workshop
+                            </Badge>
+                          )}
+                        </div>
+                      </div>
+
+                      {/* Description */}
+                      <p className="text-sm text-muted-foreground mb-4 line-clamp-3 min-h-[60px]">
+                        {cert.description}
+                      </p>
+
+                      {/* Skills */}
+                      {cert.skills && cert.skills.length > 0 && (
+                        <div className="flex flex-wrap gap-1.5 mb-4">
+                          {cert.skills.slice(0, 4).map((skill) => (
+                            <span
+                              key={skill}
+                              className="inline-block px-2 py-1 text-xs bg-secondary/50 rounded-md border border-border"
+                            >
+                              {skill}
+                            </span>
+                          ))}
+                          {cert.skills.length > 4 && (
+                            <span className="inline-block px-2 py-1 text-xs text-muted-foreground">
+                              +{cert.skills.length - 4} more
+                            </span>
+                          )}
+                        </div>
+                      )}
+
+                      {/* Footer with Button - Fixed Spacing */}
+                      <div className="flex items-center justify-between pt-4 border-t mt-4">
+                        <div className="text-xs text-muted-foreground truncate max-w-[60%]">
+                          {cert.credentialId && (
+                            <span className="truncate">
+                              ID: {cert.credentialId}
+                            </span>
+                          )}
+                          {cert.duration && (
+                            <span className="ml-2">• {cert.duration}</span>
+                          )}
+                        </div>
+
+                        {cert.url && cert.url !== "#" && (
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            className="h-8 gap-2 px-3 text-xs shrink-0"
+                            asChild
+                          >
+                            <Link
+                              href={cert.url}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                            >
+                              <ExternalLink className="h-3 w-3" />
+                              <span className="hidden sm:inline">Verify</span>
+                              <span className="sm:hidden">View</span>
+                            </Link>
+                          </Button>
+                        )}
+                      </div>
+
+                      {/* Progress Bar for Ongoing */}
+                      {cert.status === "ongoing" && cert.progress && (
+                        <div className="mt-4 pt-3 border-t">
+                          <div className="flex justify-between text-xs text-muted-foreground mb-1">
+                            <span>Progress</span>
+                            <span>{cert.progress}%</span>
+                          </div>
+                          <div className="h-2 w-full bg-secondary rounded-full overflow-hidden">
+                            <div
+                              className="h-full bg-yellow-500 rounded-full transition-all duration-500"
+                              style={{ width: `${cert.progress}%` }}
+                            />
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  </BlurFade>
+                ))}
               </div>
             </div>
           </BlurFade>
-          <BlurFade delay={BLUR_FADE_DELAY * 14}>
-            <ul className="mb-4 ml-4 divide-y divide-dashed border-l">
-              {DATA.hackathons.map((project, id) => (
-                <BlurFade
-                  key={project.title + project.dates}
-                  delay={BLUR_FADE_DELAY * 15 + id * 0.05}
-                >
-                  <HackathonCard
-                    title={project.title}
-                    description={project.description}
-                    location={project.location}
-                    dates={project.dates}
-                    image={project.image}
-                    links={project.links}
-                  />
-                </BlurFade>
-              ))}
-            </ul>
-          </BlurFade>
         </div>
       </section>
+
       <section id="contact">
         <div className="grid items-center justify-center gap-4 px-4 text-center md:px-6 w-full py-12">
           <BlurFade delay={BLUR_FADE_DELAY * 16}>
@@ -206,15 +328,24 @@ export default function Page() {
                 Get in Touch
               </h2>
               <p className="mx-auto max-w-[600px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-                Want to chat? Just shoot me a dm{" "}
-                <Link
-                  href={DATA.contact.social.X.url}
-                  className="text-blue-500 hover:underline"
+                Interested in working together or have a question? Feel free to
+                reach out via{" "}
+                <a
+                  href="mailto:pankaj9129@gmail.com"
+                  className="text-blue-700 font-bold underline underline-offset-4 hover:opacity-80"
                 >
-                  with a direct question on twitter
-                </Link>{" "}
-                and I&apos;ll respond whenever I can. I will ignore all
-                soliciting.
+                  email
+                </a>{" "}
+                or connect on{" "}
+                <a
+                  href="https://www.linkedin.com/in/pankaj-verma-8a99a723a/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-blue-700 font-bold underline underline-offset-4 hover:opacity-80"
+                >
+                  LinkedIn
+                </a>
+                .
               </p>
             </div>
           </BlurFade>
