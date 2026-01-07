@@ -74,24 +74,28 @@ export default function Page() {
           <BlurFade delay={BLUR_FADE_DELAY * 5}>
             <h2 className="text-xl font-bold">Work Experience</h2>
           </BlurFade>
-          {DATA.work.map((work, id) => (
-            <BlurFade
-              key={work.company}
-              delay={BLUR_FADE_DELAY * 6 + id * 0.05}
-            >
-              <ResumeCard
+          {DATA.work.map((work, id) => {
+            console.log("ResumeCard Work Data:", work);
+
+            return (
+              <BlurFade
                 key={work.company}
-                logoUrl={work.logoUrl}
-                altText={work.company}
-                title={work.company}
-                subtitle={work.title}
-                href={work.href}
-                badges={work.badges}
-                period={`${work.start} - ${work.end ?? "Present"}`}
-                description={work.description}
-              />
-            </BlurFade>
-          ))}
+                delay={BLUR_FADE_DELAY * 6 + id * 0.05}
+              >
+                <ResumeCard
+                  logoUrl={work.logoUrl}
+                  altText={work.company}
+                  title={work.company}
+                  subtitle={work.title}
+                  href={work.href}
+                  badges={work.badges}
+                  period={`${work.start} - ${work.end ?? "Present"}`}
+                  description={work.description}
+                />
+              </BlurFade>
+            );
+          })}
+
         </div>
       </section>
       <section id="education">
@@ -199,9 +203,8 @@ export default function Page() {
                     delay={BLUR_FADE_DELAY * 15 + id * 0.03}
                   >
                     <div
-                      className={`border rounded-xl p-5 hover:shadow-lg transition-all duration-300 bg-card hover:bg-card/80 ${
-                        cert.badgeColor || "border-border"
-                      }`}
+                      className={`border rounded-xl p-5 hover:shadow-lg transition-all duration-300 bg-card hover:bg-card/80 ${cert.badgeColor || "border-border"
+                        }`}
                     >
                       {/* Certification Header */}
                       <div className="flex items-start justify-between mb-4">

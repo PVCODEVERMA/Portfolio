@@ -86,33 +86,33 @@ export const DATA = {
     },
   },
 
-  work: [
+ work: [
   {
     company: "TLS Technology Pvt. Ltd.",
     href: "https://tlstechnology.in/",
-    badges: ["Contract"],
+    badges: ["Full-time"],
     location: "New Delhi, India",
     title: "MERN Stack Developer",
     logoUrl: "/tls-logo.webp",
-    start: "Sep 2024",
-    end: "Dec 2024",
+    start: "Oct 2025",
+    end: "Dec 2025",
     description:
-      "Worked on a real-estate MMP platform using the MERN stack. Built dashboards with role-based access control, integrated Razorpay payments with auto-invoicing, implemented workflow automation using Zapier and n8n, and added SEO listings with real-time alerts.",
+      "Working on a real-estate MMP platform using the MERN stack. Building dashboards with role-based access control, integrating Razorpay payments with auto-invoicing, implementing workflow automation using Zapier and n8n, and adding SEO listings with real-time alerts.",
   },
   {
     company: "Websbaba Technologies Pvt. Ltd.",
     href: "https://websbaba.in/",
-    badges: [],
+    badges: ["Full-time"],
     location: "Lucknow, India (Hybrid)",
-    title: "MERN Stack Developer",
+    title: "Frontend Developer",
     logoUrl: "/webs_baba_logo.png",
-    start: "May 2025",
+    start: "Apr 2025",
     end: "Sep 2025",
     description:
-      "Developed the official company website with an admin panel and modern UI using React and Tailwind CSS. Improved website performance, SEO, and accessibility while delivering a responsive, production-ready application.",
+      "Developing the official company website with an admin panel and modern UI using React and Tailwind CSS. Improving website performance, SEO, and accessibility while delivering a responsive, production-ready application.",
   },
   {
-    company: "marv softwares india pvt ltd",
+    company: "Marv Softwares India Pvt Ltd",
     href: "https://www.marvsoftwares.com/",
     badges: ["Full-time"],
     location: "Lucknow, India (Hybrid)",
@@ -121,7 +121,7 @@ export const DATA = {
     start: "Feb 2025",
     end: "May 2025",
     description:
-      "Worked as a Frontend Developer building responsive user interfaces using React and Tailwind CSS. Integrated APIs, improved UI/UX, and collaborated with backend teams to deliver scalable features.",
+      "Working as a Frontend Developer building responsive user interfaces using React and Tailwind CSS. Integrating APIs, improving UI/UX, and collaborating with backend teams to deliver scalable features.",
   },
   {
     company: "Z.N. Infotech Pvt. Ltd.",
@@ -130,8 +130,8 @@ export const DATA = {
     location: "Lucknow, India",
     title: "Web Developer Intern",
     logoUrl: "/znlogo.png",
-    start: "Jul 2024",
-    end: "Dec 2024",
+    start: "Jul 2023",
+    end: "Nov 2023",
     description:
       "Completed a 6-month internship focused on frontend development. Worked with HTML, CSS, JavaScript, and React fundamentals while contributing to live client projects.",
   },
@@ -143,8 +143,8 @@ export const DATA = {
     href: "https://bncet.ac.in/",
     degree: "Bachelor of Technology in Computer Science & Engineering",
     logoUrl: "/bncet.jpg",
-    start: "2020",
-    end: "2024",
+    start: "2021",
+    end: "2025",
     grade: "CGPA: 7.05/10.0",
     coursework: [
       "Data Structures & Algorithms",
@@ -162,8 +162,8 @@ export const DATA = {
     href: "https://uaic.in/",
     degree: "Intermediate (12th) - Science (PCM)",
     logoUrl: "/mmb.jpg",
-    start: "2018",
-    end: "2020",
+    start: "2019",
+    end: "2021",
     grade: "Percentage: 71%"
   },
   {
@@ -171,8 +171,8 @@ export const DATA = {
     href: "#",
     degree: "High School (10th)",
     logoUrl: "/school.png",
-    start: "2016",
-    end: "2018",
+    start: "2017",
+    end: "2019",
     grade: "Percentage: 66%"
   }
 ],
@@ -206,10 +206,40 @@ export const DATA = {
         icon: <Icons.github className="size-3" />,
       }
     ],
-    image: "/portfolio/projects/healthcare-portal.jpg",
-    video: "",
+    image: "",
+    video: "/videos/healthcare-demo.mp4",
   },
-  // E:\New folder\portfolio\projects\healthcare-portal.jpg
+   {
+    title: "Websbaba Technologies Official Website",
+    href: "https://websbaba.in",
+    dates: "Jun 2024 - Jul 2024",
+    active: true,
+    description:
+      "Designed and developed the official corporate website for Websbaba Technologies with a modern, responsive UI and SEO optimization. Built with a custom admin panel for content management, dynamic service listings, and contact form integration.",
+    technologies: [
+      "Next.js",
+      "TypeScript",
+      "Tailwind CSS",
+      "Framer Motion",
+      "SEO",
+      "Vercel",
+      "Admin Panel"
+    ],
+    links: [
+      {
+        type: "Live Website",
+        href: "https://websbaba.netlify.app/",
+        icon: <Icons.globe className="size-3" />,
+      },
+      {
+        type: "GitHub",
+        href: "https://github.com/PVCODEVERMA/websbaba-technologies-pvt.ltd",
+        icon: <Icons.github className="size-3" />,
+      }
+    ],
+    image: "",
+    video: "/videos/websbaba-demo.mp4",
+  },
   {
     title: "Online Learning Platform (LMS)",
     href: "https://yrclasses.com/",
@@ -242,37 +272,7 @@ export const DATA = {
     image: "/projects/lms-platform.png",
     video: "",
   },
-  {
-    title: "Websbaba Technologies Official Website",
-    href: "https://websbaba.in",
-    dates: "Jun 2024 - Jul 2024",
-    active: true,
-    description:
-      "Designed and developed the official corporate website for Websbaba Technologies with a modern, responsive UI and SEO optimization. Built with a custom admin panel for content management, dynamic service listings, and contact form integration.",
-    technologies: [
-      "Next.js",
-      "TypeScript",
-      "Tailwind CSS",
-      "Framer Motion",
-      "SEO",
-      "Vercel",
-      "Admin Panel"
-    ],
-    links: [
-      {
-        type: "Live Website",
-        href: "https://websbaba.netlify.app/",
-        icon: <Icons.globe className="size-3" />,
-      },
-      {
-        type: "GitHub",
-        href: "https://github.com/PVCODEVERMA/websbaba-technologies-pvt.ltd",
-        icon: <Icons.github className="size-3" />,
-      }
-    ],
-    image: "/projects/websbaba-website.png",
-    video: "",
-  },
+ 
   {
     title: "AI-Powered Resume Builder",
     href: "https://ai-resume-builder.vercel.app",
@@ -304,37 +304,38 @@ export const DATA = {
     image: "/projects/ai-resume-builder.png",
     video: "",
   },
-  {
-    title: "Real-time Chat Application",
-    href: "https://chat-app-demo-pv.vercel.app",
-    dates: "Apr 2024 - May 2024",
-    active: true,
-    description:
-      "A real-time chat application with user authentication, online status, typing indicators, and file sharing. Supports group chats, private messaging, and message history with a clean, responsive UI.",
-    technologies: [
-      "React.js",
-      "Socket.io",
-      "Node.js",
-      "MongoDB",
-      "JWT",
-      "Tailwind CSS",
-      "Cloudinary"
-    ],
-    links: [
-      {
-        type: "Demo",
-        href: "https://chat-app-demo-pv.vercel.app",
-        icon: <Icons.globe className="size-3" />,
-      },
-      {
-        type: "GitHub",
-        href: "https://github.com/pankaj912978/chat-application",
-        icon: <Icons.github className="size-3" />,
-      }
-    ],
-    image: "/projects/chat-app.png",
-    video: "",
-  }
+
+  // {
+  //   title: "Real-time Chat Application",
+  //   href: "https://chat-app-demo-pv.vercel.app",
+  //   dates: "Apr 2024 - May 2024",
+  //   active: true,
+  //   description:
+  //     "A real-time chat application with user authentication, online status, typing indicators, and file sharing. Supports group chats, private messaging, and message history with a clean, responsive UI.",
+  //   technologies: [
+  //     "React.js",
+  //     "Socket.io",
+  //     "Node.js",
+  //     "MongoDB",
+  //     "JWT",
+  //     "Tailwind CSS",
+  //     "Cloudinary"
+  //   ],
+  //   links: [
+  //     {
+  //       type: "Demo",
+  //       href: "https://chat-app-demo-pv.vercel.app",
+  //       icon: <Icons.globe className="size-3" />,
+  //     },
+  //     {
+  //       type: "GitHub",
+  //       href: "https://github.com/pankaj912978/chat-application",
+  //       icon: <Icons.github className="size-3" />,
+  //     }
+  //   ],
+  //   image: "/projects/chat-app.png",
+  //   video: "",
+  // }
 ],
   certifications: [
   {
