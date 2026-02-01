@@ -211,7 +211,7 @@ export const DATA = {
   },
    {
     title: "Websbaba Technologies Official Website",
-    href: "https://websbaba.in",
+    href: "https://velvety-biscuit-70ee75.netlify.app/",
     dates: "Jun 2024 - Jul 2024",
     active: true,
     description:
@@ -239,7 +239,41 @@ export const DATA = {
     ],
     image: "",
     video: "/videos/websbaba-demo.mp4",
-  },
+   },
+   {
+    title: "Design Beautiful Albums Online",
+    href: "https://album-design-platform.vercel.app/",
+    dates: "",
+    active: true,
+    description:
+      "A full-stack album design application developed with MongoDB, Express.js, React.js, and Node.js. It supports user authentication, image management, dynamic UI rendering, and scalable backend APIs for seamless album creation and management",
+    technologies: [
+      "React.js",
+      "Javascript",
+      "Tailwind CSS",
+      "Framer Motion",
+      
+    ],
+    links: [
+      {
+        type: "Live Website",
+        href: "https://album-design-platform.vercel.app/",
+        icon: <Icons.globe className="size-3" />,
+      },
+      {
+        type: "Live Website",
+        href: "https://app.albumdraft.com/albums/KcDOfv_Yjrq0HoVt#page=1",
+        icon: <Icons.globe className="size-3" />,
+      },
+      {
+        type: "GitHub",
+        href: "https://github.com/PVCODEVERMA/ALBUM-DESIGN-PLATFORM",
+        icon: <Icons.github className="size-3" />,
+      }
+    ],
+    image: "",
+    video: "/videos/album-design-demo.mp4",
+   },
   {
     title: "Online Learning Platform (LMS)",
     href: "https://yrclasses.com/",
