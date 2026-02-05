@@ -8,7 +8,7 @@ export const DATA = {
   location: "Noida, Sector 15, Uttar Pradesh, India",
   locationLink: "https://maps.app.goo.gl/dFLbinrTMVHjkjcHA",
   description:
-    "Software Developer with 1.5+ years of experience building scalable, production-ready web applications using React, Node.js, and MongoDB. Very active on Twitter.",
+    "Software Developer with 1 years of experience building scalable, production-ready web applications using React, Node.js, and MongoDB. Very active on Twitter.",
   summary:
     "Software Developer building scalable web applications and sharing my learning journey on [YouTube](https://www.youtube.com/channel/UCAHuQt0idElWoQ35KOqO15A), [Instagram](https://www.instagram.com/pv_code421/+), and [X](https://x.com/pv_code421).",
   avatarUrl: "/me.png",
@@ -87,27 +87,16 @@ export const DATA = {
   },
 
  work: [
-  {
-    company: "TLS Technology Pvt. Ltd.",
-    href: "https://tlstechnology.in/",
-    badges: ["Full-time"],
-    location: "New Delhi, India",
-    title: "MERN Stack Developer",
-    logoUrl: "/tls-logo.webp",
-    start: "Oct 2025",
-    end: "Dec 2025",
-    description:
-      "Working on a real-estate MMP platform using the MERN stack. Building dashboards with role-based access control, integrating Razorpay payments with auto-invoicing, implementing workflow automation using Zapier and n8n, and adding SEO listings with real-time alerts.",
-  },
+ 
   {
     company: "Websbaba Technologies Pvt. Ltd.",
     href: "https://websbaba.in/",
     badges: ["Full-time"],
     location: "Lucknow, India (Hybrid)",
-    title: "Frontend Developer",
+    title: "Full Stack Developer",
     logoUrl: "/webs_baba_logo.png",
-    start: "Apr 2025",
-    end: "Sep 2025",
+    start: "10 Jun 2025",
+    end: "Dec 2025",
     description:
       "Developing the official company website with an admin panel and modern UI using React and Tailwind CSS. Improving website performance, SEO, and accessibility while delivering a responsive, production-ready application.",
   },
@@ -118,7 +107,7 @@ export const DATA = {
     location: "Lucknow, India (Hybrid)",
     title: "Frontend Developer",
     logoUrl: "/waterloo.jpg",
-    start: "Feb 2025",
+    start: "Jan 2025",
     end: "May 2025",
     description:
       "Working as a Frontend Developer building responsive user interfaces using React and Tailwind CSS. Integrating APIs, improving UI/UX, and collaborating with backend teams to deliver scalable features.",
@@ -126,14 +115,14 @@ export const DATA = {
   {
     company: "Z.N. Infotech Pvt. Ltd.",
     href: "https://zninfotech.com/",
-    badges: ["Internship"],
+    badges: ["Training Institute"],
     location: "Lucknow, India",
     title: "Web Developer Intern",
     logoUrl: "/znlogo.png",
     start: "Jul 2023",
     end: "Nov 2023",
     description:
-      "Completed a 6-month internship focused on frontend development. Worked with HTML, CSS, JavaScript, and React fundamentals while contributing to live client projects.",
+      "Completed focused training in frontend development, working with HTML, CSS, JavaScript, and React fundamentals while contributing to live client projects.",
   },
 ],
 
