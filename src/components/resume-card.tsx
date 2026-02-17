@@ -48,12 +48,12 @@ export const ResumeCard = ({
       onClick={handleClick}
     >
       <Card className={cn(
-        "flex flex-col sm:flex-row p-3 sm:p-4 transition-all duration-300 hover:shadow-md",
+        "group flex flex-col sm:flex-row p-3 sm:p-4 transition-all duration-300 hover:shadow-md",
         className
       )}>
         {/* Logo Section - मोबाइल पर सेंटर, डेस्कटॉप पर लेफ्ट */}
         <div className="flex-none flex justify-center sm:justify-start mb-3 sm:mb-0">
-          <Avatar className="border size-12 sm:size-14 bg-muted-background dark:bg-foreground">
+          <Avatar className="border size-12 sm:size-14 bg-muted-background dark:bg-foreground opacity-0 group-hover:opacity-100 lg:opacity-100 transition-opacity duration-300">
             <AvatarImage
               src={logoUrl}
               alt={altText}
@@ -64,7 +64,7 @@ export const ResumeCard = ({
             </AvatarFallback>
           </Avatar>
         </div>
-        
+
         {/* Content Section */}
         <div className="flex-grow sm:ml-4 w-full">
           <CardHeader className="p-0">
@@ -88,7 +88,7 @@ export const ResumeCard = ({
                     />
                   )}
                 </div>
-                
+
                 {/* Badges - मोबाइल पर स्टैक, डेस्कटॉप पर रैप */}
                 {badges && badges.length > 0 && (
                   <div className="flex flex-wrap gap-1">
@@ -112,13 +112,13 @@ export const ResumeCard = ({
                   </div>
                 )}
               </div>
-              
+
               {/* Period - मोबाइल पर लेफ्ट, डेस्कटॉप पर राइट */}
               <div className="text-xs sm:text-sm tabular-nums text-muted-foreground sm:text-right">
                 {period}
               </div>
             </div>
-            
+
             {/* Subtitle */}
             {subtitle && (
               <div className="font-sans text-xs sm:text-sm text-muted-foreground mb-2">
@@ -126,7 +126,7 @@ export const ResumeCard = ({
               </div>
             )}
           </CardHeader>
-          
+
           {/* Description with Animation */}
           {description && (
             <CardContent className="p-0 mt-2">
@@ -147,8 +147,8 @@ export const ResumeCard = ({
                 </p>
                 {href && href !== "#" && (
                   <div className="mt-2">
-                    <Badge 
-                      variant="outline" 
+                    <Badge
+                      variant="outline"
                       className="text-xs gap-1 hover:bg-secondary transition-colors"
                     >
                       <ExternalLink className="size-3" />
@@ -157,11 +157,11 @@ export const ResumeCard = ({
                   </div>
                 )}
               </motion.div>
-              
+
               {/* Show More/Less Button for Mobile */}
               <button
                 type="button"
-                className="mt-2 text-xs text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 sm:hidden flex items-center gap-1"
+                className="mt-2 text-xs text-orange-600 hover:text-orange-800 dark:text-orange-400 dark:hover:text-orange-300 sm:hidden flex items-center gap-1"
                 onClick={(e) => {
                   e.preventDefault();
                   e.stopPropagation();
