@@ -17,7 +17,7 @@ export default function Page() {
           <div className="gap-2 flex justify-between items-start">
             <div className="flex-col flex flex-1 space-y-1.5">
               <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tighter xl:text-7xl/none text-foreground leading-tight">
-                Hi, I' {DATA.name.split(" ")[0]} 👋
+                Hi, I'm {DATA.name.split(" ")[0]} 👋
               </h1>
               <p className="max-w-[600px] text-base md:text-xl text-muted-foreground leading-relaxed">
                 {DATA.description}
