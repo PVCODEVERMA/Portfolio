@@ -20,16 +20,20 @@ export default function InteractiveBackground() {
         setCanvasSize();
 
         let targetPos: { x: number; y: number } | null = null;
+        let mousePos: { x: number; y: number } | null = null;
 
-        // Track mouse click only
         const handleMouseClick = (e: MouseEvent) => {
             targetPos = { x: e.clientX, y: e.clientY };
         };
 
+        const handleMouseMove = (e: MouseEvent) => {
+            mousePos = { x: e.clientX, y: e.clientY };
+        };
+
         window.addEventListener("click", handleMouseClick);
+        window.addEventListener("mousemove", handleMouseMove);
         window.addEventListener("resize", setCanvasSize);
 
-        // Fish class
         class Fish {
             x: number;
             y: number;
@@ -40,55 +44,81 @@ export default function InteractiveBackground() {
             tailAngle: number;
             tailSpeed: number;
             angle: number;
+            targetAngle: number;
+            maxSpeed: number;
+            turnSpeed: number;
 
             constructor() {
                 this.x = Math.random() * canvas!.width;
                 this.y = Math.random() * canvas!.height;
-                this.size = 30 + Math.random() * 40;
-                this.speedX = 0.5 + Math.random() * 1.5;
-                this.speedY = (Math.random() - 0.5) * 0.5;
-                // Orange and yellow themed colors
+                this.size = 15 + Math.random() * 25;
+                this.maxSpeed = 1 + Math.random() * 2;
+                this.speedX = (Math.random() - 0.5) * this.maxSpeed;
+                this.speedY = (Math.random() - 0.5) * this.maxSpeed;
+                
                 const colors = [
-                    "#F75D0B",   // Orange
-                    "#FEF9C3",   // Light Yellow
-                    "#FB923C",   // Orange variant
-                    "#FFEDD5",   // Cream
+                    "#F75D0B",   // Vibrant Orange
+                    "#FB923C",   // Soft Orange
+                    "#FACC15",   // Bright Yellow
+                    "#FEF9C3",   // Pale Yellow
                 ];
                 this.color = colors[Math.floor(Math.random() * colors.length)];
-                this.tailAngle = 0;
-                this.tailSpeed = 0.1 + Math.random() * 0.1;
-                this.angle = 0; // Direction fish is facing
+                this.tailAngle = Math.random() * Math.PI * 2;
+                this.tailSpeed = 0.15 + Math.random() * 0.1;
+                this.angle = Math.random() * Math.PI * 2;
+                this.targetAngle = this.angle;
+                this.turnSpeed = 0.05;
             }
 
             update() {
-                // Only move if user has clicked
-                if (!targetPos) {
-                    // Idle state - very slow tail wiggle
-                    this.tailAngle += this.tailSpeed * 0.2;
-                    return;
-                }
+                let currentTarget = targetPos || mousePos;
 
-                // Swim towards target position (mouse click)
-                const dx = targetPos.x - this.x;
-                const dy = targetPos.y - this.y;
-                const distance = Math.sqrt(dx * dx + dy * dy);
+                if (currentTarget) {
+                    const dx = currentTarget.x - this.x;
+                    const dy = currentTarget.y - this.y;
+                    const distance = Math.sqrt(dx * dx + dy * dy);
 
-                // Calculate angle to face target
-                this.angle = Math.atan2(dy, dx);
-
-                if (distance > 5) {
-                    this.x += (dx / distance) * this.speedX;
-                    this.y += (dy / distance) * this.speedX;
-                    this.tailAngle += this.tailSpeed; // Active swimming
+                    if (distance < 200) {
+                        // Move away if too close or attracted if clicked (simple logic)
+                        if (targetPos) {
+                            this.targetAngle = Math.atan2(dy, dx);
+                        } else {
+                            // Curiosity/following mouse slightly
+                            const angleToMouse = Math.atan2(dy, dx);
+                            this.targetAngle = angleToMouse + Math.sin(Date.now() * 0.001) * 0.5;
+                        }
+                    } else {
+                        // Wandering
+                        if (Math.random() < 0.02) {
+                            this.targetAngle += (Math.random() - 0.5) * 1;
+                        }
+                    }
                 } else {
-                    this.tailAngle += this.tailSpeed * 0.3; // Slower wiggle when arrived
+                    // Random wandering when no mouse input
+                    if (Math.random() < 0.02) {
+                        this.targetAngle += (Math.random() - 0.5) * 2;
+                    }
                 }
 
-                // Keep within canvas bounds
-                if (this.x < 0) this.x = 0;
-                if (this.x > canvas!.width) this.x = canvas!.width;
-                if (this.y < 0) this.y = 0;
-                if (this.y > canvas!.height) this.y = canvas!.height;
+                // Smoothly rotate towards target angle
+                let angleDiff = this.targetAngle - this.angle;
+                while (angleDiff > Math.PI) angleDiff -= Math.PI * 2;
+                while (angleDiff < -Math.PI) angleDiff += Math.PI * 2;
+                this.angle += angleDiff * this.turnSpeed;
+
+                // Move in direction of angle
+                this.x += Math.cos(this.angle) * this.maxSpeed;
+                this.y += Math.sin(this.angle) * this.maxSpeed;
+
+                // Tail animation speed based on movement
+                this.tailAngle += this.tailSpeed * (targetPos ? 1.5 : 1);
+
+                // Screen wrapping with padding
+                const padding = 50;
+                if (this.x < -padding) this.x = canvas!.width + padding;
+                if (this.x > canvas!.width + padding) this.x = -padding;
+                if (this.y < -padding) this.y = canvas!.height + padding;
+                if (this.y > canvas!.height + padding) this.y = -padding;
             }
 
             draw() {
@@ -96,46 +126,60 @@ export default function InteractiveBackground() {
 
                 ctx.save();
                 ctx.translate(this.x, this.y);
-                ctx.rotate(this.angle); // Rotate to face swimming direction
+                ctx.rotate(this.angle);
 
-                // Draw fish body (ellipse)
+                // Fish body - elongated teardrop
                 ctx.beginPath();
-                ctx.ellipse(0, 0, this.size, this.size * 0.6, 0, 0, Math.PI * 2);
-                ctx.fillStyle = this.color;
+                ctx.moveTo(this.size, 0);
+                ctx.bezierCurveTo(this.size, -this.size * 0.4, -this.size * 0.5, -this.size * 0.5, -this.size * 0.8, 0);
+                ctx.bezierCurveTo(-this.size * 0.5, this.size * 0.5, this.size, this.size * 0.4, this.size, 0);
+                
+                // Gradient for body
+                const grad = ctx.createLinearGradient(-this.size, 0, this.size, 0);
+                grad.addColorStop(0, this.color);
+                grad.addColorStop(1, this.color + "CC"); // Slightly transparent head
+                ctx.fillStyle = grad;
                 ctx.fill();
 
-                // Draw tail (triangle with wiggle)
-                const tailWiggle = Math.sin(this.tailAngle) * 10;
+                // Tail
+                const tailWiggle = Math.sin(this.tailAngle) * 0.4;
                 ctx.beginPath();
-                ctx.moveTo(-this.size, 0);
-                ctx.lineTo(-this.size - 20, -15 + tailWiggle);
-                ctx.lineTo(-this.size - 20, 15 + tailWiggle);
+                ctx.moveTo(-this.size * 0.7, 0);
+                ctx.lineTo(-this.size - 12, -10 + tailWiggle * 10);
+                ctx.lineTo(-this.size - 8, 0);
+                ctx.lineTo(-this.size - 12, 10 + tailWiggle * 10);
                 ctx.closePath();
                 ctx.fillStyle = this.color;
                 ctx.fill();
 
-                // Draw eye
+                // Eye
                 ctx.beginPath();
-                ctx.arc(this.size * 0.5, -this.size * 0.2, 4, 0, Math.PI * 2);
-                ctx.fillStyle = "#000";
+                ctx.arc(this.size * 0.6, -this.size * 0.15, 2, 0, Math.PI * 2);
+                ctx.fillStyle = "rgba(0,0,0,0.8)";
                 ctx.fill();
 
-                // Add glow effect
-                ctx.shadowBlur = 15;
-                ctx.shadowColor = this.color;
+                // Subtle fins
+                ctx.beginPath();
+                ctx.moveTo(-2, -this.size * 0.3);
+                ctx.quadraticCurveTo(-10, -this.size * 0.5, -5, -this.size * 0.2);
+                ctx.fillStyle = this.color + "88";
+                ctx.fill();
 
                 ctx.restore();
             }
         }
 
-        // Create fish (2-3 fish only)
-        const fishes = Array.from({ length: 3 }, () => new Fish());
+        // Increase fish count to 12
+        const fishes = Array.from({ length: 12 }, () => new Fish());
 
-        // Animation loop
         function animate() {
             if (!ctx || !canvas) return;
 
             ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Add very subtle background tint/depth
+            // ctx.fillStyle = 'rgba(255, 255, 255, 0.01)';
+            // ctx.fillRect(0, 0, canvas.width, canvas.height);
 
             fishes.forEach((fish) => {
                 fish.update();
@@ -147,9 +191,9 @@ export default function InteractiveBackground() {
 
         animate();
 
-        // Cleanup
         return () => {
             window.removeEventListener("click", handleMouseClick);
+            window.removeEventListener("mousemove", handleMouseMove);
             window.removeEventListener("resize", setCanvasSize);
         };
     }, []);

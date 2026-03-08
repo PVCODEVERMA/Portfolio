@@ -1,9 +1,7 @@
 import Navbar from "@/components/navbar";
 import { ThemeProvider } from "@/components/theme-provider";
 import { TooltipProvider } from "@/components/ui/tooltip";
-import ScrollProgress from "@/components/scroll-progress";
-import BackgroundOrbs from "@/components/background-orbs";
-import InteractiveBackground from "@/components/interactive-background";
+import VantaBirds from "@/components/vanta-birds";
 import { DATA } from "@/data/resume";
 import { cn } from "@/lib/utils";
 import type { Metadata } from "next";
@@ -65,9 +63,7 @@ export default function RootLayout({
         )}
       >
         <ThemeProvider attribute="class" defaultTheme="light">
-          <ScrollProgress />
-          <BackgroundOrbs />
-          <InteractiveBackground />
+          <VantaBirds />
           <TooltipProvider delayDuration={0}>
             {children}
             <Navbar />

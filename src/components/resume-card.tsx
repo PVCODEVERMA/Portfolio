@@ -48,12 +48,12 @@ export const ResumeCard = ({
       onClick={handleClick}
     >
       <Card className={cn(
-        "group flex flex-col sm:flex-row p-3 sm:p-4 transition-all duration-300 hover:shadow-md",
+        "group flex flex-col sm:flex-row p-4 sm:p-5 transition-all duration-300 hover:shadow-md",
         className
       )}>
         {/* Logo Section - मोबाइल पर सेंटर, डेस्कटॉप पर लेफ्ट */}
-        <div className="flex-none flex justify-center sm:justify-start mb-3 sm:mb-0">
-          <Avatar className="border size-12 sm:size-14 bg-muted-background dark:bg-foreground opacity-0 group-hover:opacity-100 lg:opacity-100 transition-opacity duration-300">
+        <div className="flex-none flex justify-start mb-3 sm:mb-0">
+          <Avatar className="border size-10 sm:size-14 bg-muted-background dark:bg-foreground transition-opacity duration-300">
             <AvatarImage
               src={logoUrl}
               alt={altText}
@@ -73,16 +73,16 @@ export const ResumeCard = ({
               {/* Title and Badges */}
               <div className="space-y-2">
                 <div className="flex items-center gap-2">
-                  <h3 className="font-semibold leading-none text-sm sm:text-base">
+                  <h3 className="font-semibold leading-tight text-sm sm:text-base">
                     {title}
                   </h3>
                   {href && href !== "#" && !description && (
-                    <ExternalLink className="size-3 sm:size-4 text-muted-foreground" />
+                    <ExternalLink className="size-3 sm:size-4 text-muted-foreground shrink-0" />
                   )}
                   {description && (
                     <ChevronRightIcon
                       className={cn(
-                        "size-3 sm:size-4 transform transition-transform duration-300",
+                        "size-3 sm:size-4 transform transition-transform duration-300 shrink-0",
                         isExpanded ? "rotate-90" : "rotate-0"
                       )}
                     />
@@ -161,7 +161,7 @@ export const ResumeCard = ({
               {/* Show More/Less Button for Mobile */}
               <button
                 type="button"
-                className="mt-2 text-xs text-orange-600 hover:text-orange-800 dark:text-orange-400 dark:hover:text-orange-300 sm:hidden flex items-center gap-1"
+                className="mt-2 text-xs text-primary hover:text-primary/80 sm:hidden flex items-center gap-1"
                 onClick={(e) => {
                   e.preventDefault();
                   e.stopPropagation();
