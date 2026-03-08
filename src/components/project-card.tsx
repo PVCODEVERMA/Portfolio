@@ -69,7 +69,7 @@ export function ProjectCard({
                 loop
                 muted
                 playsInline
-                className="pointer-events-none mx-auto h-40 w-full object-cover object-top transition-transform duration-500 group-hover:scale-110"
+                className="pointer-events-none mx-auto h-40 sm:h-48 lg:h-52 w-full object-cover object-top transition-transform duration-500 group-hover:scale-110"
               />
             )}
             {image && (
@@ -78,7 +78,7 @@ export function ProjectCard({
                 alt={title}
                 width={500}
                 height={300}
-                className="h-40 w-full overflow-hidden object-cover object-top transition-transform duration-500 group-hover:scale-110"
+                className="h-40 sm:h-48 lg:h-52 w-full overflow-hidden object-cover object-top transition-transform duration-500 group-hover:scale-110"
               />
             )}
             <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-background/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />

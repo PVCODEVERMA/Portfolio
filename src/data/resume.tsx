@@ -275,70 +275,71 @@ export const DATA = {
       image: "",
       video: "/videos/album-design-demo.mp4",
     },
-    {
-      title: "Online Learning Platform (LMS)",
-      href: "https://yrclasses.com/",
-      dates: "Nov 2023 - Dec 2023",
-      active: true,
-      description:
-        "A feature-rich Learning Management System with course uploads, video streaming, real-time chat, and role-based dashboards. Includes instructor panels for course management, student progress tracking, and interactive discussion forums.",
-      technologies: [
-        "React.js",
-        "Node.js",
-        "Socket.io",
-        "MongoDB",
-        "JWT",
-        "Tailwind CSS",
-        "Express.js",
-        "React Player"
-      ],
-      links: [
-        {
-          type: "Live Demo",
-          href: "https://lms-platform-demo.vercel.app",
-          icon: <Icons.globe className="size-3" />,
-        },
-        {
-          type: "GitHub",
-          href: "https://github.com/pankaj912978/lms-platform",
-          icon: <Icons.github className="size-3" />,
-        }
-      ],
-      image: "/projects/lms-platform.png",
-      video: "",
-    },
 
-    {
-      title: "AI-Powered Resume Builder",
-      href: "https://ai-resume-builder.vercel.app",
-      dates: "Aug 2024 - Sep 2024",
-      active: true,
-      description:
-        "An intelligent resume builder that uses OpenAI GPT to generate professional resume content based on user input. Features include multiple templates, ATS optimization, PDF export, and AI-powered suggestions for improving resume impact.",
-      technologies: [
-        "Next.js",
-        "OpenAI API",
-        "Tailwind CSS",
-        "Shadcn UI",
-        "React PDF",
-        "Prisma",
-        "PostgreSQL"
-      ],
-      links: [
-        {
-          type: "Demo",
-          href: "https://ai-resume-builder.vercel.app",
-          icon: <Icons.globe className="size-3" />,
-        },
-        {
-          type: "GitHub",
-          href: "https://github.com/pankaj912978/ai-resume-builder",
-          icon: <Icons.github className="size-3" />,
-        }
-      ],
-      image: "/projects/ai-resume-builder.png",
-      video: "",
-    },
+    // {
+    //   title: "Online Learning Platform (LMS)",
+    //   href: "https://yrclasses.com/",
+    //   dates: "Nov 2023 - Dec 2023",
+    //   active: true,
+    //   description:
+    //     "A feature-rich Learning Management System with course uploads, video streaming, real-time chat, and role-based dashboards. Includes instructor panels for course management, student progress tracking, and interactive discussion forums.",
+    //   technologies: [
+    //     "React.js",
+    //     "Node.js",
+    //     "Socket.io",
+    //     "MongoDB",
+    //     "JWT",
+    //     "Tailwind CSS",
+    //     "Express.js",
+    //     "React Player"
+    //   ],
+    //   links: [
+    //     {
+    //       type: "Live Demo",
+    //       href: "https://lms-platform-demo.vercel.app",
+    //       icon: <Icons.globe className="size-3" />,
+    //     },
+    //     {
+    //       type: "GitHub",
+    //       href: "https://github.com/pankaj912978/lms-platform",
+    //       icon: <Icons.github className="size-3" />,
+    //     }
+    //   ],
+    //   image: "/projects/lms-platform.png",
+    //   video: "",
+    // },
+
+    // {
+    //   title: "AI-Powered Resume Builder",
+    //   href: "https://ai-resume-builder.vercel.app",
+    //   dates: "Aug 2024 - Sep 2024",
+    //   active: true,
+    //   description:
+    //     "An intelligent resume builder that uses OpenAI GPT to generate professional resume content based on user input. Features include multiple templates, ATS optimization, PDF export, and AI-powered suggestions for improving resume impact.",
+    //   technologies: [
+    //     "Next.js",
+    //     "OpenAI API",
+    //     "Tailwind CSS",
+    //     "Shadcn UI",
+    //     "React PDF",
+    //     "Prisma",
+    //     "PostgreSQL"
+    //   ],
+    //   links: [
+    //     {
+    //       type: "Demo",
+    //       href: "https://ai-resume-builder.vercel.app",
+    //       icon: <Icons.globe className="size-3" />,
+    //     },
+    //     {
+    //       type: "GitHub",
+    //       href: "https://github.com/pankaj912978/ai-resume-builder",
+    //       icon: <Icons.github className="size-3" />,
+    //     }
+    //   ],
+    //   image: "/projects/ai-resume-builder.png",
+    //   video: "",
+    // },
 
     // {
     //   title: "Real-time Chat Application",
