@@ -1,5 +1,5 @@
 import { Dock, DockIcon } from "@/components/magicui/dock";
-import { ModeToggle } from "@/components/mode-toggle";
+import { FileText } from "lucide-react";
 import { buttonVariants } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import {
@@ -63,10 +63,20 @@ export default function Navbar() {
         <DockIcon>
           <Tooltip>
             <TooltipTrigger asChild>
-              <ModeToggle />
+              <Link
+                href="https://drive.google.com/file/d/18MuY03WjBz1nYPJVJhaj5_SnxhGBBitu/view?usp=sharing"
+                target="_blank"
+                rel="noopener noreferrer"
+                className={cn(
+                  buttonVariants({ variant: "ghost", size: "icon" }),
+                  "size-12"
+                )}
+              >
+                <FileText className="size-4" />
+              </Link>
             </TooltipTrigger>
             <TooltipContent>
-              <p>Theme</p>
+              <p>Download Resume</p>
             </TooltipContent>
           </Tooltip>
         </DockIcon>

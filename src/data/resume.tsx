@@ -8,7 +8,7 @@ export const DATA = {
   location: "Noida, Sector 15, Uttar Pradesh, India",
   locationLink: "https://maps.app.goo.gl/dFLbinrTMVHjkjcHA",
   description:
-    "Software Developer with 1 years of experience building scalable, production-ready web applications using React, Node.js, and MongoDB. Very active on Twitter.",
+    "Software Developer with 1.5+ years of experience building scalable, production-ready web applications using React, Node.js, and MongoDB. Very active on Twitter.",
   summary:
     "Software Developer building scalable web applications and sharing my learning journey on [YouTube](https://www.youtube.com/channel/UCAHuQt0idElWoQ35KOqO15A), [Instagram](https://www.instagram.com/pv_code421/+), and [X](https://x.com/pv_code421).",
   avatarUrl: "/me.png",
@@ -134,7 +134,7 @@ export const DATA = {
       start: "Jul 2023",
       end: "Nov 2023",
       description:
-        "Completed focused training in frontend development, working with HTML, CSS, JavaScript, and React fundamentals while contributing to live client projects.",
+        "Completed a comprehensive MERN Stack Developer course and contributed to live projects, focusing on building end-to-end web applications with MongoDB, Express.js, React, and Node.js.",
     },
   ],
 

@@ -15,14 +15,14 @@ import { motion } from "framer-motion";
 export default function Page() {
   return (
     <main className="flex flex-col min-h-[100dvh] space-y-16 md:space-y-24">
-      <section id="hero" className="relative pt-8 md:pt-12">
+      <section id="hero" className="relative pt-2 md:pt-4">
         <div className="mx-auto w-full max-w-2xl lg:max-w-5xl space-y-8">
           <div className="gap-2 flex justify-between items-start">
             <div className="flex-col flex flex-1 space-y-1.5">
               <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tighter xl:text-7xl/none text-foreground leading-tight">
                 Hi, I&apos;m {DATA.name.split(" ")[0]} 👋
               </h1>
-              <p className="max-w-[600px] text-base md:text-xl text-muted-foreground leading-relaxed">
+              <p className="max-w-[600px] text-base md:text-xl text-foreground/80 leading-relaxed font-medium">
                 {DATA.description}
               </p>
             </div>
@@ -37,26 +37,8 @@ export default function Page() {
       <section id="about" className="scroll-mt-16">
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-4">
           <h2 className="text-xl sm:text-2xl md:text-3xl font-bold">About</h2>
-          <div className="flex flex-wrap gap-3">
-            <motion.div
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              transition={{ type: "spring", stiffness: 400, damping: 10 }}
-            >
-              <Button asChild className="gap-2 bg-primary hover:bg-primary/90 text-primary-foreground shadow-lg shadow-primary/30">
-                <a
-                  href="https://drive.google.com/file/d/18MuY03WjBz1nYPJVJhaj5_SnxhGBBitu/view?usp=sharing"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <Download className="h-4 w-4" />
-                  Download Resume
-                </a>
-              </Button>
-            </motion.div>
-          </div>
         </div>
-        <Markdown className="prose max-w-full text-pretty font-sans text-sm text-muted-foreground dark:prose-invert">
+        <Markdown className="prose max-w-full text-pretty font-sans text-sm text-foreground/90 dark:prose-invert leading-relaxed">
           {DATA.summary}
         </Markdown>
       </section>
@@ -70,7 +52,7 @@ export default function Page() {
               <h2 className="text-2xl sm:text-3xl md:text-5xl font-bold tracking-tighter">
                 Check out my latest work
               </h2>
-              <p className="text-muted-foreground text-sm sm:text-base md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
+              <p className="text-foreground/80 text-sm sm:text-base md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed font-medium">
                 I&apos;ve worked on a variety of projects, from simple
                 websites to complex web applications. Here are a few of my
                 favorites.
@@ -96,7 +78,12 @@ export default function Page() {
       </section>
       <section id="work" className="scroll-mt-16">
         <div className="flex min-h-0 flex-col gap-y-3">
-          <h2 className="text-xl font-bold">Work Experience</h2>
+          <div className="flex items-center justify-between">
+            <h2 className="text-xl font-bold">Work Experience</h2>
+            <Badge variant="secondary" className="bg-primary/20 text-black dark:text-primary font-bold text-xs">
+              Total Experience: 1.5+ Years
+            </Badge>
+          </div>
           {DATA.work.map((work, id) => (
             <ResumeCard
               key={work.company}
@@ -160,42 +147,42 @@ export default function Page() {
               {DATA.certifications?.map((cert, id) => (
                 <div
                   key={cert.title}
-                  className={`border rounded-xl p-5 hover:shadow-lg transition-all duration-300 bg-card hover:bg-card/80 ${cert.badgeColor || "border-border"
+                  className={`border rounded-xl p-5 hover:shadow-lg transition-all duration-300 bg-card/40 backdrop-blur-md hover:bg-card/60 hover:border-primary/30 ${cert.badgeColor || "border-primary/10"
                     }`}
                 >
                   <div className="flex items-start justify-between mb-4">
                     <div className="flex-1 pr-2">
-                      <h3 className="font-semibold text-lg mb-1 line-clamp-2">
+                      <h3 className="font-semibold text-lg mb-1 line-clamp-2 text-foreground">
                         {cert.title}
                       </h3>
-                      <p className="text-sm text-muted-foreground line-clamp-1">
+                      <p className="text-sm text-foreground/80 line-clamp-1 font-medium">
                         {cert.issuer}
                       </p>
                     </div>
                     <div className="flex flex-col items-end gap-1.5 shrink-0">
                       <Badge
                         variant="outline"
-                        className="text-xs font-normal"
+                        className="text-xs font-medium border-primary/20 bg-background/50"
                       >
                         {cert.date}
                       </Badge>
                       {cert.status === "ongoing" && (
                         <Badge
                           variant="secondary"
-                          className="text-xs"
+                          className="text-xs bg-primary/20 text-primary-foreground dark:text-primary border-primary/20"
                         >
                           In Progress
                         </Badge>
                       )}
                       {cert.type === "workshop" && (
-                        <Badge variant="outline" className="text-xs">
+                        <Badge variant="outline" className="text-xs border-primary/20 bg-background/50">
                           Workshop
                         </Badge>
                       )}
                     </div>
                   </div>
 
-                  <p className="text-sm text-muted-foreground mb-4 line-clamp-3 min-h-[60px]">
+                  <p className="text-sm text-foreground/80 mb-4 line-clamp-3 min-h-[60px] leading-relaxed">
                     {cert.description}
                   </p>
 
@@ -279,7 +266,7 @@ export default function Page() {
             <h2 className="text-2xl sm:text-3xl md:text-5xl font-bold tracking-tighter">
               Get in Touch
             </h2>
-            <p className="mx-auto max-w-[600px] text-muted-foreground text-sm sm:text-base md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
+            <p className="mx-auto max-w-[600px] text-foreground/80 text-sm sm:text-base md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed font-medium">
               Interested in working together or have a question? Feel free to
               reach out via{" "}
               <a

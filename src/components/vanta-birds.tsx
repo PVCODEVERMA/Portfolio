@@ -29,7 +29,7 @@ export default function VantaBirds() {
           minWidth: 200.0,
           scale: 1.0,
           scaleMobile: 1.0,
-          backgroundColor: 0xffd863,
+          backgroundColor: 0xffffff,
           color1: 0xff1f1f,
           color2: 0x333333,
           birdSize: 1.5,
@@ -71,7 +71,7 @@ export default function VantaBirds() {
       <div
         ref={vantaRef}
         className="fixed inset-0 -z-10 w-full h-full"
-        style={{ backgroundColor: "#ffd863" }}
+        style={{ backgroundColor: "#ffffff" }}
       />
     </>
   );

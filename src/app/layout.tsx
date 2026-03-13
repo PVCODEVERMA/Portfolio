@@ -1,3 +1,4 @@
+import AIChatbot from "@/components/ai-chatbot";
 import Navbar from "@/components/navbar";
 import { ThemeProvider } from "@/components/theme-provider";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -58,15 +59,16 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body
         className={cn(
-          "min-h-screen bg-background font-sans antialiased max-w-2xl lg:max-w-5xl mx-auto py-12 sm:py-24 px-6",
+          "min-h-screen bg-background font-sans antialiased max-w-2xl lg:max-w-5xl mx-auto pt-4 pb-12 sm:pt-8 sm:pb-24 px-6",
           fontSans.variable
         )}
       >
-        <ThemeProvider attribute="class" defaultTheme="light">
+        <ThemeProvider forcedTheme="light" defaultTheme="light">
           <VantaBirds />
           <TooltipProvider delayDuration={0}>
             {children}
             <Navbar />
+            <AIChatbot />
           </TooltipProvider>
         </ThemeProvider>
       </body>

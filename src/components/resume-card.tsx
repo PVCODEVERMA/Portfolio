@@ -48,7 +48,7 @@ export const ResumeCard = ({
       onClick={handleClick}
     >
       <Card className={cn(
-        "group flex flex-col sm:flex-row p-4 sm:p-5 transition-all duration-300 hover:shadow-md",
+        "group flex flex-col sm:flex-row p-4 sm:p-5 transition-all duration-300 hover:shadow-md bg-card/40 backdrop-blur-md border border-primary/10 hover:border-primary/20",
         className
       )}>
         {/* Logo Section - मोबाइल पर सेंटर, डेस्कटॉप पर लेफ्ट */}
@@ -114,14 +114,14 @@ export const ResumeCard = ({
               </div>
 
               {/* Period - मोबाइल पर लेफ्ट, डेस्कटॉप पर राइट */}
-              <div className="text-xs sm:text-sm tabular-nums text-muted-foreground sm:text-right">
+              <div className="text-xs sm:text-sm tabular-nums text-foreground/80 sm:text-right font-medium">
                 {period}
               </div>
             </div>
 
             {/* Subtitle */}
             {subtitle && (
-              <div className="font-sans text-xs sm:text-sm text-muted-foreground mb-2">
+              <div className="font-sans text-xs sm:text-sm text-foreground/90 mb-2 font-medium">
                 {subtitle}
               </div>
             )}
@@ -142,7 +142,7 @@ export const ResumeCard = ({
                 }}
                 className="overflow-hidden"
               >
-                <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">
+                <p className="text-xs sm:text-sm text-foreground/80 leading-relaxed">
                   {description}
                 </p>
                 {href && href !== "#" && (
