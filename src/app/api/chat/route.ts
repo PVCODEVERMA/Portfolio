@@ -23,8 +23,10 @@ export async function POST(req: NextRequest) {
     if (modelId === "v1") {
       // Google Gemini
       const apiKey = process.env.GEMINI_API_KEY;
+      if (!apiKey) return NextResponse.json({ text: "Gemini API Key is missing. Please check your .env.local file." });
+
       const response = await fetch(
-        `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`,
+        `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=${apiKey}`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -37,14 +39,22 @@ export async function POST(req: NextRequest) {
           }),
         }
       );
+
       const data = await response.json();
-      const text = data.candidates?.[0]?.content?.parts?.[0]?.text || "I'm sorry, I couldn't process that.";
+      if (!response.ok) {
+        console.error("Gemini API Error:", data);
+        return NextResponse.json({ text: `Gemini Error: ${data.error?.message || "Unknown error"}` });
+      }
+
+      const text = data.candidates?.[0]?.content?.parts?.[0]?.text || "I'm sorry, Gemini couldn't generate a response.";
       return NextResponse.json({ text });
     }
 
     if (modelId === "v2") {
       // Groq (Llama 3)
       const apiKey = process.env.GROQ_API_KEY;
+      if (!apiKey) return NextResponse.json({ text: "Groq API Key is missing." });
+
       const response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
         method: "POST",
         headers: {
@@ -52,21 +62,29 @@ export async function POST(req: NextRequest) {
           Authorization: `Bearer ${apiKey}`,
         },
         body: JSON.stringify({
-          model: "llama3-70b-8192",
+          model: "llama-3.3-70b-versatile",
           messages: [
             { role: "system", content: systemPrompt },
             { role: "user", content: lastMessage },
           ],
         }),
       });
+
       const data = await response.json();
-      const text = data.choices?.[0]?.message?.content || "I'm sorry, I couldn't process that.";
+      if (!response.ok) {
+        console.error("Groq API Error:", data);
+        return NextResponse.json({ text: `Groq Error: ${data.error?.message || "Unknown error"}` });
+      }
+
+      const text = data.choices?.[0]?.message?.content || "I'm sorry, Groq couldn't generate a response.";
       return NextResponse.json({ text });
     }
 
     if (modelId === "v3") {
       // OpenAI
       const apiKey = process.env.OPENAI_API_KEY;
+      if (!apiKey) return NextResponse.json({ text: "OpenAI API Key is missing." });
+
       const response = await fetch("https://api.openai.com/v1/chat/completions", {
         method: "POST",
         headers: {
@@ -81,8 +99,14 @@ export async function POST(req: NextRequest) {
           ],
         }),
       });
+
       const data = await response.json();
-      const text = data.choices?.[0]?.message?.content || "I'm sorry, I couldn't process that.";
+      if (!response.ok) {
+        console.error("OpenAI API Error:", data);
+        return NextResponse.json({ text: `OpenAI Error: ${data.error?.message || "Unknown error"}` });
+      }
+
+      const text = data.choices?.[0]?.message?.content || "I'm sorry, OpenAI couldn't generate a response.";
       return NextResponse.json({ text });
     }
 

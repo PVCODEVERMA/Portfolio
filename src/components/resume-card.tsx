@@ -50,7 +50,10 @@ export const ResumeCard = ({
       <Card className={cn(
         "group flex flex-col sm:flex-row p-4 sm:p-5 transition-all duration-300 hover:shadow-md bg-card/40 backdrop-blur-md border border-primary/10 hover:border-primary/20",
         className
-      )}>
+      )}
+      role="button"
+      tabIndex={0}
+      >
         {/* Logo Section - मोबाइल पर सेंटर, डेस्कटॉप पर लेफ्ट */}
         <div className="flex-none flex justify-start mb-3 sm:mb-0">
           <Avatar className="border size-10 sm:size-14 bg-muted-background dark:bg-foreground transition-opacity duration-300">
@@ -114,7 +117,7 @@ export const ResumeCard = ({
               </div>
 
               {/* Period - मोबाइल पर लेफ्ट, डेस्कटॉप पर राइट */}
-              <div className="text-xs sm:text-sm tabular-nums text-foreground/80 sm:text-right font-medium">
+              <div className="text-[11px] sm:text-xs tabular-nums text-foreground/60 sm:text-right font-medium tracking-tight">
                 {period}
               </div>
             </div>

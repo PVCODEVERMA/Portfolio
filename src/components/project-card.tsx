@@ -81,13 +81,13 @@ export function ProjectCard({
                 className="h-40 sm:h-48 lg:h-52 w-full overflow-hidden object-cover object-top transition-transform duration-500 group-hover:scale-110"
               />
             )}
-            <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-background/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent sm:opacity-0 sm:group-hover:opacity-100 transition-opacity duration-300" />
           </div>
         </Link>
-        <CardHeader className="px-3 pt-3">
-          <div className="space-y-1">
-            <CardTitle className="mt-1 text-sm sm:text-base group-hover:text-primary transition-colors duration-300 text-foreground font-bold">{title}</CardTitle>
-            <time className="font-sans text-xs text-foreground/80 font-medium">{dates}</time>
+        <CardHeader className="px-3 pt-4">
+          <div className="space-y-2">
+            <CardTitle className="text-base sm:text-lg group-hover:text-primary transition-colors duration-300 text-foreground font-bold tracking-tight">{title}</CardTitle>
+            <time className="font-sans text-[11px] text-foreground/60 font-medium tracking-wide uppercase">{dates}</time>
             <div className="hidden font-sans text-xs underline print:visible">
               {link?.replace("https://", "").replace("www.", "").replace("/", "")}
             </div>

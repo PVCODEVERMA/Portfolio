@@ -67,6 +67,17 @@ export default function AIChatbot() {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
+  useEffect(() => {
+    if (isOpen && window.innerWidth < 640) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "unset";
+    }
+    return () => {
+      document.body.style.overflow = "unset";
+    };
+  }, [isOpen]);
+
   const handleSendMessage = async (text: string) => {
     if (!text.trim()) return;
 
@@ -112,14 +123,17 @@ export default function AIChatbot() {
   };
 
   return (
-    <div className="fixed bottom-6 right-6 z-[100] flex flex-col items-end">
+    <div className={cn(
+      "fixed bottom-6 right-6 z-[100] flex flex-col items-end",
+      isOpen && "inset-0 bottom-0 right-0 sm:inset-auto sm:bottom-6 sm:right-6"
+    )}>
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            initial={{ opacity: 0, y: 20, scale: 0.95, transformOrigin: "bottom right" }}
+            initial={{ opacity: 0, y: 20, scale: 0.95 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.95 }}
-            className="mb-4 w-[90vw] sm:w-[400px] h-[550px] bg-card/60 backdrop-blur-2xl border border-primary/20 rounded-3xl shadow-2xl flex flex-col overflow-hidden"
+            className="fixed inset-0 z-[100] sm:relative sm:inset-auto sm:mb-4 w-full sm:w-[440px] h-full sm:h-[600px] bg-background sm:bg-card/60 sm:backdrop-blur-2xl border-none sm:border sm:border-primary/20 rounded-none sm:rounded-3xl shadow-2xl flex flex-col overflow-hidden"
           >
             {/* Header */}
             <div className="p-5 bg-primary/5 border-b border-primary/10 flex items-center justify-between">

@@ -18,11 +18,11 @@ export default function Page() {
       <section id="hero" className="relative pt-2 md:pt-4">
         <div className="mx-auto w-full max-w-2xl lg:max-w-5xl space-y-8">
           <div className="gap-2 flex justify-between items-start">
-            <div className="flex-col flex flex-1 space-y-1.5">
+            <div className="flex-col flex flex-1 space-y-2">
               <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tighter xl:text-7xl/none text-foreground leading-tight">
                 Hi, I&apos;m {DATA.name.split(" ")[0]} 👋
               </h1>
-              <p className="max-w-[600px] text-base md:text-xl text-foreground/80 leading-relaxed font-medium">
+              <p className="max-w-[600px] text-base md:text-xl text-foreground font-medium leading-relaxed">
                 {DATA.description}
               </p>
             </div>
