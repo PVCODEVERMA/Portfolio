@@ -320,104 +320,26 @@ export const DATA = {
       video: "/videos/album-design-demo.mp4",
     },
 
-    // {
-    //   title: "Online Learning Platform (LMS)",
-    //   href: "https://yrclasses.com/",
-    //   dates: "Nov 2023 - Dec 2023",
-    //   active: true,
-    //   description:
-    //     "A feature-rich Learning Management System with course uploads, video streaming, real-time chat, and role-based dashboards. Includes instructor panels for course management, student progress tracking, and interactive discussion forums.",
-    //   technologies: [
-    //     "React.js",
-    //     "Node.js",
-    //     "Socket.io",
-    //     "MongoDB",
-    //     "JWT",
-    //     "Tailwind CSS",
-    //     "Express.js",
-    //     "React Player"
-    //   ],
-    //   links: [
-    //     {
-    //       type: "Live Demo",
-    //       href: "https://lms-platform-demo.vercel.app",
-    //       icon: <Icons.globe className="size-3" />,
-    //     },
-    //     {
-    //       type: "GitHub",
-    //       href: "https://github.com/pankaj912978/lms-platform",
-    //       icon: <Icons.github className="size-3" />,
-    //     }
-    //   ],
-    //   image: "/projects/lms-platform.png",
-    //   video: "",
-    // },
-
-    // {
-    //   title: "AI-Powered Resume Builder",
-    //   href: "https://ai-resume-builder.vercel.app",
-    //   dates: "Aug 2024 - Sep 2024",
-    //   active: true,
-    //   description:
-    //     "An intelligent resume builder that uses OpenAI GPT to generate professional resume content based on user input. Features include multiple templates, ATS optimization, PDF export, and AI-powered suggestions for improving resume impact.",
-    //   technologies: [
-    //     "Next.js",
-    //     "OpenAI API",
-    //     "Tailwind CSS",
-    //     "Shadcn UI",
-    //     "React PDF",
-    //     "Prisma",
-    //     "PostgreSQL"
-    //   ],
-    //   links: [
-    //     {
-    //       type: "Demo",
-    //       href: "https://ai-resume-builder.vercel.app",
-    //       icon: <Icons.globe className="size-3" />,
-    //     },
-    //     {
-    //       type: "GitHub",
-    //       href: "https://github.com/pankaj912978/ai-resume-builder",
-    //       icon: <Icons.github className="size-3" />,
-    //     }
-    //   ],
-    //   image: "/projects/ai-resume-builder.png",
-    //   video: "",
-    // },
-
-    // {
-    //   title: "Real-time Chat Application",
-    //   href: "https://chat-app-demo-pv.vercel.app",
-    //   dates: "Apr 2024 - May 2024",
-    //   active: true,
-    //   description:
-    //     "A real-time chat application with user authentication, online status, typing indicators, and file sharing. Supports group chats, private messaging, and message history with a clean, responsive UI.",
-    //   technologies: [
-    //     "React.js",
-    //     "Socket.io",
-    //     "Node.js",
-    //     "MongoDB",
-    //     "JWT",
-    //     "Tailwind CSS",
-    //     "Cloudinary"
-    //   ],
-    //   links: [
-    //     {
-    //       type: "Demo",
-    //       href: "https://chat-app-demo-pv.vercel.app",
-    //       icon: <Icons.globe className="size-3" />,
-    //     },
-    //     {
-    //       type: "GitHub",
-    //       href: "https://github.com/pankaj912978/chat-application",
-    //       icon: <Icons.github className="size-3" />,
-    //     }
-    //   ],
-    //   image: "/projects/chat-app.png",
-    //   video: "",
-    // }
   ],
   certifications: [
+    {
+      title: "Data Science Fundamentals",
+      issuer: "PW Skills",
+      date: "2025",
+      credentialId: "DS-PW-2025",
+      url: "#",
+      description: "Currently learning data science fundamentals including statistics, data analysis, machine learning concepts, and Python programming for data applications.",
+      skills: [
+        "Python", "Statistics", "Data Analysis", "Machine Learning",
+        "Pandas", "NumPy", "Data Visualization", "EDA"
+      ],
+      status: "ongoing",
+      type: "professional",
+      duration: "Ongoing",
+      progress: 60,
+      verified: false,
+      badgeColor: "bg-yellow-500/10 border-yellow-500/20"
+    },
     {
       title: "Full Stack Web Development 2.0",
       issuer: "Physics Wallah (PW Skills)",
@@ -456,24 +378,7 @@ export const DATA = {
       verified: true,
       badgeColor: "bg-orange-500/10 border-orange-500/20"
     },
-    {
-      title: "Data Science Fundamentals",
-      issuer: "PW Skills",
-      date: "2024",
-      credentialId: "DS-PW-2024",
-      url: "#",
-      description: "Currently learning data science fundamentals including statistics, data analysis, machine learning concepts, and Python programming for data applications.",
-      skills: [
-        "Python", "Statistics", "Data Analysis", "Machine Learning",
-        "Pandas", "NumPy", "Data Visualization", "EDA"
-      ],
-      status: "ongoing",
-      type: "professional",
-      duration: "Ongoing",
-      progress: 60,
-      verified: false,
-      badgeColor: "bg-yellow-500/10 border-yellow-500/20"
-    },
+    
     {
       title: "Full Stack Development Webinar",
       issuer: "Shri Balaji Infotech",

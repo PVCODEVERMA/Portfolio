@@ -60,7 +60,7 @@ export default function Page() {
                   animate={{ scale: 1 }}
                   transition={{ delay: 0.5, type: "spring" }}
                 >
-                  <CheckCircle2 className="size-8 sm:size-10 text-blue-500 fill-blue-500/20" />
+                  <CheckCircle2 className="size-8 sm:size-10 text-[#F97C39] fill-blue-[#F97C39]" />
                 </motion.div>
               </div>
               <p className="text-xl md:text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary to-blue-600">
