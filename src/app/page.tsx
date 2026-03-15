@@ -9,12 +9,29 @@ import { Button } from "@/components/ui/button";
 import { DATA } from "@/data/resume";
 import Link from "next/link";
 import Markdown from "react-markdown";
-import { ExternalLink, Download, CheckCircle2, Briefcase, Users, Cpu } from "lucide-react";
+import { ExternalLink, Download, CheckCircle2, Briefcase, Users, Cpu, Sparkles, ArrowUpRight } from "lucide-react";
 import { motion } from "framer-motion";
+import React from "react";
 
 import { CertificationCard } from "@/components/certification-card";
+import { SkillsDrawer } from "@/components/skills-drawer";
+import { 
+  Layout, 
+  Server, 
+  Cloud, 
+  Database, 
+  Wrench,
+} from "lucide-react";
 
 export default function Page() {
+  const [isSkillsDrawerOpen, setIsSkillsDrawerOpen] = React.useState(false);
+  const [activeSkillCategory, setActiveSkillCategory] = React.useState<string | null>(null);
+
+  const openSkillsDrawer = (category: string) => {
+    setActiveSkillCategory(category);
+    setIsSkillsDrawerOpen(true);
+  };
+
   return (
     <main className="flex flex-col min-h-[100dvh] space-y-16 md:space-y-24">
       <section id="hero" className="relative pt-12 md:pt-20 pb-8 overflow-hidden">
@@ -169,44 +186,82 @@ export default function Page() {
               </h2>
               <p className="text-foreground/80 text-sm sm:text-base md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed font-medium">
                 I've categorized my expertise across various domains. 
-                Total of {DATA.skills ? Object.values(DATA.skills).reduce((acc: number, curr: any) => acc + (curr.length || 0), 0) : 0} skills listed below.
+                Total of {Object.values(DATA.skills).reduce((acc: number, curr: any) => acc + (curr.list?.length || 0), 0)} skills listed below.
               </p>
             </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-[1200px] mx-auto w-full">
-            {DATA.skills && Object.entries(DATA.skills).map(([category, skills]) => (
-              <motion.div
-                key={category}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                className="p-6 rounded-2xl bg-card/40 backdrop-blur-md border border-primary/10 hover:border-primary/30 transition-all duration-300 shadow-sm"
-              >
-                <div className="flex items-center justify-between mb-4 border-b border-primary/10 pb-3">
-                  <h3 className="font-bold text-lg text-foreground flex items-center gap-2">
-                    <div className="size-2 rounded-full bg-primary animate-pulse" />
-                    {category}
-                  </h3>
-                  <Badge variant="secondary" className="text-xs bg-primary/10 text-primary-foreground dark:text-primary font-bold">
-                    {(skills as readonly string[]).length} Skills
-                  </Badge>
-                </div>
-                <div className="flex flex-wrap gap-2">
-                  {(skills as readonly string[]).map((skill) => (
-                    <Badge 
-                      key={skill} 
-                      variant="outline" 
-                      className="px-3 py-1 text-xs font-medium bg-background/50 hover:bg-primary/5 transition-colors cursor-default"
-                    >
-                      {skill}
-                    </Badge>
-                  ))}
-                </div>
-              </motion.div>
-            ))}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-[1200px] mx-auto w-full">
+            {Object.entries(DATA.skills).map(([category, data]: [string, any]) => {
+              const Icon = {
+                "AI / ML": Cpu,
+                "Frontend": Layout,
+                "Backend": Server,
+                "Cloud & DevOps": Cloud,
+                "Databases": Database,
+                "Tools": Wrench
+              }[category] || Cpu;
+
+              return (
+                <motion.div
+                  key={category}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  onClick={() => openSkillsDrawer(category)}
+                  className="group relative p-6 rounded-2xl bg-card/40 backdrop-blur-md border border-primary/10 hover:border-primary/40 transition-all duration-300 shadow-sm cursor-pointer overflow-hidden"
+                >
+                  <div className="absolute top-0 right-0 p-4 opacity-0 group-hover:opacity-100 transition-opacity">
+                    <ArrowUpRight className="size-5 text-primary" />
+                  </div>
+                  
+                  <div className="flex items-center justify-between mb-4 border-b border-primary/10 pb-3">
+                    <div className="flex items-center gap-3">
+                      <div className="p-2 rounded-xl bg-primary/10 group-hover:bg-primary/20 transition-colors">
+                        <Icon className="size-5 text-primary" />
+                      </div>
+                      <h3 className="font-bold text-lg text-foreground">
+                        {category}
+                      </h3>
+                    </div>
+                    {category === "AI / ML" && (
+                      <Badge className="bg-orange-500 hover:bg-orange-600 text-white border-none text-[10px] font-bold px-2 py-0">
+                        <Sparkles className="size-3 mr-1" />
+                        HOT SKILLS
+                      </Badge>
+                    )}
+                  </div>
+                  
+                  <div className="flex flex-wrap gap-2">
+                    {data.list.slice(0, 6).map((skill: any) => (
+                      <Badge 
+                        key={skill.name} 
+                        variant="outline" 
+                        className="px-2 py-0.5 text-[11px] font-semibold bg-background/50 border-primary/10 group-hover:border-primary/30 transition-colors pointer-events-none"
+                      >
+                        {skill.name}
+                      </Badge>
+                    ))}
+                    {data.list.length > 6 && (
+                      <Badge variant="secondary" className="px-2 py-0.5 text-[11px] bg-primary/5 text-primary font-bold border-none">
+                        +{data.list.length - 6} More
+                      </Badge>
+                    )}
+                  </div>
+                </motion.div>
+              );
+            })}
           </div>
         </div>
+
+        {activeSkillCategory && (
+          <SkillsDrawer
+            isOpen={isSkillsDrawerOpen}
+            onClose={() => setIsSkillsDrawerOpen(false)}
+            initialCategory={activeSkillCategory}
+            skillsData={DATA.skills as any}
+          />
+        )}
       </section>
 
       <section id="certifications" className="scroll-mt-16">

@@ -19,16 +19,71 @@ export const DATA = {
   ],
   avatarUrl: "/me.png",
   skills: {
-    "Hot Skills": ["Working on LLMs", "AI Products Builder", "WebResume Architect"],
-    "LLMs": ["Large Language Models", "RAG", "LangChain", "OpenAI API", "Hugging Face"],
-    "AI & ML": ["AI & Automation (Learning)", "Data Science", "Natural Language Processing", "Prompt Engineering"],
-    "Frontend": ["React.js", "Next.js", "Redux Toolkit", "Tailwind CSS", "Material UI", "HTML5", "CSS3", "Responsive Design"],
-    "Backend": ["Node.js", "Express.js", "REST APIs", "JWT Authentication", "Serverless Functions"],
-    "Databases": ["MongoDB", "SQL", "PostgreSQL", "Mongoose"],
-    "Cloud & DevOps": ["Docker", "CI/CD", "Git", "GitHub", "Vercel Deployment"],
-    "Languages": ["JavaScript", "Python", "C", "C++", "TypeScript (Learning)"],
-    "Tools": ["Postman", "VS Code", "Figma", "Canva", "Discord API"],
-    "DSA": ["Data Structures", "Algorithms", "Problem Solving"]
+    "AI / ML": {
+      icon: "Cpu",
+      description: "Machine Learning & AI Technologies",
+      list: [
+        { name: "RAG", level: "Advanced", years: "2+ yrs", projects: "5+ projects", trend: "High", progress: 90 },
+        { name: "LLMs", level: "Advanced", years: "2+ yrs", projects: "6+ projects", trend: "High", progress: 95 },
+        { name: "MCP Orchestration", level: "Advanced", years: "2+ yrs", projects: "4+ projects", trend: "High", progress: 85 },
+        { name: "LangChain", level: "Advanced", years: "2+ yrs", projects: "4+ projects", trend: "High", progress: 88 },
+        { name: "OpenAI API", level: "Medium", years: "1+ yrs", projects: "4+ projects", trend: "Growing", progress: 75 },
+        { name: "Gemini (Google)", level: "Medium", years: "1+ yrs", projects: "3+ projects", trend: "Growing", progress: 70 },
+        { name: "LLM Fine-Tuning", level: "Medium", years: "1+ yrs", projects: "3+ projects", trend: "Growing", progress: 65 },
+        { name: "Prompt Engineering", level: "Medium", years: "1+ yrs", projects: "5+ projects", trend: "Growing", progress: 80 },
+        { name: "PyTorch", level: "Easy", years: "1+ yrs", projects: "2+ projects", trend: "Learning", progress: 40 },
+        { name: "scikit-learn", level: "Easy", years: "1+ yrs", projects: "2+ projects", trend: "Learning", progress: 35 },
+      ]
+    },
+    "Frontend": {
+      icon: "Layout",
+      description: "User Interface & Experience Development",
+      list: [
+        { name: "Next.js", level: "Advanced", years: "2+ yrs", projects: "10+ projects", trend: "High", progress: 95 },
+        { name: "React", level: "Advanced", years: "2+ yrs", projects: "12+ projects", trend: "High", progress: 92 },
+        { name: "Tailwind CSS", level: "Advanced", years: "2+ yrs", projects: "15+ projects", trend: "High", progress: 98 },
+        { name: "TypeScript", level: "Medium", years: "1+ yrs", projects: "5+ projects", trend: "Growing", progress: 70 },
+        { name: "Redux", level: "Medium", years: "1+ yrs", projects: "4+ projects", trend: "Stable", progress: 75 },
+      ]
+    },
+    "Backend": {
+      icon: "Server",
+      description: "Server-side Logic & API Architecture",
+      list: [
+        { name: "Node.js", level: "Advanced", years: "2+ yrs", projects: "8+ projects", trend: "High", progress: 90 },
+        { name: "Express.js", level: "Advanced", years: "2+ yrs", projects: "8+ projects", trend: "High", progress: 88 },
+        { name: "REST APIs", level: "Advanced", years: "2+ yrs", projects: "10+ projects", trend: "High", progress: 92 },
+        { name: "Python", level: "Medium", years: "1+ yrs", projects: "4+ projects", trend: "Growing", progress: 70 },
+      ]
+    },
+    "Cloud & DevOps": {
+      icon: "Cloud",
+      description: "Deployment, Infrastructure & Automation",
+      list: [
+        { name: "Docker", level: "Medium", years: "1+ yrs", projects: "3+ projects", trend: "Essential", progress: 65 },
+        { name: "CI/CD", level: "Medium", years: "1+ yrs", projects: "4+ projects", trend: "Essential", progress: 60 },
+        { name: "GitHub Actions", level: "Medium", years: "1+ yrs", projects: "5+ projects", trend: "Growing", progress: 75 },
+        { name: "Vercel", level: "Advanced", years: "2+ yrs", projects: "15+ projects", trend: "Stable", progress: 95 },
+      ]
+    },
+    "Databases": {
+      icon: "Database",
+      description: "Data Storage & Query Optimization",
+      list: [
+        { name: "MongoDB", level: "Advanced", years: "2+ yrs", projects: "10+ projects", trend: "High", progress: 92 },
+        { name: "PostgreSQL", level: "Medium", years: "1+ yrs", projects: "3+ projects", trend: "Growing", progress: 65 },
+        { name: "Mongoose", level: "Advanced", years: "2+ yrs", projects: "10+ projects", trend: "Stable", progress: 90 },
+      ]
+    },
+    "Tools": {
+      icon: "Wrench",
+      description: "Development Tools & Utilities",
+      list: [
+        { name: "VS Code", level: "Advanced", years: "3+ yrs", projects: "All", trend: "Daily", progress: 98 },
+        { name: "Postman", level: "Advanced", years: "2+ yrs", projects: "Many", trend: "Standard", progress: 90 },
+        { name: "Git", level: "Advanced", years: "2+ yrs", projects: "All", trend: "Essential", progress: 95 },
+      ]
+    }
   },
   navbar: [
     { href: "/", icon: HomeIcon, label: "Home" },
