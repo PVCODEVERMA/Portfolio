@@ -1,3 +1,5 @@
+"use client";
+
 import { Dock, DockIcon } from "@/components/magicui/dock";
 import { FileText } from "lucide-react";
 import { buttonVariants } from "@/components/ui/button";
@@ -10,6 +12,7 @@ import {
 import { DATA } from "@/data/resume";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
+import toast from "react-hot-toast";
 
 export default function Navbar() {
   return (
@@ -64,13 +67,14 @@ export default function Navbar() {
           <Tooltip>
             <TooltipTrigger asChild>
               <Link
-                href="https://drive.google.com/file/d/18MuY03WjBz1nYPJVJhaj5_SnxhGBBitu/view?usp=sharing"
+                href="/resuma/resuma_pv.pdf"
                 target="_blank"
                 rel="noopener noreferrer"
                 className={cn(
                   buttonVariants({ variant: "ghost", size: "icon" }),
                   "size-12"
                 )}
+                onClick={() => toast.success("Resume downloading...")}
               >
                 <FileText className="size-4" />
               </Link>

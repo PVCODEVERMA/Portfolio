@@ -9,29 +9,69 @@ import { Button } from "@/components/ui/button";
 import { DATA } from "@/data/resume";
 import Link from "next/link";
 import Markdown from "react-markdown";
-import { ExternalLink, Download } from "lucide-react";
+import { ExternalLink, Download, CheckCircle2, Briefcase, Users, Cpu } from "lucide-react";
 import { motion } from "framer-motion";
 
 export default function Page() {
   return (
     <main className="flex flex-col min-h-[100dvh] space-y-16 md:space-y-24">
-      <section id="hero" className="relative pt-2 md:pt-4">
-        <div className="mx-auto w-full max-w-2xl lg:max-w-5xl space-y-8">
-          <div className="gap-2 flex justify-between items-start">
-            <div className="flex-col flex flex-1 space-y-2">
-              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tighter xl:text-7xl/none text-foreground leading-tight">
-                Hi, I&apos;m {DATA.name.split(" ")[0]} 👋
-              </h1>
-              <p className="max-w-[600px] text-base md:text-xl text-foreground font-medium leading-relaxed">
-                {DATA.description}
+      <section id="hero" className="relative pt-12 md:pt-20 pb-8 overflow-hidden">
+        <div className="mx-auto w-full max-w-4xl space-y-10 text-center">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.5 }}
+            className="flex flex-col items-center space-y-6"
+          >
+            <div className="relative group">
+              <div className="absolute -inset-1 bg-gradient-to-r from-primary to-blue-600 rounded-full blur opacity-25 group-hover:opacity-50 transition duration-1000 group-hover:duration-200"></div>
+              <Avatar className="size-32 sm:size-40 border-4 border-background shadow-2xl relative">
+                <AvatarImage alt={DATA.name} src={DATA.avatarUrl} className="object-cover" />
+                <AvatarFallback className="text-4xl">{DATA.initials}</AvatarFallback>
+              </Avatar>
+            </div>
+
+            <div className="space-y-3">
+              <div className="flex items-center justify-center gap-2">
+                <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tighter text-foreground">
+                  {DATA.name}
+                </h1>
+                <motion.div
+                  initial={{ scale: 0 }}
+                  animate={{ scale: 1 }}
+                  transition={{ delay: 0.5, type: "spring" }}
+                >
+                  <CheckCircle2 className="size-8 sm:size-10 text-blue-500 fill-blue-500/20" />
+                </motion.div>
+              </div>
+              <p className="text-xl md:text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary to-blue-600">
+                {(DATA as any).role} | {(DATA as any).subtitle}
               </p>
             </div>
 
-            <Avatar className="size-20 sm:size-28 border-4 border-primary/20 shadow-xl shadow-primary/20">
-              <AvatarImage alt={DATA.name} src={DATA.avatarUrl} />
-              <AvatarFallback>{DATA.initials}</AvatarFallback>
-            </Avatar>
-          </div>
+            <div className="max-w-[800px] text-base md:text-lg text-muted-foreground font-medium leading-relaxed px-4">
+              {DATA.description}
+            </div>
+
+            <div className="flex flex-wrap items-center justify-center gap-6 sm:gap-10 pt-4">
+              {(DATA as any).stats?.map((stat: any) => {
+                const Icon = {
+                  Briefcase: <Briefcase className="size-5 text-primary" />,
+                  Users: <Users className="size-5 text-primary" />,
+                  Cpu: <Cpu className="size-5 text-primary" />,
+                }[stat.icon as string];
+
+                return (
+                  <div key={stat.label} className="flex items-center gap-2.5 group cursor-default">
+                    <div className="p-2 rounded-full bg-primary/5 group-hover:bg-primary/10 transition-colors">
+                      {Icon}
+                    </div>
+                    <span className="text-sm sm:text-base font-bold text-foreground/80">{stat.label}</span>
+                  </div>
+                );
+              })}
+            </div>
+          </motion.div>
         </div>
       </section>
       <section id="about" className="scroll-mt-16">
@@ -43,7 +83,7 @@ export default function Page() {
         </Markdown>
       </section>
       <section id="projects" className="scroll-mt-16">
-        <div className="space-y-12 w-full py-12">
+        <div className="space-y-12 w-full py-8">
           <div className="flex flex-col items-center justify-center space-y-4 text-center">
             <div className="space-y-2">
               <div className="inline-block rounded-lg bg-primary text-primary-foreground px-3 py-1 text-sm font-medium shadow-lg shadow-primary/30">

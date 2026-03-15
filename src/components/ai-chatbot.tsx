@@ -124,7 +124,7 @@ export default function AIChatbot() {
 
   return (
     <div className={cn(
-      "fixed bottom-6 right-6 z-[100] flex flex-col items-end",
+      "fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-[100] flex flex-col items-end",
       isOpen && "inset-0 bottom-0 right-0 sm:inset-auto sm:bottom-6 sm:right-6"
     )}>
       <AnimatePresence>
@@ -188,9 +188,9 @@ export default function AIChatbot() {
                 </motion.div>
               ))}
               {isTyping && (
-                <motion.div 
-                  initial={{ opacity: 0 }} 
-                  animate={{ opacity: 1 }} 
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
                   className="flex gap-1.5 p-3 px-4 items-center bg-primary/5 rounded-2xl w-fit border border-primary/10"
                 >
                   <span className="size-1.5 bg-primary/40 rounded-full animate-bounce"></span>
@@ -288,7 +288,7 @@ export default function AIChatbot() {
                     className="flex-1 bg-transparent border-none px-3 py-2 text-[13px] focus:outline-none focus:ring-0 text-foreground/80 placeholder:text-foreground/30 min-w-0"
                     disabled={isTyping}
                   />
-                  
+
                   <Button
                     type="submit"
                     size="icon"
@@ -299,14 +299,14 @@ export default function AIChatbot() {
                   </Button>
                 </div>
               </form>
-                <div className="flex flex-col items-center gap-0.5 mt-3">
-                  <p className="text-sm font-medium text-foreground/40 whitespace-nowrap">
-                    Chat with My Custom AI Models
-                  </p>
-                  <p className="text-[10px] text-primary/40 font-medium">
-                    3 active models available
-                  </p>
-                </div>
+              <div className="flex flex-col items-center gap-0.5 mt-3">
+                <p className="text-sm font-medium text-foreground/40 whitespace-nowrap">
+                  Chat with My Custom AI Models
+                </p>
+                <p className="text-[10px] text-primary/40 font-medium">
+                  3 active models available
+                </p>
+              </div>
             </div>
           </motion.div>
         )}
@@ -319,14 +319,14 @@ export default function AIChatbot() {
       >
         <Button
           onClick={() => setIsOpen(!isOpen)}
-          className="size-16 rounded-full shadow-2xl shadow-primary/30 bg-primary hover:bg-primary/90 flex items-center justify-center p-0 transition-transform duration-300 ring-4 ring-primary/5"
+          className="size-12 sm:size-16 rounded-full shadow-2xl shadow-primary/30 bg-primary hover:bg-primary/90 flex items-center justify-center p-0 transition-transform duration-300 ring-4 ring-primary/5"
         >
           {isOpen ? (
-            <X className="size-8 text-primary-foreground" />
+            <X className="size-6 sm:size-8 text-primary-foreground" />
           ) : (
             <div className="relative">
-              <MessageCircle className="size-8 text-primary-foreground fill-current animate-pulse-subtle" />
-              <div className="absolute -top-1 -right-1 size-3.5 bg-green-500 rounded-full border-2 border-primary ring-2 ring-primary/20"></div>
+              <MessageCircle className="size-6 sm:size-8 text-primary-foreground fill-current animate-pulse-subtle" />
+              <div className="absolute -top-1 -right-1 size-2.5 sm:size-3.5 bg-green-500 rounded-full border-2 border-primary ring-2 ring-primary/20"></div>
             </div>
           )}
         </Button>

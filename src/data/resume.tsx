@@ -7,10 +7,16 @@ export const DATA = {
   url: "https://pvcode.com",
   location: "Noida, Sector 15, Uttar Pradesh, India",
   locationLink: "https://maps.app.goo.gl/dFLbinrTMVHjkjcHA",
-  description:
-    "Software Developer with 1.5+ years of experience building scalable, production-ready web applications using React, Node.js, and MongoDB. Very active on Twitter.",
+  role: "Founding Engineer & AI Architect @pvcode1u",
+  subtitle: "Portfolio aka WebResume",
+  description: "Software Developer with 1.5+ years of experience building scalable, production-ready web applications using React, Node.js, and MongoDB. Very active on Twitter.",
   summary:
-    "Software Developer building scalable web applications and sharing my learning journey on [YouTube](https://www.youtube.com/channel/UCAHuQt0idElWoQ35KOqO15A), [Instagram](https://www.instagram.com/pv_code421/+), and [X](https://x.com/pv_code421).",
+    "Founding Engineer & AI Architect @pvcode1u building scalable AI-powered applications and sharing my journey on [Instagram](https://www.instagram.com/pv_code421) and [X](https://x.com/pv_code421).",
+  stats: [
+    { label: "1.5 Years Experience", icon: "Briefcase" },
+    { label: "10K+ Followers on Instagram", icon: "Users" },
+    { label: "AI Products Builder", icon: "Cpu" }
+  ],
   avatarUrl: "/me.png",
   skills: [
     "JavaScript",
