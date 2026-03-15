@@ -18,35 +18,18 @@ export const DATA = {
     { label: "AI Products Builder", icon: "Cpu" }
   ],
   avatarUrl: "/me.png",
-  skills: [
-    "JavaScript",
-    "Python",
-    "C",
-    "C++",
-    "SQL",
-    "React.js",
-    "Next.js",
-    "Redux Toolkit",
-    "Tailwind CSS",
-    "Material UI",
-    "Node.js",
-    "Express.js",
-    "MongoDB",
-    "REST APIs",
-    "JWT Authentication",
-    "Docker",
-    "CI/CD",
-    "Git",
-    "GitHub",
-    "Postman",
-    "AI & Automation (Learning)",
-    "LLMs",
-    "RAG",
-    "LangChain",
-    "OpenAI API",
-    "Data Science",
-    "DSA"
-  ],
+  skills: {
+    "Hot Skills": ["Working on LLMs", "AI Products Builder", "WebResume Architect"],
+    "LLMs": ["Large Language Models", "RAG", "LangChain", "OpenAI API", "Hugging Face"],
+    "AI & ML": ["AI & Automation (Learning)", "Data Science", "Natural Language Processing", "Prompt Engineering"],
+    "Frontend": ["React.js", "Next.js", "Redux Toolkit", "Tailwind CSS", "Material UI", "HTML5", "CSS3", "Responsive Design"],
+    "Backend": ["Node.js", "Express.js", "REST APIs", "JWT Authentication", "Serverless Functions"],
+    "Databases": ["MongoDB", "SQL", "PostgreSQL", "Mongoose"],
+    "Cloud & DevOps": ["Docker", "CI/CD", "Git", "GitHub", "Vercel Deployment"],
+    "Languages": ["JavaScript", "Python", "C", "C++", "TypeScript (Learning)"],
+    "Tools": ["Postman", "VS Code", "Figma", "Canva", "Discord API"],
+    "DSA": ["Data Structures", "Algorithms", "Problem Solving"]
+  },
   navbar: [
     { href: "/", icon: HomeIcon, label: "Home" },
   ],
@@ -468,7 +451,24 @@ export const DATA = {
       type: "workshop",
       duration: "5 days",
       verified: true,
-      badgeColor: "bg-green-500/10 border-green-500/20"
+      badgeColor: "bg-green-500/10 border-green-500/20",
+      image: "/CertificateAll/Certificate_ Workshop.png"
     },
+    {
+      title: "Full Stack Development Webinar",
+      issuer: "Shri Balaji Infotech",
+      date: "2023",
+      description: "Participated in an industry webinar on Full Stack Development trends and best practices.",
+      status: "completed",
+      image: "/CertificateAll/Certificate_webinar.png"
+    },
+    {
+      title: "MERN Stack Certification",
+      issuer: "PW Skills",
+      date: "2024",
+      description: "Advanced certification in MERN Stack development, covering MongoDB, Express, React, and Node.js.",
+      status: "completed",
+      image: "/CertificateAll/PW-certification-MERN.png"
+    }
   ],
 } as const;

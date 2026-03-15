@@ -9,6 +9,7 @@ import type { Metadata } from "next";
 import { Inter as FontSans } from "next/font/google";
 import { Toaster } from "react-hot-toast";
 import { GlobalLoader } from "@/components/loader";
+import { Header } from "@/components/header";
 import "./globals.css";
 
 const fontSans = FontSans({
@@ -65,8 +66,9 @@ export default function RootLayout({
           fontSans.variable
         )}
       >
-        <ThemeProvider forcedTheme="light" defaultTheme="light">
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <GlobalLoader />
+          <Header />
           <Toaster position="bottom-right" reverseOrder={false} />
           <VantaBirds />
           <TooltipProvider delayDuration={0}>

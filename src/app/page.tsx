@@ -12,6 +12,8 @@ import Markdown from "react-markdown";
 import { ExternalLink, Download, CheckCircle2, Briefcase, Users, Cpu } from "lucide-react";
 import { motion } from "framer-motion";
 
+import { CertificationCard } from "@/components/certification-card";
+
 export default function Page() {
   return (
     <main className="flex flex-col min-h-[100dvh] space-y-16 md:space-y-24">
@@ -156,11 +158,52 @@ export default function Page() {
         </div>
       </section>
       <section id="skills" className="scroll-mt-16">
-        <div className="flex min-h-0 flex-col gap-y-3">
-          <h2 className="text-xl font-bold">Skills</h2>
-          <div className="flex flex-wrap gap-1">
-            {DATA.skills.map((skill, id) => (
-              <Badge key={skill}>{skill}</Badge>
+        <div className="flex min-h-0 flex-col gap-y-8 w-full py-8">
+          <div className="flex flex-col items-center justify-center space-y-4 text-center">
+            <div className="space-y-2">
+              <div className="inline-block rounded-lg bg-primary text-primary-foreground px-3 py-1 text-sm font-medium shadow-lg shadow-primary/30">
+                My Skills
+              </div>
+              <h2 className="text-2xl sm:text-3xl md:text-5xl font-bold tracking-tighter">
+                Technical Skills
+              </h2>
+              <p className="text-foreground/80 text-sm sm:text-base md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed font-medium">
+                I've categorized my expertise across various domains. 
+                Total of {DATA.skills ? Object.values(DATA.skills).reduce((acc: number, curr: any) => acc + (curr.length || 0), 0) : 0} skills listed below.
+              </p>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-[1200px] mx-auto w-full">
+            {DATA.skills && Object.entries(DATA.skills).map(([category, skills]) => (
+              <motion.div
+                key={category}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                className="p-6 rounded-2xl bg-card/40 backdrop-blur-md border border-primary/10 hover:border-primary/30 transition-all duration-300 shadow-sm"
+              >
+                <div className="flex items-center justify-between mb-4 border-b border-primary/10 pb-3">
+                  <h3 className="font-bold text-lg text-foreground flex items-center gap-2">
+                    <div className="size-2 rounded-full bg-primary animate-pulse" />
+                    {category}
+                  </h3>
+                  <Badge variant="secondary" className="text-xs bg-primary/10 text-primary-foreground dark:text-primary font-bold">
+                    {(skills as readonly string[]).length} Skills
+                  </Badge>
+                </div>
+                <div className="flex flex-wrap gap-2">
+                  {(skills as readonly string[]).map((skill) => (
+                    <Badge 
+                      key={skill} 
+                      variant="outline" 
+                      className="px-3 py-1 text-xs font-medium bg-background/50 hover:bg-primary/5 transition-colors cursor-default"
+                    >
+                      {skill}
+                    </Badge>
+                  ))}
+                </div>
+              </motion.div>
             ))}
           </div>
         </div>
@@ -173,124 +216,19 @@ export default function Page() {
               <h2 className="text-xl sm:text-2xl font-bold">
                 Certifications & Workshops
               </h2>
-              <div className="text-sm text-muted-foreground">
-                {DATA.certifications?.filter((c) => c.status === "completed")
-                  .length || 0}{" "}
-                Completed •
-                {DATA.certifications?.filter((c) => c.status === "ongoing")
-                  .length || 0}{" "}
-                Ongoing
+              <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                <div className="flex items-center gap-1">
+                  <CheckCircle2 className="size-4 text-green-500 fill-green-500/10" />
+                  <span>{(DATA.certifications as readonly any[])?.filter((c) => c.status === "completed").length || 0} Completed</span>
+                </div>
+                <span>•</span>
+                <span>{(DATA.certifications as readonly any[])?.filter((c) => c.status === "ongoing").length || 0} Ongoing</span>
               </div>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
               {DATA.certifications?.map((cert, id) => (
-                <div
-                  key={cert.title}
-                  className={`border rounded-xl p-5 hover:shadow-lg transition-all duration-300 bg-card/40 backdrop-blur-md hover:bg-card/60 hover:border-primary/30 ${cert.badgeColor || "border-primary/10"
-                    }`}
-                >
-                  <div className="flex items-start justify-between mb-4">
-                    <div className="flex-1 pr-2">
-                      <h3 className="font-semibold text-lg mb-1 line-clamp-2 text-foreground">
-                        {cert.title}
-                      </h3>
-                      <p className="text-sm text-foreground/80 line-clamp-1 font-medium">
-                        {cert.issuer}
-                      </p>
-                    </div>
-                    <div className="flex flex-col items-end gap-1.5 shrink-0">
-                      <Badge
-                        variant="outline"
-                        className="text-xs font-medium border-primary/20 bg-background/50"
-                      >
-                        {cert.date}
-                      </Badge>
-                      {cert.status === "ongoing" && (
-                        <Badge
-                          variant="secondary"
-                          className="text-xs bg-primary/20 text-primary-foreground dark:text-primary border-primary/20"
-                        >
-                          In Progress
-                        </Badge>
-                      )}
-                      {cert.type === "workshop" && (
-                        <Badge variant="outline" className="text-xs border-primary/20 bg-background/50">
-                          Workshop
-                        </Badge>
-                      )}
-                    </div>
-                  </div>
-
-                  <p className="text-sm text-foreground/80 mb-4 line-clamp-3 min-h-[60px] leading-relaxed">
-                    {cert.description}
-                  </p>
-
-                  {cert.skills && cert.skills.length > 0 && (
-                    <div className="flex flex-wrap gap-1.5 mb-4">
-                      {cert.skills.slice(0, 4).map((skill) => (
-                        <span
-                          key={skill}
-                          className="inline-block px-2 py-1 text-xs bg-secondary/50 rounded-md border border-border"
-                        >
-                          {skill}
-                        </span>
-                      ))}
-                      {cert.skills.length > 4 && (
-                        <span className="inline-block px-2 py-1 text-xs text-muted-foreground">
-                          +{cert.skills.length - 4} more
-                        </span>
-                      )}
-                    </div>
-                  )}
-
-                  <div className="flex items-center justify-between pt-4 border-t mt-4">
-                    <div className="text-xs text-muted-foreground truncate max-w-[60%]">
-                      {cert.credentialId && (
-                        <span className="truncate">
-                          ID: {cert.credentialId}
-                        </span>
-                      )}
-                      {cert.duration && (
-                        <span className="ml-2">• {cert.duration}</span>
-                      )}
-                    </div>
-
-                    {cert.url && cert.url !== "#" && (
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        className="h-8 gap-2 px-3 text-xs shrink-0"
-                        asChild
-                      >
-                        <Link
-                          href={cert.url}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                        >
-                          <ExternalLink className="h-3 w-3" />
-                          <span className="hidden sm:inline">Verify</span>
-                          <span className="sm:hidden">View</span>
-                        </Link>
-                      </Button>
-                    )}
-                  </div>
-
-                  {cert.status === "ongoing" && cert.progress && (
-                    <div className="mt-4 pt-3 border-t">
-                      <div className="flex justify-between text-xs text-muted-foreground mb-1">
-                        <span>Progress</span>
-                        <span>{cert.progress}%</span>
-                      </div>
-                      <div className="h-2 w-full bg-secondary rounded-full overflow-hidden">
-                        <div
-                          className="h-full bg-primary rounded-full transition-all duration-500"
-                          style={{ width: `${cert.progress}%` }}
-                        />
-                      </div>
-                    </div>
-                  )}
-                </div>
+                <CertificationCard key={cert.title} cert={cert as any} />
               ))}
             </div>
           </div>
