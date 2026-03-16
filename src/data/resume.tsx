@@ -7,81 +7,142 @@ export const DATA = {
   url: "https://pvcode.com",
   location: "Noida, Sector 15, Uttar Pradesh, India",
   locationLink: "https://maps.app.goo.gl/dFLbinrTMVHjkjcHA",
-  role: "Founding Engineer & AI Architect @pvcode1u",
-  subtitle: "Portfolio aka WebResume",
-  description: "Software Developer with 1.5+ years of experience building scalable, production-ready web applications using React, Node.js, and MongoDB. Very active on Twitter.",
+  role: "Developer • AI Builder • Freelancer • Tech Creator",
+  subtitle: "Building the future with AI & Code",
+  description: "I share my journey of building AI tools, freelancing, and software development with my audience. Helping websites rank better on search engines using technical SEO, performance optimization, and content strategy.",
   summary:
-    "Founding Engineer & AI Architect @pvcode1u building scalable AI-powered applications and sharing my journey on [Instagram](https://www.instagram.com/pv_code421) and [X](https://x.com/pv_code421).",
+    "Founding Engineer & AI Architect building scalable AI-powered applications. I document my journey as a developer, freelancer, and AI builder—sharing AI experiments, startup ideas, and developer life insights across YouTube, Instagram, and X.",
   stats: [
-    { label: "1.5 Years Experience", icon: "Briefcase" },
-    { label: "10K+ Followers on Instagram", icon: "Users" },
-    { label: "AI Products Builder", icon: "Cpu" }
+    { label: "10+ Clients Served", icon: "Users" },
+    { label: "25+ Projects Delivered", icon: "Briefcase" },
+    { label: "15+ Technologies Used", icon: "Cpu" }
   ],
   avatarUrl: "/me.png",
+  nowBuilding: [
+    { title: "AI Automation Tools", icon: "Cpu", description: "Testing and sharing new AI coding and productivity tools." },
+    { title: "Freelance Solutions", icon: "Layout", description: "Full Stack Web Development & AI Integration services." },
+    { title: "SEO Optimization", icon: "Globe", description: "Technical SEO & performance optimization for businesses." },
+    { title: "Developer Content", icon: "Video", description: "Coding tutorials and tech insights on YouTube & Socials." }
+  ],
+  githubActivity: {
+    username: "PVCODEVERMA",
+    stats: [
+      { label: "Total Commits", value: "850+" },
+      { label: "Stars Earned", value: "120+" },
+      { label: "Pull Requests", value: "45+" }
+    ]
+  },
+  blogPosts: [
+    {
+      title: "Building Scalable AI Agents with LangGraph",
+      publishedAt: "March 2026",
+      summary: "A deep dive into orchestration patterns for multi-agent systems.",
+      url: "#"
+    },
+    {
+      title: "The Future of MERN: Next.js 15 & Beyond",
+      publishedAt: "Feb 2026",
+      summary: "Exploring the next evolution of full-stack web development.",
+      url: "#"
+    }
+  ],
+  community: [
+    {
+      platform: "Instagram",
+      handle: "@pv_code421",
+      followers: "10K+",
+      link: "https://www.instagram.com/pv_code421",
+      description: "Sharing daily coding tips and AI insights."
+    },
+    {
+      platform: "X (Twitter)",
+      handle: "@pv_code421",
+      followers: "1.2K+",
+      link: "https://x.com/pv_code421",
+      description: "Active in the AI & Web Architecture community."
+    }
+  ],
+  timeline: [
+    { year: "2023", title: "Started Coding Journey", description: "Mastered HTML/CSS and basic Javascript.", icon: "CheckCircle2" },
+    { year: "2024", title: "MERN Stack Era", description: "Built 10+ full-stack projects using React, Node, and MongoDB.", icon: "Briefcase" },
+    { year: "2025", title: "Full Stack Developer", description: "Professional experience building scalable production apps.", icon: "CheckCircle2" },
+    { year: "2026", title: "AI Product Builder", description: "Architecting LLM-based solutions & AI agents.", icon: "Sparkles" }
+  ],
   skills: {
     "AI / ML": {
       icon: "Cpu",
-      description: "Machine Learning & AI Technologies",
+      description: "Advanced AI Orchestration & LLM Engineering",
       list: [
-        { name: "RAG", level: "Advanced", years: "2+ yrs", projects: "5+ projects", trend: "High", progress: 90 },
-        { name: "LLMs", level: "Advanced", years: "2+ yrs", projects: "6+ projects", trend: "High", progress: 95 },
-        { name: "MCP Orchestration", level: "Advanced", years: "2+ yrs", projects: "4+ projects", trend: "High", progress: 85 },
-        { name: "LangChain", level: "Advanced", years: "2+ yrs", projects: "4+ projects", trend: "High", progress: 88 },
-        { name: "OpenAI API", level: "Medium", years: "1+ yrs", projects: "4+ projects", trend: "Growing", progress: 75 },
-        { name: "Gemini (Google)", level: "Medium", years: "1+ yrs", projects: "3+ projects", trend: "Growing", progress: 70 },
-        { name: "LLM Fine-Tuning", level: "Medium", years: "1+ yrs", projects: "3+ projects", trend: "Growing", progress: 65 },
-        { name: "Prompt Engineering", level: "Medium", years: "1+ yrs", projects: "5+ projects", trend: "Growing", progress: 80 },
-        { name: "PyTorch", level: "Easy", years: "1+ yrs", projects: "2+ projects", trend: "Learning", progress: 40 },
-        { name: "scikit-learn", level: "Easy", years: "1+ yrs", projects: "2+ projects", trend: "Learning", progress: 35 },
+        { name: "RAG Stack (Pinecone, FAISS)", level: "Advanced", years: "2+ yrs", projects: "8+ projects", trend: "High", progress: 95 },
+        { name: "LLM Advanced (Function Calling, structured output)", level: "Advanced", years: "2+ yrs", projects: "6+ projects", trend: "High", progress: 92 },
+        { name: "AI Agents (LangGraph, CrewAI)", level: "Advanced", years: "1+ yrs", projects: "4+ projects", trend: "High", progress: 88 },
+        { name: "Prompt Engineering & Chaining", level: "Advanced", years: "2+ yrs", projects: "10+ projects", trend: "High", progress: 95 },
+        { name: "LlamaIndex / LangChain", level: "Advanced", years: "2+ yrs", projects: "5+ projects", trend: "High", progress: 90 },
+        { name: "Vector Search & Embeddings", level: "Advanced", years: "1+ yrs", projects: "4+ projects", trend: "High", progress: 85 },
+        { name: "OpenAI / Gemini API", level: "Advanced", years: "2+ yrs", projects: "10+ projects", trend: "Stable", progress: 92 },
       ]
     },
     "Frontend": {
       icon: "Layout",
-      description: "User Interface & Experience Development",
+      description: "Scalable UI Architecture & Performance",
       list: [
-        { name: "Next.js", level: "Advanced", years: "2+ yrs", projects: "10+ projects", trend: "High", progress: 95 },
-        { name: "React", level: "Advanced", years: "2+ yrs", projects: "12+ projects", trend: "High", progress: 92 },
-        { name: "Tailwind CSS", level: "Advanced", years: "2+ yrs", projects: "15+ projects", trend: "High", progress: 98 },
-        { name: "TypeScript", level: "Medium", years: "1+ yrs", projects: "5+ projects", trend: "Growing", progress: 70 },
-        { name: "Redux", level: "Medium", years: "1+ yrs", projects: "4+ projects", trend: "Stable", progress: 75 },
+        { name: "Next.js 14/15", level: "Advanced", years: "2+ yrs", projects: "15+ projects", trend: "High", progress: 98 },
+        { name: "React (Context, Hooks)", level: "Advanced", years: "3+ yrs", projects: "20+ projects", trend: "Stable", progress: 95 },
+        { name: "State (Redux, Zustand, React Query)", level: "Advanced", years: "2+ yrs", projects: "10+ projects", trend: "Growing", progress: 92 },
+        { name: "Tailwind CSS", level: "Advanced", years: "3+ yrs", projects: "25+ projects", trend: "Stable", progress: 100 },
+        { name: "Performance (Lazy Loading, Code Splitting)", level: "Advanced", years: "1+ yrs", projects: "8+ projects", trend: "High", progress: 88 },
+        { name: "TypeScript", level: "Advanced", years: "2+ yrs", projects: "12+ projects", trend: "High", progress: 90 },
       ]
     },
-    "Backend": {
+    "Backend & Architecture": {
       icon: "Server",
-      description: "Server-side Logic & API Architecture",
+      description: "Scalable Systems & API Design",
       list: [
-        { name: "Node.js", level: "Advanced", years: "2+ yrs", projects: "8+ projects", trend: "High", progress: 90 },
-        { name: "Express.js", level: "Advanced", years: "2+ yrs", projects: "8+ projects", trend: "High", progress: 88 },
-        { name: "REST APIs", level: "Advanced", years: "2+ yrs", projects: "10+ projects", trend: "High", progress: 92 },
-        { name: "Python", level: "Medium", years: "1+ yrs", projects: "4+ projects", trend: "Growing", progress: 70 },
+        { name: "Node.js / Express.js", level: "Advanced", years: "2+ yrs", projects: "12+ projects", trend: "High", progress: 92 },
+        { name: "REST API Design & Documentation", level: "Advanced", years: "2+ yrs", projects: "15+ projects", trend: "High", progress: 95 },
+        { name: "API Auth (JWT, OAuth)", level: "Advanced", years: "2+ yrs", projects: "10+ projects", trend: "High", progress: 94 },
+        { name: "Microservices & System Design", level: "Medium", years: "1+ yrs", projects: "4+ projects", trend: "Growing", progress: 75 },
+        { name: "Rate Limiting & Security (CORS, XSS)", level: "Advanced", years: "1+ yrs", projects: "6+ projects", trend: "High", progress: 85 },
+        { name: "Postman / Swagger", level: "Advanced", years: "3+ yrs", projects: "All", trend: "Standard", progress: 98 },
       ]
     },
-    "Cloud & DevOps": {
+    "DevOps & Security": {
       icon: "Cloud",
-      description: "Deployment, Infrastructure & Automation",
+      description: "CI/CD, Deployment & Infrastructure",
       list: [
-        { name: "Docker", level: "Medium", years: "1+ yrs", projects: "3+ projects", trend: "Essential", progress: 65 },
-        { name: "CI/CD", level: "Medium", years: "1+ yrs", projects: "4+ projects", trend: "Essential", progress: 60 },
-        { name: "GitHub Actions", level: "Medium", years: "1+ yrs", projects: "5+ projects", trend: "Growing", progress: 75 },
-        { name: "Vercel", level: "Advanced", years: "2+ yrs", projects: "15+ projects", trend: "Stable", progress: 95 },
+        { name: "Docker & Docker Compose", level: "Medium", years: "1+ yrs", projects: "5+ projects", trend: "Essential", progress: 78 },
+        { name: "CI/CD Pipelines (GitHub Actions)", level: "Advanced", years: "2+ yrs", projects: "10+ projects", trend: "High", progress: 92 },
+        { name: "Nginx & Server Management", level: "Medium", years: "1+ yrs", projects: "4+ projects", trend: "Stable", progress: 70 },
+        { name: "Vercel / VPS Deployment", level: "Advanced", years: "3+ yrs", projects: "20+ projects", trend: "Stable", progress: 98 },
+        { name: "Web Security (CSRF, Protection)", level: "Medium", years: "1+ yrs", projects: "5+ projects", trend: "Essential", progress: 75 },
       ]
     },
     "Databases": {
       icon: "Database",
-      description: "Data Storage & Query Optimization",
+      description: "Data Storage & Search Optimization",
       list: [
-        { name: "MongoDB", level: "Advanced", years: "2+ yrs", projects: "10+ projects", trend: "High", progress: 92 },
-        { name: "PostgreSQL", level: "Medium", years: "1+ yrs", projects: "3+ projects", trend: "Growing", progress: 65 },
-        { name: "Mongoose", level: "Advanced", years: "2+ yrs", projects: "10+ projects", trend: "Stable", progress: 90 },
+        { name: "MongoDB (Mongoose)", level: "Advanced", years: "3+ yrs", projects: "15+ projects", trend: "High", progress: 95 },
+        { name: "PostgreSQL / Redis", level: "Medium", years: "1+ yrs", projects: "5+ projects", trend: "Growing", progress: 75 },
+        { name: "Vector Databases (Pinecone, Chroma)", level: "Advanced", years: "2+ yrs", projects: "8+ projects", trend: "High", progress: 92 },
       ]
     },
-    "Tools": {
+    "Testing & Tools": {
       icon: "Wrench",
-      description: "Development Tools & Utilities",
+      description: "Quality Assurance & Development Tools",
       list: [
-        { name: "VS Code", level: "Advanced", years: "3+ yrs", projects: "All", trend: "Daily", progress: 98 },
-        { name: "Postman", level: "Advanced", years: "2+ yrs", projects: "Many", trend: "Standard", progress: 90 },
-        { name: "Git", level: "Advanced", years: "2+ yrs", projects: "All", trend: "Essential", progress: 95 },
+        { name: "Testing (Jest, Mocha, Cypress)", level: "Medium", years: "1+ yrs", projects: "6+ projects", trend: "Growing", progress: 70 },
+        { name: "Git / GitHub (Version Control)", level: "Advanced", years: "3+ yrs", projects: "All", trend: "Essential", progress: 100 },
+        { name: "VS Code / Prettier", level: "Advanced", years: "4+ yrs", projects: "All", trend: "Stable", progress: 98 },
+      ]
+    },
+    "Soft Skills": {
+      icon: "Users",
+      description: "Collaboration & Professional Excellence",
+      list: [
+        { name: "Problem Solving", level: "Advanced", years: "4+ yrs", projects: "Continuous", trend: "High", progress: 95 },
+        { name: "Technical Documentation", level: "Advanced", years: "2+ yrs", projects: "All", trend: "Essential", progress: 90 },
+        { name: "Team Collaboration", level: "Advanced", years: "3+ yrs", projects: "Collaborative", trend: "Stable", progress: 92 },
+        { name: "System Thinking", level: "Medium", years: "1+ yrs", projects: "Design", trend: "Growing", progress: 80 },
       ]
     }
   },
@@ -181,6 +242,30 @@ export const DATA = {
         "Completed a comprehensive MERN Stack Developer course and contributed to live projects, focusing on building end-to-end web applications with MongoDB, Express.js, React, and Node.js.",
     },
   ],
+  aiProjects: [
+    {
+      title: "Agentic Workflow Orchestrator",
+      href: "#",
+      dates: "Jan 2026 - Present",
+      active: true,
+      description: "A specialized framework for building and debugging multi-agent LLM workflows with state management.",
+      technologies: ["Next.js", "Python", "LangGraph", "OpenAI", "Tailwind CSS"],
+      links: [],
+      image: "",
+      video: "",
+    },
+    {
+      title: "RAG Knowledge Base",
+      href: "#",
+      dates: "Dec 2025",
+      active: true,
+      description: "Enterprise-grade RAG system with multi-modal support and hybrid search capabilities.",
+      technologies: ["Pinecone", "LangChain", "Node.js", "Gemini Pro"],
+      links: [],
+      image: "",
+      video: "",
+    }
+  ],
 
   education: [
     {
@@ -215,7 +300,7 @@ export const DATA = {
       school: "St. Shri Saryu Prasad Inter College",
       href: "#",
       degree: "High School (10th)",
-      logoUrl: "/school.png",
+      logoUrl: "/mmb.jpg",
       start: "2017",
       end: "2019",
       grade: "Percentage: 66%"
@@ -412,7 +497,7 @@ export const DATA = {
       duration: "5 days",
       verified: true,
       badgeColor: "bg-green-500/10 border-green-500/20",
-      image: "/CertificateAll/Certificate_ Workshop.png"
+      image: "/CertificateAll/Certificate_Workshop.png"
     },
     {
       title: "Full Stack Development Webinar",

@@ -13,7 +13,8 @@ import {
   TrendingUp,
   Clock,
   Briefcase,
-  ChevronRight
+  ChevronRight,
+  Users
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
@@ -67,10 +68,11 @@ const LEVEL_CONFIG = {
 const CATEGORY_ICONS: Record<string, any> = {
   "AI / ML": Cpu,
   "Frontend": Layout,
-  "Backend": Server,
-  "Cloud & DevOps": Cloud,
+  "Backend & Architecture": Server,
+  "DevOps & Security": Cloud,
   "Databases": Database,
-  "Tools": Wrench
+  "Testing & Tools": Wrench,
+  "Soft Skills": Users
 };
 
 export function SkillsDrawer({ isOpen, onClose, initialCategory, skillsData }: SkillsDrawerProps) {
@@ -155,11 +157,11 @@ export function SkillsDrawer({ isOpen, onClose, initialCategory, skillsData }: S
                     <CategoryIcon className="size-6 text-primary" />
                   </div>
                   <div>
-                    <h3 className="text-xl font-bold flex items-center gap-2">
+                    <h3 className="text-xl font-black flex items-center gap-2">
                       {activeCategory}
-                      <span className="text-sm font-bold text-muted-foreground/60">{activeInfo?.list.length}</span>
+                      <span className="text-sm font-black text-foreground/70">{activeInfo?.list.length}</span>
                     </h3>
-                    <p className="text-sm text-muted-foreground font-medium">{activeInfo?.description}</p>
+                    <p className="text-sm text-foreground font-bold">{activeInfo?.description}</p>
                   </div>
                 </div>
               </div>
@@ -188,7 +190,7 @@ export function SkillsDrawer({ isOpen, onClose, initialCategory, skillsData }: S
                             <TrendingUp className="size-2.5" />
                             {skill.level}
                           </div>
-                          <div className="flex items-center gap-1 text-[10px] text-muted-foreground font-bold italic">
+                          <div className="flex items-center gap-1 text-[10px] text-foreground font-black italic opacity-80">
                             {skill.years}
                           </div>
                         </div>
@@ -205,7 +207,7 @@ export function SkillsDrawer({ isOpen, onClose, initialCategory, skillsData }: S
                         </div>
 
                         <div className="flex items-center justify-between pt-1">
-                          <div className="flex items-center gap-1 text-[10px] font-bold text-muted-foreground/80">
+                          <div className="flex items-center gap-1 text-[10px] font-black text-foreground opacity-80">
                             <Briefcase className="size-2.5" />
                             {skill.projects}
                           </div>
@@ -231,7 +233,7 @@ export function SkillsDrawer({ isOpen, onClose, initialCategory, skillsData }: S
                       <div className={cn("p-1 rounded-md", guide.bgColor)}>
                         {guide.icon}
                       </div>
-                      <span className="text-xs font-bold text-foreground/80">{guide.label}</span>
+                      <span className="text-xs font-black text-foreground">{guide.label}</span>
                     </div>
                   ))}
                 </div>

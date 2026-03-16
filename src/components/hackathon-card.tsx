@@ -33,14 +33,14 @@ export function HackathonCard({
       </div>
       <div className="flex flex-1 flex-col justify-start gap-1">
         {dates && (
-          <time className="text-xs text-foreground/80 font-medium">{dates}</time>
+          <time className="text-xs text-foreground font-bold">{dates}</time>
         )}
-        <h2 className="font-semibold leading-none">{title}</h2>
+        <h2 className="font-black leading-none">{title}</h2>
         {location && (
-          <p className="text-sm text-foreground/80 font-medium">{location}</p>
+          <p className="text-sm text-foreground font-bold">{location}</p>
         )}
         {description && (
-          <span className="prose dark:prose-invert text-sm text-foreground/90 leading-relaxed">
+          <span className="prose dark:prose-invert text-sm text-foreground font-bold leading-relaxed">
             {description}
           </span>
         )}

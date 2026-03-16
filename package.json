@@ -29,6 +29,7 @@
     "react-dom": "^18.3.1",
     "react-hot-toast": "^2.6.0",
     "react-markdown": "^9.1.0",
+    "react-water-wave": "^2.0.1",
     "rehype-pretty-code": "^0.13.2",
     "rehype-stringify": "^10.0.1",
     "remark-gfm": "^4.0.1",

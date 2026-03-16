@@ -87,11 +87,11 @@ export function ProjectCard({
         <CardHeader className="px-3 pt-4">
           <div className="space-y-2">
             <CardTitle className="text-base sm:text-lg group-hover:text-primary transition-colors duration-300 text-foreground font-bold tracking-tight">{title}</CardTitle>
-            <time className="font-sans text-[11px] text-foreground/60 font-medium tracking-wide uppercase">{dates}</time>
+            <time className="font-sans text-[11px] text-foreground font-bold tracking-wide uppercase opacity-80">{dates}</time>
             <div className="hidden font-sans text-xs underline print:visible">
               {link?.replace("https://", "").replace("www.", "").replace("/", "")}
             </div>
-            <Markdown className="prose max-w-full text-pretty font-sans text-sm text-foreground/90 dark:prose-invert leading-relaxed">
+            <Markdown className="prose max-w-full text-pretty font-sans text-sm text-foreground font-bold dark:prose-invert leading-relaxed">
               {description}
             </Markdown>
           </div>

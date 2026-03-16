@@ -48,7 +48,7 @@ export const ResumeCard = ({
       onClick={handleClick}
     >
       <Card className={cn(
-        "group flex flex-col sm:flex-row p-4 sm:p-5 transition-all duration-300 hover:shadow-md bg-card/40 backdrop-blur-md border border-primary/10 hover:border-primary/20",
+        "group flex flex-col sm:flex-row p-4 sm:p-5 transition-all duration-300 hover:shadow-md bg-card/60 backdrop-blur-xl border border-primary/20 hover:border-primary/40",
         className
       )}
       role="button"
@@ -76,7 +76,7 @@ export const ResumeCard = ({
               {/* Title and Badges */}
               <div className="space-y-2">
                 <div className="flex items-center gap-2">
-                  <h3 className="font-semibold leading-tight text-sm sm:text-base">
+                  <h3 className="font-black leading-tight text-sm sm:text-base text-foreground">
                     {title}
                   </h3>
                   {href && href !== "#" && !description && (
@@ -117,14 +117,14 @@ export const ResumeCard = ({
               </div>
 
               {/* Period - मोबाइल पर लेफ्ट, डेस्कटॉप पर राइट */}
-              <div className="text-[11px] sm:text-xs tabular-nums text-foreground/60 sm:text-right font-medium tracking-tight">
+              <div className="text-[11px] sm:text-xs tabular-nums text-foreground sm:text-right font-black tracking-tight opacity-70">
                 {period}
               </div>
             </div>
 
             {/* Subtitle */}
             {subtitle && (
-              <div className="font-sans text-xs sm:text-sm text-foreground/90 mb-2 font-medium">
+              <div className="font-sans text-xs sm:text-sm text-foreground mb-2 font-bold">
                 {subtitle}
               </div>
             )}
@@ -145,7 +145,7 @@ export const ResumeCard = ({
                 }}
                 className="overflow-hidden"
               >
-                <p className="text-xs sm:text-sm text-foreground/80 leading-relaxed">
+                <p className="text-xs sm:text-sm text-foreground font-bold leading-relaxed">
                   {description}
                 </p>
                 {href && href !== "#" && (

@@ -4,7 +4,6 @@ import React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion } from "framer-motion";
-import { useTheme } from "next-themes";
 import { cn } from "@/lib/utils";
 import { DATA } from "@/data/resume";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
@@ -15,14 +14,15 @@ import {
   GraduationCap, 
   Folder, 
   Mail,
-  Moon,
-  Sun,
+  Phone,
   Award,
   ChevronLeft,
   ChevronRight,
   X as CloseIcon
 } from "lucide-react";
 import { AnimatePresence } from "framer-motion";
+
+import { useLoading } from "@/hooks/use-loading";
 
 const NAV_ITEMS = [
   { name: "Home", href: "/", icon: Home },
@@ -34,18 +34,20 @@ const NAV_ITEMS = [
   { name: "Contact", href: "#contact", icon: Mail },
 ];
 
+
 export function Header() {
   const pathname = usePathname();
-  const { theme, setTheme } = useTheme();
   const [mounted, setMounted] = React.useState(false);
   const [isDrawerOpen, setIsDrawerOpen] = React.useState(false);
   const [activeCertIdx, setActiveCertIdx] = React.useState<number | null>(null);
+  const { startLoading } = useLoading();
 
   React.useEffect(() => {
     setMounted(true);
   }, []);
 
   const handleNavClick = (e: React.MouseEvent, href: string) => {
+    startLoading(1000);
     if (href === "#certifications") {
       e.preventDefault();
       setIsDrawerOpen(true);
@@ -80,34 +82,35 @@ export function Header() {
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [activeCertIdx, isDrawerOpen, handleNextCert, handlePrevCert]);
 
+  // Sync drawer/lightbox state to body class (to hide chatbot)
+  React.useEffect(() => {
+    if (isDrawerOpen || activeCertIdx !== null) {
+      document.body.classList.add("drawer-open");
+    } else {
+      document.body.classList.remove("drawer-open");
+    }
+    return () => {
+      document.body.classList.remove("drawer-open");
+    };
+  }, [isDrawerOpen, activeCertIdx]);
+
   return (
-    <header className="sticky top-0 z-50 w-full flex justify-center pt-4 px-4 overflow-hidden pointer-events-none">
+    <header className="sticky top-0 z-50 w-full flex justify-center pt-4 px-2 sm:px-4 pointer-events-none">
       <motion.nav
         initial={{ y: -100, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
-        className="flex items-center gap-2 p-2 rounded-2xl bg-background/70 backdrop-blur-xl border border-border/50 shadow-2xl pointer-events-auto max-w-full overflow-x-auto hide-scrollbar"
+        className="flex items-center gap-1 sm:gap-2 p-1.5 sm:p-2 rounded-2xl bg-background/60 backdrop-blur-2xl border border-white/20 dark:border-white/10 shadow-[0_0_50px_-12px_rgba(0,0,0,0.3)] pointer-events-auto max-w-full overflow-x-auto hide-scrollbar"
       >
-        {/* Left: Theme/Profile Section */}
-        <div className="flex items-center gap-2 pr-2 border-r border-border/50">
-          <button 
-            onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-            className="p-2 rounded-xl hover:bg-primary/10 transition-colors"
-          >
-            {mounted && (theme === "dark" ? (
-              <Sun className="size-4 text-primary" />
-            ) : (
-              <Moon className="size-4 text-primary" />
-            ))}
-            {!mounted && <Moon className="size-4 text-primary" />}
-          </button>
-          <Avatar className="size-8 border-2 border-primary/20">
+        {/* Left: Profile Section */}
+        <div className="flex items-center gap-1.5 sm:gap-2 pr-1.5 sm:pr-2 border-r border-border/50">
+          <Avatar className="size-7 sm:size-8 border-2 border-primary/20 shrink-0">
             <AvatarImage src={DATA.avatarUrl} />
             <AvatarFallback>{DATA.initials}</AvatarFallback>
           </Avatar>
         </div>
 
         {/* Center: Navigation Links */}
-        <div className="flex items-center gap-1">
+        <div className="flex items-center gap-0.5 sm:gap-1">
           {NAV_ITEMS.map((item) => {
             const Icon = item.icon;
             const isActive = pathname === item.href;
@@ -118,42 +121,50 @@ export function Header() {
                 href={item.href}
                 onClick={(e) => handleNavClick(e, item.href)}
                 className={cn(
-                  "flex items-center gap-1.5 px-3 py-2 text-xs font-bold rounded-xl whitespace-nowrap transition-all duration-200 active:scale-95",
+                  "flex items-center gap-1 sm:gap-1.5 px-2 py-1.5 sm:px-3 sm:py-2 text-[10px] sm:text-xs font-bold rounded-xl whitespace-nowrap transition-all duration-200 active:scale-95",
                   isActive 
-                    ? "bg-primary text-primary-foreground shadow-lg" 
-                    : "hover:bg-primary/10 text-muted-foreground hover:text-primary"
+                    ? "bg-primary text-primary-foreground shadow-lg shadow-primary/20 scale-105" 
+                    : "hover:bg-primary/10 text-foreground font-black hover:text-primary opacity-80"
                 )}
               >
-                <Icon className="size-3.5" />
-                <span>{item.name}</span>
+                <Icon className="size-3.5 sm:size-4 shrink-0" />
+                <span className="inline-block">{item.name}</span>
               </Link>
             );
           })}
         </div>
+
+
       </motion.nav>
 
       {/* Certificate Drawer */}
       <AnimatePresence>
         {isDrawerOpen && (
-          <>
+          <motion.div
+            key="drawer-overlay"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[100] pointer-events-auto"
+          >
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={() => setIsDrawerOpen(false)}
-              className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[100] pointer-events-auto"
+              className="absolute inset-0 bg-black/60 backdrop-blur-sm"
             />
             <motion.div
               initial={{ x: "100%" }}
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
               transition={{ type: "spring", damping: 25, stiffness: 200 }}
-              className="fixed top-0 right-0 h-full w-full sm:w-[450px] bg-background border-l border-border/50 shadow-2xl z-[101] pointer-events-auto flex flex-col pt-6"
+              className="absolute top-0 right-0 h-full w-full sm:w-[450px] bg-background border-l border-border/50 shadow-2xl flex flex-col pt-6"
             >
               <div className="px-6 flex items-center justify-between mb-8">
                 <div>
-                  <h2 className="text-2xl font-bold tracking-tight">Certificates</h2>
-                  <p className="text-sm text-muted-foreground">My achievements & certifications</p>
+                  <h2 className="text-2xl font-black tracking-tight text-foreground">Certificates</h2>
+                  <p className="text-sm text-foreground font-bold opacity-80">My achievements & certifications</p>
                 </div>
                 <button 
                   onClick={() => setIsDrawerOpen(false)}
@@ -197,7 +208,7 @@ export function Header() {
                         </div>
                       )}
                       
-                      <p className="text-xs text-muted-foreground line-clamp-2 leading-relaxed">
+                      <p className="text-xs text-foreground font-bold line-clamp-2 leading-relaxed opacity-90">
                         {cert.description}
                       </p>
                     </motion.div>
@@ -215,80 +226,86 @@ export function Header() {
                 </button>
               </div>
             </motion.div>
-          </>
+          </motion.div>
         )}
       </AnimatePresence>
 
-      {/* Lightbox Slider */}
       <AnimatePresence>
         {activeCertIdx !== null && (
-          <>
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              onClick={() => setActiveCertIdx(null)}
-              className="fixed inset-0 bg-black/90 backdrop-blur-xl z-[200] pointer-events-auto flex items-center justify-center p-4"
+          <motion.div
+            key="lightbox"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 bg-black/95 backdrop-blur-2xl z-[200] pointer-events-auto flex items-center justify-center p-4 sm:p-6"
+            onClick={() => setActiveCertIdx(null)}
+          >
+            {/* Controls */}
+            <div className="absolute top-6 left-6 text-white/50 font-bold text-sm sm:text-lg z-[210]">
+              <span className="text-white">{activeCertIdx + 1}</span> / {DATA.certifications.length}
+            </div>
+            
+            <button 
+              onClick={(e) => { e.stopPropagation(); setActiveCertIdx(null); }}
+              className="absolute top-6 right-6 p-2 rounded-full bg-white/10 hover:bg-white/20 text-white transition-all border border-white/10 z-[220] active:scale-90"
             >
-              {/* Controls */}
-              <div className="absolute top-6 left-6 text-white/70 font-bold text-lg">
-                <span className="text-white">{activeCertIdx + 1}</span> / {DATA.certifications.length}
-              </div>
-              
-              <button 
-                onClick={(e) => { e.stopPropagation(); setActiveCertIdx(null); }}
-                className="absolute top-6 right-6 p-3 rounded-full bg-white/10 hover:bg-white/20 text-white transition-colors border border-white/10"
-              >
-                <CloseIcon className="size-6" />
-              </button>
+              <CloseIcon className="size-5 sm:size-7" />
+            </button>
 
-              <button 
-                onClick={(e) => { e.stopPropagation(); handlePrevCert(); }}
-                className="absolute left-6 p-4 rounded-full bg-white/10 hover:bg-white/20 text-white transition-colors border border-white/10 group active:scale-90"
-              >
-                <motion.div whileHover={{ x: -2 }}><ChevronLeft className="size-8" /></motion.div>
-              </button>
+            <button 
+              onClick={(e) => { e.stopPropagation(); handlePrevCert(); }}
+              className="absolute left-2 sm:left-10 p-2 sm:p-4 rounded-full bg-white/5 hover:bg-white/20 text-white transition-all border border-white/10 group active:scale-90 z-[220]"
+            >
+              <ChevronLeft className="size-6 sm:size-10" />
+            </button>
 
-              <button 
-                onClick={(e) => { e.stopPropagation(); handleNextCert(); }}
-                className="absolute right-6 p-4 rounded-full bg-white/10 hover:bg-white/20 text-white transition-colors border border-white/10 group active:scale-90"
-              >
-                <motion.div whileHover={{ x: 2 }}><ChevronRight className="size-8" /></motion.div>
-              </button>
+            <button 
+              onClick={(e) => { e.stopPropagation(); handleNextCert(); }}
+              className="absolute right-2 sm:right-10 p-2 sm:p-4 rounded-full bg-white/5 hover:bg-white/20 text-white transition-all border border-white/10 group active:scale-90 z-[220]"
+            >
+              <ChevronRight className="size-6 sm:size-10" />
+            </button>
 
-              {/* Main Image */}
+            {/* Main Image */}
+            {DATA.certifications[activeCertIdx] && (
               <motion.div
                 key={activeCertIdx}
-                initial={{ opacity: 0, scale: 0.9, x: 20 }}
+                initial={{ opacity: 0, scale: 0.9, x: 50 }}
                 animate={{ opacity: 1, scale: 1, x: 0 }}
-                exit={{ opacity: 0, scale: 0.9, x: -20 }}
+                exit={{ opacity: 0, scale: 0.9, x: -50 }}
                 transition={{ type: "spring", damping: 30, stiffness: 200 }}
-                className="relative max-w-4xl max-h-[80vh] w-full flex flex-col items-center gap-6"
+                drag="x"
+                dragConstraints={{ left: 0, right: 0 }}
+                onDragEnd={(_, info) => {
+                  if (info.offset.x > 80) handlePrevCert();
+                  else if (info.offset.x < -80) handleNextCert();
+                }}
+                className="relative max-w-5xl max-h-[85vh] w-full flex flex-col items-center gap-6 cursor-grab active:cursor-grabbing"
                 onClick={(e) => e.stopPropagation()}
               >
-                {(DATA.certifications[activeCertIdx] as any)?.image && (
-                  <div className="w-full rounded-3xl overflow-hidden border-2 border-white/20 shadow-2xl shadow-blue-500/20">
+                {(DATA.certifications[activeCertIdx] as any).image && (
+                  <div className="w-full max-w-full rounded-2xl overflow-hidden border border-white/20 shadow-2xl">
                     <img 
                       src={(DATA.certifications[activeCertIdx] as any).image} 
                       alt={(DATA.certifications[activeCertIdx] as any).title}
-                      className="w-full h-full object-contain"
+                      className="w-full h-auto max-h-[60vh] sm:max-h-[70vh] object-contain pointer-events-none select-none"
                     />
                   </div>
                 )}
-                <div className="text-center space-y-2 max-w-2xl">
-                  <h2 className="text-2xl font-bold text-white tracking-tight leading-tight">
+                <div className="text-center space-y-2 px-6 max-w-3xl">
+                  <h2 className="text-xl sm:text-3xl font-black text-white tracking-tight leading-tight">
                     {(DATA.certifications[activeCertIdx] as any).title}
                   </h2>
-                  <p className="text-blue-400 font-bold text-lg">
+                  <p className="text-primary font-bold text-base sm:text-xl italic">
                     {(DATA.certifications[activeCertIdx] as any).issuer}
                   </p>
-                  <p className="text-white/60 text-sm italic">
-                    Click outside or press ESC to close • Use arrows to navigate
+                  <p className="text-white font-black text-[10px] sm:text-xs uppercase tracking-widest pt-2 opacity-60">
+                    Swipe or use arrows to navigate • ESC to close
                   </p>
                 </div>
               </motion.div>
-            </motion.div>
-          </>
+            )}
+          </motion.div>
         )}
       </AnimatePresence>
     </header>

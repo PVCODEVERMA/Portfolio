@@ -47,34 +47,34 @@ export function CertificationCard({ cert }: CertificationCardProps) {
               <CheckCircle2 className="size-5 text-green-500 fill-green-500/10 shrink-0" />
             )}
           </div>
-          <p className="text-sm text-foreground/80 line-clamp-1 font-medium">
+          <p className="text-sm text-foreground line-clamp-1 font-bold">
             {cert.issuer}
           </p>
         </div>
         <div className="flex flex-col items-end gap-1.5 shrink-0">
           <Badge
             variant="outline"
-            className="text-xs font-medium border-primary/20 bg-background/50"
+            className="text-xs font-bold border-primary/40 bg-background/80 text-foreground"
           >
             {cert.date}
           </Badge>
           {cert.status === "ongoing" && (
             <Badge
               variant="secondary"
-              className="text-xs bg-primary/20 text-primary-foreground dark:text-primary border-primary/20"
+              className="text-xs bg-primary/20 text-foreground border-primary/20 font-bold"
             >
               In Progress
             </Badge>
           )}
           {cert.type === "workshop" && (
-            <Badge variant="outline" className="text-xs border-primary/20 bg-background/50">
+            <Badge variant="outline" className="text-xs border-primary/40 bg-background/80 text-foreground font-bold">
               Workshop
             </Badge>
           )}
         </div>
       </div>
 
-      <p className="text-sm text-foreground/80 mb-4 line-clamp-3 min-h-[60px] leading-relaxed">
+      <p className="text-sm text-foreground mb-4 line-clamp-3 min-h-[60px] leading-relaxed font-bold">
         {cert.description}
       </p>
 

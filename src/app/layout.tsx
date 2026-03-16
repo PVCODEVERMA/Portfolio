@@ -2,14 +2,16 @@ import AIChatbot from "@/components/ai-chatbot";
 import Navbar from "@/components/navbar";
 import { ThemeProvider } from "@/components/theme-provider";
 import { TooltipProvider } from "@/components/ui/tooltip";
-import VantaBirds from "@/components/vanta-birds";
+import InteractiveBackground from "@/components/interactive-background";
 import { DATA } from "@/data/resume";
 import { cn } from "@/lib/utils";
 import type { Metadata } from "next";
 import { Inter as FontSans } from "next/font/google";
 import { Toaster } from "react-hot-toast";
-import { GlobalLoader } from "@/components/loader";
+import { SiteLoader } from "@/components/site-loader";
 import { Header } from "@/components/header";
+import { WaterWaveEffect } from "@/components/water-wave-effect";
+import { LoadingProvider } from "@/hooks/use-loading";
 import "./globals.css";
 
 const fontSans = FontSans({
@@ -62,20 +64,23 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body
         className={cn(
-          "min-h-screen bg-background font-sans antialiased max-w-2xl lg:max-w-5xl mx-auto pt-4 pb-12 sm:pt-8 sm:pb-24 px-6",
+          "min-h-screen bg-background font-sans antialiased max-w-screen-xl mx-auto pt-2 pb-12 sm:pt-8 sm:pb-24 px-4 sm:px-6",
           fontSans.variable
         )}
+        suppressHydrationWarning
       >
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          <GlobalLoader />
-          <Header />
-          <Toaster position="bottom-right" reverseOrder={false} />
-          <VantaBirds />
-          <TooltipProvider delayDuration={0}>
-            {children}
-            <Navbar />
-            <AIChatbot />
-          </TooltipProvider>
+        <ThemeProvider attribute="class" defaultTheme="dark" forcedTheme="dark" enableSystem>
+          <LoadingProvider>
+            <SiteLoader />
+            <Header />
+            <Toaster position="bottom-right" reverseOrder={false} />
+            <WaterWaveEffect />
+            <TooltipProvider delayDuration={0}>
+              {children}
+              <Navbar />
+              <AIChatbot />
+            </TooltipProvider>
+          </LoadingProvider>
         </ThemeProvider>
       </body>
     </html>
