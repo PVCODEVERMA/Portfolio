@@ -2,7 +2,7 @@ import AIChatbot from "@/components/ai-chatbot";
 import Navbar from "@/components/navbar";
 import { ThemeProvider } from "@/components/theme-provider";
 import { TooltipProvider } from "@/components/ui/tooltip";
-import InteractiveBackground from "@/components/interactive-background";
+import VantaBirds from "@/components/vanta-birds";
 import { DATA } from "@/data/resume";
 import { cn } from "@/lib/utils";
 import type { Metadata } from "next";
@@ -10,7 +10,6 @@ import { Inter as FontSans } from "next/font/google";
 import { Toaster } from "react-hot-toast";
 import { SiteLoader } from "@/components/site-loader";
 import { Header } from "@/components/header";
-import { WaterWaveEffect } from "@/components/water-wave-effect";
 import { LoadingProvider } from "@/hooks/use-loading";
 import "./globals.css";
 
@@ -69,12 +68,12 @@ export default function RootLayout({
         )}
         suppressHydrationWarning
       >
-        <ThemeProvider attribute="class" defaultTheme="dark" forcedTheme="dark" enableSystem>
+        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
           <LoadingProvider>
             <SiteLoader />
             <Header />
             <Toaster position="bottom-right" reverseOrder={false} />
-            <WaterWaveEffect />
+            <VantaBirds />
             <TooltipProvider delayDuration={0}>
               {children}
               <Navbar />

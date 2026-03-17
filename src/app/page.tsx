@@ -9,7 +9,7 @@ import { Button } from "@/components/ui/button";
 import { DATA } from "@/data/resume";
 import Link from "next/link";
 import Markdown from "react-markdown";
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import React from "react";
 import toast from "react-hot-toast";
 import { Icons } from "@/components/icons";
@@ -40,18 +40,66 @@ import {
   History,
   Rocket,
   Mail,
-  Phone
+  Phone,
+  X
 } from "lucide-react";
 
 export default function Page() {
   const [isSkillsDrawerOpen, setIsSkillsDrawerOpen] = React.useState(false);
   const [activeSkillCategory, setActiveSkillCategory] = React.useState<string | null>(null);
+  const [isCommentOpen, setIsCommentOpen] = React.useState(false);
+  const [commentForm, setCommentForm] = React.useState({ name: "", email: "", comment: "" });
 
   const { startLoading } = useLoading();
 
   const openSkillsDrawer = (category: string) => {
     setActiveSkillCategory(category);
     setIsSkillsDrawerOpen(true);
+  };
+
+  const submitComment = async () => {
+    const comment = commentForm.comment.trim();
+    if (!comment) {
+      toast.error("Write a comment first.");
+      return;
+    }
+
+    try {
+      const res = await fetch("/api/comment", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          page: "/",
+          name: commentForm.name,
+          email: commentForm.email,
+          comment,
+        }),
+      });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok || data?.ok === false) throw new Error(data?.error || "Failed");
+
+      toast.success("Comment submitted. Thank you!");
+      setIsCommentOpen(false);
+      setCommentForm({ name: "", email: "", comment: "" });
+    } catch {
+      toast.error("Could not submit comment. Try again.");
+    }
+  };
+
+  const followOn = async (platform: string, handle?: string) => {
+    try {
+      const res = await fetch("/api/follow", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ platform, handle }),
+      });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok || data?.ok === false) throw new Error(data?.error || "Failed");
+
+      toast.success(`Thanks! Follow recorded for ${platform}.`);
+    } catch {
+      toast.success(`Open ${platform} to follow.`);
+    }
   };
 
   return (
@@ -86,7 +134,7 @@ export default function Page() {
               </p>
             </div>
 
-            <div className="max-w-[700px] text-sm sm:text-base text-white font-bold leading-relaxed px-4 drop-shadow-sm">
+            <div className="max-w-[700px] text-sm sm:text-base text-foreground/90 dark:text-white font-bold leading-relaxed px-4 drop-shadow-sm">
               {DATA.description}
             </div>
 
@@ -108,6 +156,26 @@ export default function Page() {
                 <a href={DATA.contact.social.GitHub.url} target="_blank" rel="noopener noreferrer">
                   View GitHub
                 </a>
+              </Button>
+              <Button
+                size="sm"
+                variant="secondary"
+                className="rounded-full px-6 font-bold"
+                onClick={() => {
+                  const x = (DATA.contact.social as any)?.X;
+                  followOn("X", x?.label || x?.handle || "@pv_code421");
+                  if (x?.url) window.open(x.url, "_blank");
+                }}
+              >
+                Follow
+              </Button>
+              <Button
+                size="sm"
+                variant="outline"
+                className="rounded-full px-6 font-bold"
+                onClick={() => setIsCommentOpen(true)}
+              >
+                Comment
               </Button>
             </div>
 
@@ -163,7 +231,8 @@ export default function Page() {
                         "p-2.5 rounded-xl transition-all hover:scale-110",
                         name === "LinkedIn" && "bg-blue-600/10 text-blue-600 hover:bg-blue-600/20",
                         name === "GitHub" && "bg-slate-500/10 text-slate-400 hover:bg-slate-500/20",
-                        name === "X" && "bg-white/10 text-white hover:bg-white/20",
+                        // X needs theme-aware contrast (white on dark, dark on light).
+                        name === "X" && "bg-foreground/10 text-foreground hover:bg-foreground/15 dark:bg-white/10 dark:text-white dark:hover:bg-white/20",
                         name === "Youtube" && "bg-red-600/10 text-red-600 hover:bg-red-600/20",
                         !["LinkedIn", "GitHub", "X", "Youtube"].includes(name) && "bg-primary/10 text-primary hover:bg-primary/20"
                       )}
@@ -189,6 +258,75 @@ export default function Page() {
           </motion.div>
         </div>
       </section>
+
+      {/* Comment Modal */}
+      <AnimatePresence>
+        {isCommentOpen && (
+          <motion.div
+            className="fixed inset-0 z-[300] flex items-center justify-center p-4"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setIsCommentOpen(false)}
+          >
+            <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" />
+            <motion.div
+              className="relative w-full max-w-lg rounded-3xl border border-primary/20 bg-background p-6 shadow-2xl"
+              initial={{ y: 20, scale: 0.98, opacity: 0 }}
+              animate={{ y: 0, scale: 1, opacity: 1 }}
+              exit={{ y: 20, scale: 0.98, opacity: 0 }}
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="flex items-start justify-between gap-3">
+                <div>
+                  <h3 className="text-xl font-black tracking-tight">Leave a comment</h3>
+                  <p className="mt-1 text-sm text-muted-foreground font-medium">
+                    Share feedback or say hi. This will be saved to Supabase.
+                  </p>
+                </div>
+                <button
+                  className="rounded-xl p-2 hover:bg-primary/10 transition-colors"
+                  onClick={() => setIsCommentOpen(false)}
+                  type="button"
+                  aria-label="Close"
+                >
+                  <X className="size-6 text-foreground/70" />
+                </button>
+              </div>
+
+              <div className="mt-5 grid gap-3">
+                <input
+                  className="w-full rounded-2xl border border-border/60 bg-background px-4 py-3 text-sm font-medium outline-none focus:border-primary/60"
+                  placeholder="Your name (optional)"
+                  value={commentForm.name}
+                  onChange={(e) => setCommentForm((s) => ({ ...s, name: e.target.value }))}
+                />
+                <input
+                  className="w-full rounded-2xl border border-border/60 bg-background px-4 py-3 text-sm font-medium outline-none focus:border-primary/60"
+                  placeholder="Email (optional)"
+                  value={commentForm.email}
+                  onChange={(e) => setCommentForm((s) => ({ ...s, email: e.target.value }))}
+                />
+                <textarea
+                  className="min-h-[120px] w-full rounded-2xl border border-border/60 bg-background px-4 py-3 text-sm font-medium outline-none focus:border-primary/60"
+                  placeholder="Write your comment..."
+                  value={commentForm.comment}
+                  onChange={(e) => setCommentForm((s) => ({ ...s, comment: e.target.value }))}
+                />
+              </div>
+
+              <div className="mt-6 flex flex-wrap items-center justify-end gap-3">
+                <Button variant="outline" onClick={() => setIsCommentOpen(false)} className="rounded-2xl">
+                  Cancel
+                </Button>
+                <Button onClick={submitComment} className="rounded-2xl font-bold">
+                  Submit
+                </Button>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* 2. About Section with Timeline */}
       <section id="about" className="scroll-mt-16 px-4 max-w-[1400px] mx-auto w-full">

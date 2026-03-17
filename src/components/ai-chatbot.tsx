@@ -20,6 +20,16 @@ interface Message {
   sender: "user" | "ai";
 }
 
+function getConversationId() {
+  if (typeof window === "undefined") return "server";
+  const key = "pv_chat_conversation_id";
+  const existing = window.localStorage.getItem(key);
+  if (existing) return existing;
+  const next = (globalThis.crypto?.randomUUID?.() ?? `${Date.now()}-${Math.random()}`).toString();
+  window.localStorage.setItem(key, next);
+  return next;
+}
+
 const INITIAL_QUICK_QUESTIONS = [
   "Why should I hire you?",
   "What is your total experience?",
@@ -28,9 +38,10 @@ const INITIAL_QUICK_QUESTIONS = [
 ];
 
 const AI_MODELS = [
-  { id: "v1", name: "Gemini", fullName: "Gemini 1.5 Flash", color: "text-blue-500", icon: "💎" },
-  { id: "v2", name: "Llama", fullName: "Llama 3 70B", color: "text-orange-500", icon: "🦙" },
-  { id: "v3", name: "GPT-4", fullName: "GPT-4o Mini", color: "text-purple-500", icon: "🧠" },
+  { id: "v1", name: "Gemini", fullName: "Gemini 1.5 Flash (free tier)", color: "text-blue-500", icon: "💎" },
+  { id: "v2", name: "Llama", fullName: "Groq Llama (free tier)", color: "text-orange-500", icon: "🦙" },
+  { id: "v3", name: "OpenAI", fullName: "OpenAI (paid/optional)", color: "text-purple-500", icon: "🧠" },
+  { id: "local", name: "Local", fullName: "Offline fallback (always works)", color: "text-emerald-500", icon: "🛟" },
 ];
 
 export default function AIChatbot() {
@@ -48,12 +59,14 @@ export default function AIChatbot() {
   const [inputValue, setInputValue] = useState("");
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const modelSelectorRef = useRef<HTMLDivElement>(null);
+  const conversationIdRef = useRef<string>("init");
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
   useEffect(() => {
+    conversationIdRef.current = getConversationId();
     scrollToBottom();
   }, [messages, isTyping]);
 
@@ -97,6 +110,7 @@ export default function AIChatbot() {
         body: JSON.stringify({
           messages: [...messages, userMessage],
           modelId: currentModel.id,
+          conversationId: conversationIdRef.current,
         }),
       });
 

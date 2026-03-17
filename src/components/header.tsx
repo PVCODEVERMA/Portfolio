@@ -7,6 +7,8 @@ import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { DATA } from "@/data/resume";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
+import { ModeToggle } from "@/components/mode-toggle";
+import { createPortal } from "react-dom";
 import { 
   Home, 
   User, 
@@ -44,6 +46,11 @@ export function Header() {
 
   React.useEffect(() => {
     setMounted(true);
+  }, []);
+
+  const closeCertificates = React.useCallback(() => {
+    setIsDrawerOpen(false);
+    setActiveCertIdx(null);
   }, []);
 
   const handleNavClick = (e: React.MouseEvent, href: string) => {
@@ -94,6 +101,11 @@ export function Header() {
     };
   }, [isDrawerOpen, activeCertIdx]);
 
+  const certifications = DATA.certifications as readonly { status?: string }[];
+  const totalCerts = certifications.length;
+  const completedCerts = certifications.filter((c) => c.status === "completed").length;
+  const ongoingCerts = certifications.filter((c) => c.status === "ongoing").length;
+
   return (
     <header className="sticky top-0 z-50 w-full flex justify-center pt-4 px-2 sm:px-4 pointer-events-none">
       <motion.nav
@@ -134,101 +146,150 @@ export function Header() {
           })}
         </div>
 
+        {/* Right: Theme toggle */}
+        <div className="pl-1.5 sm:pl-2 border-l border-border/50 flex items-center">
+          <ModeToggle />
+        </div>
 
       </motion.nav>
 
-      {/* Certificate Drawer */}
-      <AnimatePresence>
-        {isDrawerOpen && (
-          <motion.div
-            key="drawer-overlay"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[100] pointer-events-auto"
-          >
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              onClick={() => setIsDrawerOpen(false)}
-              className="absolute inset-0 bg-black/60 backdrop-blur-sm"
-            />
-            <motion.div
-              initial={{ x: "100%" }}
-              animate={{ x: 0 }}
-              exit={{ x: "100%" }}
-              transition={{ type: "spring", damping: 25, stiffness: 200 }}
-              className="absolute top-0 right-0 h-full w-full sm:w-[450px] bg-background border-l border-border/50 shadow-2xl flex flex-col pt-6"
-            >
-              <div className="px-6 flex items-center justify-between mb-8">
-                <div>
-                  <h2 className="text-2xl font-black tracking-tight text-foreground">Certificates</h2>
-                  <p className="text-sm text-foreground font-bold opacity-80">My achievements & certifications</p>
-                </div>
-                <button 
-                  onClick={() => setIsDrawerOpen(false)}
-                  className="p-2 rounded-xl hover:bg-primary/10 transition-colors"
+      {/* Certificate Drawer (portal to body so it always receives clicks) */}
+      {mounted
+        ? createPortal(
+            <AnimatePresence>
+              {isDrawerOpen && (
+                <motion.div
+                  key="drawer-overlay"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  className="fixed inset-0 z-[100] pointer-events-auto"
                 >
-                  <CloseIcon className="size-6 text-muted-foreground" />
-                </button>
-              </div>
-
-              <div className="flex-1 overflow-y-auto px-6 pb-20 scrollbar-hide">
-                <div className="space-y-8">
-                  {DATA.certifications.map((cert: any, idx) => (
-                    <motion.div 
-                      key={idx}
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: idx * 0.1 }}
-                      onClick={() => setActiveCertIdx(idx)}
-                      className="group cursor-pointer flex flex-col gap-4 p-4 rounded-2xl bg-secondary/30 border border-border/50 hover:border-primary/50 transition-all"
-                    >
-                      <div className="space-y-1">
-                        <div className="flex items-center justify-between">
-                          <h3 className="font-bold text-lg leading-tight">{cert.title}</h3>
-                          <span className="text-xs font-medium px-2 py-1 rounded-full bg-primary/10 text-primary">
-                            {cert.date}
+                  <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    onClick={closeCertificates}
+                    className="absolute inset-0 bg-black/60 backdrop-blur-sm"
+                  />
+                  <motion.div
+                    initial={{ x: "100%" }}
+                    animate={{ x: 0 }}
+                    exit={{ x: "100%" }}
+                    transition={{ type: "spring", damping: 25, stiffness: 200 }}
+                    className="absolute top-0 right-0 h-full w-full sm:w-[460px] bg-background border-l border-border/50 shadow-2xl flex flex-col pt-6"
+                    onClick={(e) => e.stopPropagation()}
+                  >
+                    <div className="px-6 flex items-start justify-between gap-4 mb-7">
+                      <div className="min-w-0">
+                        <div className="flex flex-wrap items-center gap-2">
+                          <h2 className="text-2xl font-black tracking-tight text-foreground">
+                            Certificates
+                          </h2>
+                          <span className="text-[10px] font-black uppercase tracking-widest px-2 py-1 rounded-full bg-primary/10 text-primary border border-primary/20">
+                            {totalCerts} total
                           </span>
+                          {completedCerts > 0 ? (
+                            <span className="text-[10px] font-black uppercase tracking-widest px-2 py-1 rounded-full bg-emerald-500/10 text-emerald-500 border border-emerald-500/20">
+                              {completedCerts} completed
+                            </span>
+                          ) : null}
+                          {ongoingCerts > 0 ? (
+                            <span className="text-[10px] font-black uppercase tracking-widest px-2 py-1 rounded-full bg-orange-500/10 text-orange-500 border border-orange-500/20">
+                              {ongoingCerts} ongoing
+                            </span>
+                          ) : null}
                         </div>
-                        <p className="text-sm font-semibold text-primary">{cert.issuer}</p>
+                        <p className="mt-1 text-sm text-muted-foreground font-bold">
+                          My achievements & certifications
+                        </p>
                       </div>
-                      
-                      {cert.image && (
-                        <div className="relative aspect-[4/3] w-full rounded-xl overflow-hidden border border-border/50 group-hover:scale-[1.02] transition-transform duration-300">
-                          <img 
-                            src={cert.image} 
-                            alt={cert.title}
-                            className="w-full h-full object-cover"
-                          />
-                          <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                            <span className="text-white font-bold text-sm bg-black/40 px-3 py-1.5 rounded-lg backdrop-blur-md border border-white/20">Click to Preview</span>
-                          </div>
-                        </div>
-                      )}
-                      
-                      <p className="text-xs text-foreground font-bold line-clamp-2 leading-relaxed opacity-90">
-                        {cert.description}
-                      </p>
-                    </motion.div>
-                  ))}
-                </div>
-              </div>
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          closeCertificates();
+                        }}
+                        className="shrink-0 p-2 rounded-xl hover:bg-primary/10 transition-colors active:scale-90"
+                        aria-label="Close certificates"
+                        type="button"
+                      >
+                        <CloseIcon className="size-6 text-foreground/70 hover:text-foreground" />
+                      </button>
+                    </div>
 
-              {/* Drawer Footer */}
-              <div className="absolute bottom-0 left-0 w-full p-6 bg-gradient-to-t from-background via-background/90 to-transparent">
-                <button 
-                  onClick={() => setIsDrawerOpen(false)}
-                  className="w-full py-4 rounded-2xl bg-primary text-primary-foreground font-bold shadow-xl shadow-primary/20 active:scale-95 transition-all"
-                >
-                  Close Certificates
-                </button>
-              </div>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+                    <div className="flex-1 overflow-y-auto px-6 pb-24 scrollbar-hide">
+                      <div className="space-y-6">
+                        {DATA.certifications.map((cert: any, idx) => (
+                          <motion.div
+                            key={idx}
+                            initial={{ opacity: 0, y: 16 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: idx * 0.04 }}
+                            onClick={() => setActiveCertIdx(idx)}
+                            className="group cursor-pointer flex flex-col gap-4 p-4 rounded-2xl bg-secondary/25 border border-border/50 hover:border-primary/50 hover:bg-secondary/30 transition-all"
+                            role="button"
+                            tabIndex={0}
+                            onKeyDown={(e) => {
+                              if (e.key === "Enter" || e.key === " ") setActiveCertIdx(idx);
+                            }}
+                          >
+                            <div className="space-y-1">
+                              <div className="flex items-start justify-between gap-3">
+                                <h3 className="font-bold text-lg leading-tight text-foreground">
+                                  {cert.title}
+                                </h3>
+                                <span className="text-[10px] font-black px-2 py-1 rounded-full bg-primary/10 text-primary border border-primary/20 whitespace-nowrap">
+                                  {cert.date}
+                                </span>
+                              </div>
+                              <p className="text-sm font-semibold text-primary">
+                                {cert.issuer}
+                              </p>
+                            </div>
+
+                            {cert.image && (
+                              <div className="relative aspect-[4/3] w-full rounded-xl overflow-hidden border border-border/50 group-hover:scale-[1.02] transition-transform duration-300">
+                                <img
+                                  src={cert.image}
+                                  alt={cert.title}
+                                  className="w-full h-full object-cover"
+                                />
+                                <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                                  <span className="text-white font-bold text-sm bg-black/40 px-3 py-1.5 rounded-lg backdrop-blur-md border border-white/20">
+                                    Click to Preview
+                                  </span>
+                                </div>
+                              </div>
+                            )}
+
+                            <p className="text-xs text-foreground font-bold line-clamp-2 leading-relaxed opacity-90">
+                              {cert.description}
+                            </p>
+                          </motion.div>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* Drawer Footer */}
+                    <div className="absolute bottom-0 left-0 w-full p-6 bg-gradient-to-t from-background via-background/95 to-transparent">
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          closeCertificates();
+                        }}
+                        className="w-full py-4 rounded-2xl bg-primary text-primary-foreground font-bold shadow-xl shadow-primary/20 active:scale-95 transition-all"
+                        type="button"
+                      >
+                        Close Certificates
+                      </button>
+                    </div>
+                  </motion.div>
+                </motion.div>
+              )}
+            </AnimatePresence>,
+            document.body,
+          )
+        : null}
 
       <AnimatePresence>
         {activeCertIdx !== null && (
@@ -249,7 +310,7 @@ export function Header() {
               onClick={(e) => { e.stopPropagation(); setActiveCertIdx(null); }}
               className="absolute top-6 right-6 p-2 rounded-full bg-white/10 hover:bg-white/20 text-white transition-all border border-white/10 z-[220] active:scale-90"
             >
-              <CloseIcon className="size-5 sm:size-7" />
+              <CloseIcon className="size-5 sm:size-7 text-white" />
             </button>
 
             <button 
