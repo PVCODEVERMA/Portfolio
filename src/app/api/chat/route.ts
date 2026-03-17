@@ -101,14 +101,14 @@ export async function POST(req: Request) {
 
     const supabase = getSupabaseServerClient();
 
-    async function logToSupabase(payload: {
+    const logToSupabase = async (payload: {
       question: string;
       answer: string;
       model_id: string;
       conversation_id: string | null;
       ok: boolean;
       error?: string | null;
-    }) {
+    }) => {
       if (!supabase) return;
       // Table expected: chat_logs(conversation_id text, model_id text, question text, answer text, ok boolean, error text, created_at timestamptz default now())
       await supabase.from("chat_logs").insert({
@@ -119,7 +119,7 @@ export async function POST(req: Request) {
         ok: payload.ok,
         error: payload.error ?? null,
       });
-    }
+    };
 
     // Always-available free fallback (or user-selected)
     if (modelId === "local") {
