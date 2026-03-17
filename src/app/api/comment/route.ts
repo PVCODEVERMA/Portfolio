@@ -33,6 +33,21 @@ export async function POST(req: Request) {
       return NextResponse.json({ ok: false, error: error.message }, { status: 500 });
     }
 
+    // WhatsApp Notification (Non-blocking but awaited for completeness in this context)
+    try {
+      const waPhone = process.env.WHATSAPP_PHONE;
+      const waKey = process.env.WHATSAPP_API_KEY;
+      if (waPhone && waKey) {
+        const text = `🚀 New Comment on Portfolio!\n\nName: ${name || "Anonymous"}\nEmail: ${email || "None"}\nComment: ${comment}`;
+        // CallMeBot API: https://api.callmebot.com/whatsapp.php?phone=[phone]&text=[text]&apikey=[apikey]
+        await fetch(
+          `https://api.callmebot.com/whatsapp.php?phone=${waPhone}&text=${encodeURIComponent(text)}&apikey=${waKey}`
+        ).catch((err) => console.error("WhatsApp notification error:", err));
+      }
+    } catch (waErr) {
+      console.error("WhatsApp notification outer error:", waErr);
+    }
+
     return NextResponse.json({ ok: true, stored: true });
   } catch (e) {
     return NextResponse.json({ ok: false, error: "Internal Server Error" }, { status: 500 });
