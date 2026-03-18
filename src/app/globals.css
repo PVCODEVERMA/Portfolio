@@ -150,3 +150,65 @@ code[data-line-numbers-max-digits="2"]>[data-line]::before {
 code[data-line-numbers-max-digits="3"]>[data-line]::before {
   width: 3rem;
 }
+/* Animated social icon buttons */
+.social-icon-btn {
+  position: relative;
+  background: hsl(var(--secondary));
+  border-radius: 50%;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.68,-0.55,0.265,1.55);
+  color: hsl(var(--foreground));
+  text-decoration: none;
+  flex-shrink: 0;
+}
+.social-icon-btn:hover { transform: translateY(-4px); }
+.social-icon-tip {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 11px;
+  font-weight: 800;
+  background: hsl(var(--foreground));
+  color: hsl(var(--background));
+  padding: 4px 8px;
+  border-radius: 5px;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.25s cubic-bezier(0.68,-0.55,0.265,1.55);
+}
+.social-icon-tip::after {
+  content: '';
+  position: absolute;
+  bottom: -3px;
+  left: 50%;
+  transform: translateX(-50%) rotate(45deg);
+  width: 7px; height: 7px;
+  background: inherit;
+}
+.social-icon-btn:hover .social-icon-tip { top: -38px; opacity: 1; }
+.social-icon-btn.si-github:hover { background: #24292e; color: #fff; }
+.social-icon-btn.si-github:hover .social-icon-tip { background: #24292e; color: #fff; }
+.social-icon-btn.si-linkedin:hover { background: #0A66C2; color: #fff; }
+.social-icon-btn.si-linkedin:hover .social-icon-tip { background: #0A66C2; color: #fff; }
+.social-icon-btn.si-x:hover { background: #000; color: #fff; }
+.social-icon-btn.si-x:hover .social-icon-tip { background: #000; color: #fff; }
+.social-icon-btn.si-youtube:hover { background: #FF0000; color: #fff; }
+.social-icon-btn.si-youtube:hover .social-icon-tip { background: #FF0000; color: #fff; }
+.social-icon-btn.si-instagram:hover { background: #E4405F; color: #fff; }
+.social-icon-btn.si-instagram:hover .social-icon-tip { background: #E4405F; color: #fff; }
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}

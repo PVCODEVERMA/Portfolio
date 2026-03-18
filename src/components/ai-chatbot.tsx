@@ -13,6 +13,7 @@ import { Button } from "@/components/ui/button";
 import { DATA } from "@/data/resume";
 import { cn } from "@/lib/utils";
 import ReactMarkdown from "react-markdown";
+import { ConfettiButton } from "@/registry/magicui/confetti";
 
 interface Message {
   id: string;
@@ -317,14 +318,15 @@ export default function AIChatbot() {
                     disabled={isTyping}
                   />
 
-                  <Button
+                  <ConfettiButton
                     type="submit"
                     size="icon"
                     disabled={isTyping || !inputValue.trim()}
+                    options={{ particleCount: 30, spread: 50, colors: ["#22c55e", "#3b82f6", "#f59e0b"] }}
                     className="rounded-xl size-9 shrink-0 shadow-lg shadow-primary/20 ml-1"
                   >
                     <Send className="size-4" />
-                  </Button>
+                  </ConfettiButton>
                 </div>
               </form>
               <div className="flex flex-col items-center gap-0.5 mt-3">
@@ -379,3 +381,27 @@ export default function AIChatbot() {
     </div>
   );
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

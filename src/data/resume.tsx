@@ -7,20 +7,20 @@ export const DATA = {
   url: "https://pvcode.com",
   location: "Noida, Sector 15, Uttar Pradesh, India",
   locationLink: "https://maps.app.goo.gl/dFLbinrTMVHjkjcHA",
-  role: "Developer • AI Builder • Freelancer • Tech Creator",
+  role: "Developer • AI Architect • Tech Creator",
   subtitle: "Building the future with AI & Code",
-  description: "I share my journey of building AI tools, freelancing, and software development with my audience. Helping websites rank better on search engines using technical SEO, performance optimization, and content strategy.",
+  description: "I share my journey of building AI tools and software development with my audience. Helping websites rank better on search engines using technical SEO, performance optimization, and content strategy.",
   summary:
-    "Founding Engineer & AI Architect building scalable AI-powered applications. I document my journey as a developer, freelancer, and AI builder—sharing AI experiments, startup ideas, and developer life insights across YouTube, Instagram, and X.",
+    "Founding Engineer & AI Architect building scalable AI-powered applications. I document my journey as a developer and AI builder—sharing AI experiments, startup ideas, and developer life insights across YouTube, Instagram, and X.",
   stats: [
-    { label: "10+ Clients Served", icon: "Users" },
+    { label: "10+ Systems Architected", icon: "Users" },
     { label: "25+ Projects Delivered", icon: "Briefcase" },
     { label: "15+ Technologies Used", icon: "Cpu" }
   ],
   avatarUrl: "/me.png",
   nowBuilding: [
     { title: "AI Automation Tools", icon: "Cpu", description: "Testing and sharing new AI coding and productivity tools." },
-    { title: "Freelance Solutions", icon: "Layout", description: "Full Stack Web Development & AI Integration services." },
+    { title: "System Architecture", icon: "Layout", description: "Designing scalable, high-performance web systems & AI workflows." },
     { title: "SEO Optimization", icon: "Globe", description: "Technical SEO & performance optimization for businesses." },
     { title: "Developer Content", icon: "Video", description: "Coding tutorials and tech insights on YouTube & Socials." }
   ],
@@ -479,7 +479,8 @@ export const DATA = {
       type: "webinar",
       duration: "1 day",
       verified: true,
-      badgeColor: "bg-orange-500/10 border-orange-500/20"
+      badgeColor: "bg-orange-500/10 border-orange-500/20",
+      image: "/CertificateAll/Certificate_webinar.png"
     },
     {
       title: "Java Software Development Workshop",
@@ -498,14 +499,6 @@ export const DATA = {
       verified: true,
       badgeColor: "bg-green-500/10 border-green-500/20",
       image: "/CertificateAll/Certificate_Workshop.png"
-    },
-    {
-      title: "Full Stack Development Webinar",
-      issuer: "Shri Balaji Infotech",
-      date: "2023",
-      description: "Participated in an industry webinar on Full Stack Development trends and best practices.",
-      status: "completed",
-      image: "/CertificateAll/Certificate_webinar.png"
     },
     {
       title: "MERN Stack Certification",

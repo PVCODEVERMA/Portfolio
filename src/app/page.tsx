@@ -17,6 +17,7 @@ import { cn } from "@/lib/utils";
 import { useLoading } from "@/hooks/use-loading";
 import { CertificationCard } from "@/components/certification-card";
 import { SkillsDrawer } from "@/components/skills-drawer";
+import { MessageCircle } from "lucide-react";
 import { 
   ExternalLink, 
   Download, 
@@ -41,6 +42,8 @@ import {
   Rocket,
   Mail,
   Phone,
+  User,
+  MessageSquare,
   X
 } from "lucide-react";
 
@@ -81,24 +84,9 @@ export default function Page() {
       toast.success("Comment submitted. Thank you!");
       setIsCommentOpen(false);
       setCommentForm({ name: "", email: "", comment: "" });
-    } catch {
-      toast.error("Could not submit comment. Try again.");
-    }
-  };
-
-  const followOn = async (platform: string, handle?: string) => {
-    try {
-      const res = await fetch("/api/follow", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ platform, handle }),
-      });
-      const data = await res.json().catch(() => ({}));
-      if (!res.ok || data?.ok === false) throw new Error(data?.error || "Failed");
-
-      toast.success(`Thanks! Follow recorded for ${platform}.`);
-    } catch {
-      toast.success(`Open ${platform} to follow.`);
+    } catch (err: any) {
+      console.error("Submission error:", err);
+      toast.error(err.message || "Could not submit comment. Try again.");
     }
   };
 
@@ -134,7 +122,7 @@ export default function Page() {
               </p>
             </div>
 
-            <div className="max-w-[700px] text-sm sm:text-base text-foreground/90 dark:text-white font-bold leading-relaxed px-4 drop-shadow-sm">
+            <div className="max-w-[700px] text-sm sm:text-base text-foreground font-bold leading-relaxed px-4 drop-shadow-sm">
               {DATA.description}
             </div>
 
@@ -152,30 +140,15 @@ export default function Page() {
                   Hire Me <Download className="ml-2 size-4" />
                 </Link>
               </Button>
-              <Button asChild size="sm" variant="outline" className="rounded-full px-6 font-bold">
-                <a href={DATA.contact.social.GitHub.url} target="_blank" rel="noopener noreferrer">
-                  View GitHub
-                </a>
-              </Button>
-              <Button
-                size="sm"
-                variant="secondary"
-                className="rounded-full px-6 font-bold"
-                onClick={() => {
-                  const x = (DATA.contact.social as any)?.X;
-                  followOn("X", x?.label || x?.handle || "@pv_code421");
-                  if (x?.url) window.open(x.url, "_blank");
-                }}
-              >
-                Follow
-              </Button>
+             
+
               <Button
                 size="sm"
                 variant="outline"
                 className="rounded-full px-6 font-bold"
                 onClick={() => setIsCommentOpen(true)}
               >
-                Comment
+                <MessageCircle className="text-[#f97015]" size={20} /> Ask Me
               </Button>
             </div>
 
@@ -213,48 +186,40 @@ export default function Page() {
               </Link>
             </motion.div>
 
-            {/* Social Links Section */}
-            <motion.div 
+            {/* Social Links Section - Animated circular icons with branded tooltips */}
+            <motion.div
                initial={{ opacity: 0, y: 20 }}
                animate={{ opacity: 1, y: 0 }}
                transition={{ delay: 0.6 }}
-               className="hidden sm:flex items-center justify-center gap-4 pt-4"
+               className="flex items-center justify-center flex-wrap gap-1 pt-4"
             >
-                {Object.entries(DATA.contact.social).map(([name, social]) => {
-                  const Icon = social.icon;
-                  return (
-                    <Link
-                      key={name}
-                      href={social.url}
-                      target="_blank"
-                      className={cn(
-                        "p-2.5 rounded-xl transition-all hover:scale-110",
-                        name === "LinkedIn" && "bg-blue-600/10 text-blue-600 hover:bg-blue-600/20",
-                        name === "GitHub" && "bg-slate-500/10 text-slate-400 hover:bg-slate-500/20",
-                        // X needs theme-aware contrast (white on dark, dark on light).
-                        name === "X" && "bg-foreground/10 text-foreground hover:bg-foreground/15 dark:bg-white/10 dark:text-white dark:hover:bg-white/20",
-                        name === "Youtube" && "bg-red-600/10 text-red-600 hover:bg-red-600/20",
-                        !["LinkedIn", "GitHub", "X", "Youtube"].includes(name) && "bg-primary/10 text-primary hover:bg-primary/20"
-                      )}
-                      title={name}
-                    >
-                      <Icon className="size-5" />
-                    </Link>
-                  );
-                })}
-                {/* Manual Instagram as it's in community but not in contact.social sometimes, though here we use what's in contact.social */}
-                {(DATA as any).community?.filter((c: any) => c.platform === "Instagram").map((insta: any) => (
-                  <Link
-                    key="Instagram"
-                    href={insta.link}
-                    target="_blank"
-                    className="p-2.5 rounded-xl bg-pink-600/10 text-pink-600 hover:bg-pink-600/20 transition-all hover:scale-110"
-                    title="Instagram"
-                  >
-                    <Users className="size-5" />
-                  </Link>
-                ))}
+
+              {/* Dynamic social icons */}
+
+              {Object.entries(DATA.contact.social).map(([name, social]) => {
+                const Icon = social.icon;
+                const cls =
+                  name === "LinkedIn" ? "si-linkedin" :
+                  name === "GitHub"   ? "si-github" :
+                  name === "X"        ? "si-x" :
+                  name === "Youtube"  ? "si-youtube" : "";
+                return (
+                  <a key={name} href={social.url} target="_blank" rel="noopener noreferrer" className={`social-icon-btn ${cls}`}>
+                    <span className="social-icon-tip">{name}</span>
+                    <Icon className="size-5" />
+                  </a>
+                );
+              })}
+
+              {/* Instagram from community */}
+              {(DATA as any).community?.filter((c: any) => c.platform === "Instagram").map((insta: any) => (
+                <a key="Instagram" href={insta.link} target="_blank" rel="noopener noreferrer" className="social-icon-btn si-instagram">
+                  <span className="social-icon-tip">Instagram</span>
+                  <Users className="size-5" />
+                </a>
+              ))}
             </motion.div>
+
           </motion.div>
         </div>
       </section>
@@ -279,9 +244,9 @@ export default function Page() {
             >
               <div className="flex items-start justify-between gap-3">
                 <div>
-                  <h3 className="text-xl font-black tracking-tight">Leave a comment</h3>
+                  <h3 className="text-xl font-black tracking-tight">Let’s connect 🚀</h3>
                   <p className="mt-1 text-sm text-muted-foreground font-medium">
-                    Share feedback or say hi. This will be saved to Supabase.
+                    Drop your message and I’ll get back to you soon.
                   </p>
                 </div>
                 <button
@@ -294,25 +259,36 @@ export default function Page() {
                 </button>
               </div>
 
-              <div className="mt-5 grid gap-3">
-                <input
-                  className="w-full rounded-2xl border border-border/60 bg-background px-4 py-3 text-sm font-medium outline-none focus:border-primary/60"
-                  placeholder="Your name (optional)"
-                  value={commentForm.name}
-                  onChange={(e) => setCommentForm((s) => ({ ...s, name: e.target.value }))}
-                />
-                <input
-                  className="w-full rounded-2xl border border-border/60 bg-background px-4 py-3 text-sm font-medium outline-none focus:border-primary/60"
-                  placeholder="Email (optional)"
-                  value={commentForm.email}
-                  onChange={(e) => setCommentForm((s) => ({ ...s, email: e.target.value }))}
-                />
-                <textarea
-                  className="min-h-[120px] w-full rounded-2xl border border-border/60 bg-background px-4 py-3 text-sm font-medium outline-none focus:border-primary/60"
-                  placeholder="Write your comment..."
-                  value={commentForm.comment}
-                  onChange={(e) => setCommentForm((s) => ({ ...s, comment: e.target.value }))}
-                />
+              <div className="mt-5 grid gap-4">
+                <div className="relative group">
+                  <User className="absolute left-4 top-1/2 -translate-y-1/2 size-4 text-muted-foreground group-focus-within:text-primary transition-colors" />
+                  <input
+                    className="w-full rounded-2xl border border-border/60 bg-background pl-11 pr-4 py-3 text-sm font-medium outline-none focus:border-primary/60 transition-all"
+                    placeholder="Enter Your name"
+                    value={commentForm.name}
+                    onChange={(e) => setCommentForm((s) => ({ ...s, name: e.target.value }))}
+                  />
+                </div>
+                
+                <div className="relative group">
+                  <Mail className="absolute left-4 top-1/2 -translate-y-1/2 size-4 text-muted-foreground group-focus-within:text-primary transition-colors" />
+                  <input
+                    className="w-full rounded-2xl border border-border/60 bg-background pl-11 pr-4 py-3 text-sm font-medium outline-none focus:border-primary/60 transition-all"
+                    placeholder="Enter Your Email"
+                    value={commentForm.email}
+                    onChange={(e) => setCommentForm((s) => ({ ...s, email: e.target.value }))}
+                  />
+                </div>
+
+                <div className="relative group">
+                  <MessageSquare className="absolute left-4 top-4 size-4 text-muted-foreground group-focus-within:text-primary transition-colors" />
+                  <textarea
+                    className="min-h-[120px] w-full rounded-2xl border border-border/60 bg-background pl-11 pr-4 py-3 text-sm font-medium outline-none focus:border-primary/60 transition-all resize-none"
+                    placeholder="Write your comment..."
+                    value={commentForm.comment}
+                    onChange={(e) => setCommentForm((s) => ({ ...s, comment: e.target.value }))}
+                  />
+                </div>
               </div>
 
               <div className="mt-6 flex flex-wrap items-center justify-end gap-3">
@@ -338,7 +314,7 @@ export default function Page() {
             transition={{ duration: 0.6 }}
             className="space-y-4"
           >
-            <h2 className="text-2xl sm:text-3xl font-black flex items-center gap-3">
+            <h2 className="text-2xl sm:text-3xl font-black flex items-center gap-3 text-foreground">
               <History className="size-6 text-primary" />
               About & Journey
             </h2>
@@ -372,7 +348,7 @@ export default function Page() {
                       <span className="text-xs font-black text-primary px-2 py-0.5 rounded-md bg-primary/10">
                         {item.year}
                       </span>
-                      <h3 className="text-base sm:text-lg font-black">{item.title}</h3>
+                      <h3 className="text-base sm:text-lg font-black text-foreground">{item.title}</h3>
                     </div>
                     <p className="text-xs sm:text-sm text-foreground font-bold opacity-80">
                       {item.description}
@@ -410,7 +386,7 @@ export default function Page() {
                   <h3 className="text-xl font-black text-foreground">
                     {stat.label.split(" ").slice(0, 1).join(" ")}
                   </h3>
-                  <p className="text-xs font-bold text-muted-foreground uppercase tracking-widest">
+                  <p className="text-xs font-bold text-foreground/60 uppercase tracking-widest">
                     {stat.label.split(" ").slice(1).join(" ")}
                   </p>
                 </div>
@@ -420,47 +396,14 @@ export default function Page() {
         </div>
       </section>
 
-      {/* 3.5 Freelance Services */}
-      <section id="services" className="scroll-mt-16 px-4">
-        <div className="space-y-10 max-w-[1400px] mx-auto">
-          <div className="text-center space-y-4">
-            <h2 className="text-2xl sm:text-3xl font-black">Freelance <span className="text-primary italic">Services</span></h2>
-            <p className="text-muted-foreground text-sm sm:text-base font-medium">Helping businesses scale with modern tech and AI.</p>
-          </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            {[
-              { title: "Full Stack Web Development", icon: Layout, desc: "Building scalable, production-ready applications from scratch." },
-              { title: "AI Integration", icon: Sparkles, desc: "Injecting LLM power and agentic workflows into your business." },
-              { title: "Website SEO Optimization", icon: ArrowUpRight, desc: "Technical SEO and performance tuning to rank your site higher." },
-              { title: "Business Websites", icon: Briefcase, desc: "Premium portfolio and business landing pages that convert." },
-            ].map((service, idx) => (
-              <motion.div 
-                key={service.title}
-                initial={{ opacity: 0, y: 10 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: idx * 0.1 }}
-                className="p-6 rounded-3xl bg-primary/10 backdrop-blur-md border border-primary/20 hover:border-primary/40 transition-all flex flex-col gap-3 shadow-lg"
-              >
-                <div className="size-10 rounded-xl bg-primary/10 flex items-center justify-center">
-                  <service.icon className="size-5 text-primary" />
-                </div>
-                <h3 className="font-extrabold text-lg">{service.title}</h3>
-                <p className="text-xs text-muted-foreground leading-relaxed">{service.desc}</p>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* 4. Featured Projects */}
       <section id="projects" className="scroll-mt-20 px-4">
         <div className="space-y-10 w-full py-8">
           <div className="space-y-4 text-center max-w-3xl mx-auto">
-            <h2 className="text-2xl sm:text-4xl font-black tracking-tighter">
+            <h2 className="text-2xl sm:text-4xl font-black tracking-tighter text-foreground">
                Creative & <span className="text-primary italic">Web Apps</span>
             </h2>
-            <p className="text-muted-foreground text-sm sm:text-base font-medium">
+            <p className="text-foreground/70 text-sm sm:text-base font-medium">
               Robust full-stack applications built with modern frameworks and performance in mind.
             </p>
           </div>
@@ -489,10 +432,10 @@ export default function Page() {
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary border border-primary/20 text-[10px] font-black uppercase tracking-widest">
               <Sparkles className="size-3" /> AI Engineering
             </div>
-            <h2 className="text-2xl sm:text-4xl font-black tracking-tighter">
+            <h2 className="text-2xl sm:text-4xl font-black tracking-tighter text-foreground">
                Intelligent <span className="text-primary italic">Systems</span>
             </h2>
-            <p className="text-muted-foreground text-sm sm:text-base font-medium">
+            <p className="text-foreground/70 text-sm sm:text-base font-medium">
               Exploring the frontiers of RAG, Agentic workflows, and LLM orchestration.
             </p>
           </div>
@@ -518,7 +461,7 @@ export default function Page() {
       <section id="work" className="scroll-mt-16 px-4 max-w-[1400px] mx-auto">
         <div className="space-y-8">
           <div className="flex items-center justify-between border-b border-primary/10 pb-4">
-            <h2 className="text-xl sm:text-2xl font-black">Work Experience</h2>
+            <h2 className="text-xl sm:text-2xl font-black text-foreground">Work Experience</h2>
             <Badge variant="secondary" className="bg-primary/10 text-primary font-bold text-[10px] sm:text-xs">
               1.5+ Years Exp.
             </Badge>
@@ -544,7 +487,7 @@ export default function Page() {
       {/* 6.5 Education (Integrated) */}
       <section id="education" className="scroll-mt-16 px-4 max-w-[1400px] mx-auto">
         <div className="space-y-8">
-          <h2 className="text-xl sm:text-2xl font-black">Education</h2>
+          <h2 className="text-xl sm:text-2xl font-black text-foreground">Education</h2>
           <div className="space-y-4">
             {DATA.education.map((education, id) => (
               <ResumeCard
@@ -565,10 +508,10 @@ export default function Page() {
       <section id="skills" className="scroll-mt-24 px-4">
         <div className="space-y-12 py-8">
           <div className="text-center space-y-4 max-w-3xl mx-auto">
-             <h2 className="text-2xl sm:text-4xl font-black tracking-tighter">
+             <h2 className="text-2xl sm:text-4xl font-black tracking-tighter text-foreground">
                Technical <span className="text-primary italic">Arsenal</span>
             </h2>
-            <p className="text-muted-foreground text-sm sm:text-base font-medium">
+            <p className="text-foreground/70 text-sm sm:text-base font-medium">
               A comprehensive toolkit of {Object.values(DATA.skills).reduce((acc: number, curr: any) => acc + (curr.list?.length || 0), 0)} expert skills across modern engineering domains.
             </p>
           </div>
@@ -600,7 +543,7 @@ export default function Page() {
                       <div className="p-2.5 rounded-xl bg-primary/10 group-hover:bg-primary/20 transition-all">
                         <Icon className="size-5 text-primary" />
                       </div>
-                      <h3 className="font-bold text-lg">{category}</h3>
+                      <h3 className="font-bold text-lg text-foreground">{category}</h3>
                     </div>
                     <ArrowUpRight className="size-4 text-primary opacity-0 group-hover:opacity-100 transition-opacity" />
                   </div>
@@ -667,7 +610,7 @@ export default function Page() {
             {DATA.githubActivity.stats.map((stat) => (
               <div key={stat.label} className="text-center space-y-1">
                 <p className="text-lg sm:text-2xl font-black text-foreground">{stat.value}</p>
-                <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest leading-tight">{stat.label}</p>
+                <p className="text-[10px] font-bold text-foreground/60 uppercase tracking-widest leading-tight">{stat.label}</p>
               </div>
             ))}
           </div>
@@ -688,10 +631,10 @@ export default function Page() {
                   <span className="text-[10px] font-black text-primary uppercase tracking-widest px-2 py-0.5 rounded-md bg-primary/10 italic">
                     {post.publishedAt}
                   </span>
-                  <ArrowUpRight className="size-4 text-muted-foreground group-hover:text-primary transition-colors" />
+                  <ArrowUpRight className="size-4 text-foreground/40 group-hover:text-primary transition-colors" />
                 </div>
                 <h3 className="text-lg font-bold group-hover:text-primary transition-colors leading-tight">{post.title}</h3>
-                <p className="text-sm text-muted-foreground line-clamp-2">{post.summary}</p>
+                <p className="text-sm text-foreground/70 line-clamp-2">{post.summary}</p>
               </Link>
             ))}
           </div>
@@ -703,8 +646,8 @@ export default function Page() {
         <div className="space-y-8 py-8">
           <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-primary/10 pb-6">
             <div className="space-y-1">
-               <h2 className="text-2xl sm:text-3xl font-black">Certifications</h2>
-               <p className="text-sm text-muted-foreground font-medium italic">Industry recognized credentials & skill validations.</p>
+               <h2 className="text-2xl sm:text-3xl font-black text-foreground">Certifications</h2>
+               <p className="text-sm text-foreground/70 font-medium italic">Industry recognized credentials & skill validations.</p>
             </div>
             <div className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-muted-foreground px-3 py-1.5 rounded-full bg-secondary/20">
               <CheckCircle2 className="size-3 text-green-500 fill-green-500/10" />
@@ -731,7 +674,7 @@ export default function Page() {
               <Users className="size-6 text-primary" />
               Community & Content
             </h2>
-            <p className="text-sm text-muted-foreground font-medium italic">Building in public and helping the next generation of engineers.</p>
+            <p className="text-sm text-foreground/70 font-medium italic">Building in public and helping the next generation of engineers.</p>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
             {(DATA as any).community?.map((item: any) => (
@@ -745,9 +688,9 @@ export default function Page() {
                   <span className="text-[10px] font-black text-primary px-2 py-0.5 rounded-full bg-primary/10">{item.followers}</span>
                 </div>
                 <div className="space-y-1">
-                  <h3 className="font-extrabold text-lg">{item.platform}</h3>
-                  <p className="text-xs font-bold text-muted-foreground">{item.handle}</p>
-                  <p className="text-[10px] text-muted-foreground/80 leading-relaxed pt-1">{item.description}</p>
+                  <h3 className="font-extrabold text-lg text-foreground">{item.platform}</h3>
+                  <p className="text-xs font-bold text-foreground/60">{item.handle}</p>
+                  <p className="text-[10px] text-foreground/50 leading-relaxed pt-1">{item.description}</p>
                 </div>
               </Link>
             ))}
@@ -774,9 +717,13 @@ export default function Page() {
             <h2 className="text-3xl sm:text-5xl font-black tracking-tight">
               Ready to build <span className="text-primary italic">something insane?</span>
             </h2>
-            <p className="mx-auto max-w-[600px] text-muted-foreground text-base sm:text-lg font-medium leading-relaxed">
+            <p className="mx-auto max-w-[600px] text-foreground/70 text-base sm:text-lg font-medium leading-relaxed">
               Whether you have a question or just want to say hi, my inbox is always open. 
               Let&apos;s architect the future together.
+              <br />
+              <span className="text-xs sm:text-sm mt-2 block opacity-80">
+                Looking for freelancing services? Visit <a href="https://pvcode1u.ai" target="_blank" className="text-primary font-bold hover:underline">pvcode1u.ai</a>
+              </span>
             </p>
             <div className="flex flex-wrap items-center justify-center gap-4 pt-4">
                <Button asChild size="lg" className="rounded-full px-8 font-black shadow-xl shadow-primary/20 h-14">

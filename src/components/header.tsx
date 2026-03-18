@@ -23,6 +23,11 @@ import {
   X as CloseIcon
 } from "lucide-react";
 import { AnimatePresence } from "framer-motion";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 import { useLoading } from "@/hooks/use-loading";
 
@@ -42,10 +47,34 @@ export function Header() {
   const [mounted, setMounted] = React.useState(false);
   const [isDrawerOpen, setIsDrawerOpen] = React.useState(false);
   const [activeCertIdx, setActiveCertIdx] = React.useState<number | null>(null);
+  const [activeHash, setActiveHash] = React.useState("/");
   const { startLoading } = useLoading();
 
   React.useEffect(() => {
     setMounted(true);
+    
+    const handleScroll = () => {
+      // Find the current section
+      const sections = NAV_ITEMS
+        .map(item => item.href)
+        .filter(href => href.startsWith("#"));
+      
+      let current = "/";
+      for (const section of sections) {
+        const element = document.querySelector(section);
+        if (element) {
+          const rect = element.getBoundingClientRect();
+          if (rect.top <= 150) {
+            current = section;
+          }
+        }
+      }
+      setActiveHash(current);
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    handleScroll(); // Initial check
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   const closeCertificates = React.useCallback(() => {
@@ -55,6 +84,9 @@ export function Header() {
 
   const handleNavClick = (e: React.MouseEvent, href: string) => {
     startLoading(1000);
+    if (href.startsWith("#")) {
+      setActiveHash(href);
+    }
     if (href === "#certifications") {
       e.preventDefault();
       setIsDrawerOpen(true);
@@ -111,10 +143,10 @@ export function Header() {
       <motion.nav
         initial={{ y: -100, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
-        className="flex items-center gap-1 sm:gap-2 p-1.5 sm:p-2 rounded-2xl bg-background/60 backdrop-blur-2xl border border-white/20 dark:border-white/10 shadow-[0_0_50px_-12px_rgba(0,0,0,0.3)] pointer-events-auto max-w-full overflow-x-auto hide-scrollbar"
+        className="w-[100%] sm:w-auto flex flex-nowrap items-center gap-0.5 sm:gap-2 px-1 py-1.5 sm:p-2 rounded-none sm:rounded-2xl bg-background/60 backdrop-blur-2xl border border-primary/20 shadow-[0_0_50px_-12px_rgba(0,0,0,0.3)] pointer-events-auto max-w-full overflow-x-auto hide-scrollbar"
       >
         {/* Left: Profile Section */}
-        <div className="flex items-center gap-1.5 sm:gap-2 pr-1.5 sm:pr-2 border-r border-border/50">
+        <div className="flex items-center gap-1 sm:gap-2 pr-1 sm:pr-2 border-r border-border/50">
           <Avatar className="size-7 sm:size-8 border-2 border-primary/20 shrink-0">
             <AvatarImage src={DATA.avatarUrl} />
             <AvatarFallback>{DATA.initials}</AvatarFallback>
@@ -122,38 +154,53 @@ export function Header() {
         </div>
 
         {/* Center: Navigation Links */}
-        <div className="flex items-center gap-0.5 sm:gap-1">
+        <div className="flex items-center gap-0 sm:gap-1">
           {NAV_ITEMS.map((item) => {
             const Icon = item.icon;
-            const isActive = pathname === item.href;
+            const isActive = activeHash === item.href;
 
             return (
-              <Link
-                key={item.name}
-                href={item.href}
-                onClick={(e) => handleNavClick(e, item.href)}
-                className={cn(
-                  "flex items-center gap-1 sm:gap-1.5 px-2 py-1.5 sm:px-3 sm:py-2 text-[10px] sm:text-xs font-bold rounded-xl whitespace-nowrap transition-all duration-200 active:scale-95",
-                  isActive 
-                    ? "bg-primary text-primary-foreground shadow-lg shadow-primary/20 scale-105" 
-                    : "hover:bg-primary/10 text-foreground font-black hover:text-primary opacity-80"
-                )}
-              >
-                <Icon className="size-3.5 sm:size-4 shrink-0" />
-                <span className="inline-block">{item.name}</span>
-              </Link>
+              <Tooltip key={item.name}>
+                <TooltipTrigger asChild>
+                  <Link
+                    href={item.href}
+                    onClick={(e) => handleNavClick(e, item.href)}
+                    className={cn(
+                      "relative flex items-center gap-1 sm:gap-1.5 px-2 py-2 sm:px-3 sm:py-2 text-[10px] sm:text-xs font-bold rounded-xl whitespace-nowrap transition-all duration-300 active:scale-95 group",
+                      isActive 
+                        ? "text-primary-foreground scale-105" 
+                        : "text-foreground font-black hover:text-primary opacity-80"
+                    )}
+                  >
+                    {isActive && (
+                      <motion.div
+                        layoutId="active-nav"
+                        className="absolute inset-0 bg-primary rounded-xl -z-10 shadow-lg shadow-primary/20"
+                        transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
+                      />
+                    )}
+                    <Icon className={cn(
+                      "size-4 sm:size-4 shrink-0 transition-transform duration-300",
+                      isActive ? "scale-110" : "group-hover:scale-125"
+                    )} />
+                    <span className="hidden sm:inline-block">{item.name}</span>
+                  </Link>
+                </TooltipTrigger>
+                <TooltipContent side="bottom" sideOffset={10} className="sm:hidden pointer-events-none">
+                  <p className="text-[10px] font-bold">{item.name}</p>
+                </TooltipContent>
+              </Tooltip>
             );
           })}
         </div>
 
         {/* Right: Theme toggle */}
-        <div className="pl-1.5 sm:pl-2 border-l border-border/50 flex items-center">
+        <div className="pl-1 sm:pl-2 border-l border-border/50 flex items-center">
           <ModeToggle />
         </div>
 
       </motion.nav>
 
-      {/* Certificate Drawer (portal to body so it always receives clicks) */}
       {mounted
         ? createPortal(
             <AnimatePresence>
@@ -255,7 +302,7 @@ export function Header() {
                                   className="w-full h-full object-cover"
                                 />
                                 <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                                  <span className="text-white font-bold text-sm bg-black/40 px-3 py-1.5 rounded-lg backdrop-blur-md border border-white/20">
+                                  <span className="text-primary-foreground font-bold text-sm bg-primary/80 px-3 py-1.5 rounded-lg backdrop-blur-md border border-primary/20">
                                     Click to Preview
                                   </span>
                                 </div>
@@ -291,84 +338,90 @@ export function Header() {
           )
         : null}
 
-      <AnimatePresence>
-        {activeCertIdx !== null && (
-          <motion.div
-            key="lightbox"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-black/95 backdrop-blur-2xl z-[200] pointer-events-auto flex items-center justify-center p-4 sm:p-6"
-            onClick={() => setActiveCertIdx(null)}
-          >
-            {/* Controls */}
-            <div className="absolute top-6 left-6 text-white/50 font-bold text-sm sm:text-lg z-[210]">
-              <span className="text-white">{activeCertIdx + 1}</span> / {DATA.certifications.length}
-            </div>
-            
-            <button 
-              onClick={(e) => { e.stopPropagation(); setActiveCertIdx(null); }}
-              className="absolute top-6 right-6 p-2 rounded-full bg-white/10 hover:bg-white/20 text-white transition-all border border-white/10 z-[220] active:scale-90"
-            >
-              <CloseIcon className="size-5 sm:size-7 text-white" />
-            </button>
-
-            <button 
-              onClick={(e) => { e.stopPropagation(); handlePrevCert(); }}
-              className="absolute left-2 sm:left-10 p-2 sm:p-4 rounded-full bg-white/5 hover:bg-white/20 text-white transition-all border border-white/10 group active:scale-90 z-[220]"
-            >
-              <ChevronLeft className="size-6 sm:size-10" />
-            </button>
-
-            <button 
-              onClick={(e) => { e.stopPropagation(); handleNextCert(); }}
-              className="absolute right-2 sm:right-10 p-2 sm:p-4 rounded-full bg-white/5 hover:bg-white/20 text-white transition-all border border-white/10 group active:scale-90 z-[220]"
-            >
-              <ChevronRight className="size-6 sm:size-10" />
-            </button>
-
-            {/* Main Image */}
-            {DATA.certifications[activeCertIdx] && (
-              <motion.div
-                key={activeCertIdx}
-                initial={{ opacity: 0, scale: 0.9, x: 50 }}
-                animate={{ opacity: 1, scale: 1, x: 0 }}
-                exit={{ opacity: 0, scale: 0.9, x: -50 }}
-                transition={{ type: "spring", damping: 30, stiffness: 200 }}
-                drag="x"
-                dragConstraints={{ left: 0, right: 0 }}
-                onDragEnd={(_, info) => {
-                  if (info.offset.x > 80) handlePrevCert();
-                  else if (info.offset.x < -80) handleNextCert();
-                }}
-                className="relative max-w-5xl max-h-[85vh] w-full flex flex-col items-center gap-6 cursor-grab active:cursor-grabbing"
-                onClick={(e) => e.stopPropagation()}
-              >
-                {(DATA.certifications[activeCertIdx] as any).image && (
-                  <div className="w-full max-w-full rounded-2xl overflow-hidden border border-white/20 shadow-2xl">
-                    <img 
-                      src={(DATA.certifications[activeCertIdx] as any).image} 
-                      alt={(DATA.certifications[activeCertIdx] as any).title}
-                      className="w-full h-auto max-h-[60vh] sm:max-h-[70vh] object-contain pointer-events-none select-none"
-                    />
+      {/* Certificate Lightbox – also via portal so it escapes header stacking context */}
+      {mounted
+        ? createPortal(
+            <AnimatePresence>
+              {activeCertIdx !== null && (
+                <motion.div
+                  key="lightbox"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  className="fixed inset-0 bg-black/95 backdrop-blur-2xl z-[300] pointer-events-auto flex items-center justify-center p-4 sm:p-6"
+                  onClick={() => setActiveCertIdx(null)}
+                >
+                  {/* Controls */}
+                  <div className="absolute top-6 left-6 text-white/50 font-bold text-sm sm:text-lg z-[310]">
+                    <span className="text-white">{activeCertIdx + 1}</span> / {DATA.certifications.length}
                   </div>
-                )}
-                <div className="text-center space-y-2 px-6 max-w-3xl">
-                  <h2 className="text-xl sm:text-3xl font-black text-white tracking-tight leading-tight">
-                    {(DATA.certifications[activeCertIdx] as any).title}
-                  </h2>
-                  <p className="text-primary font-bold text-base sm:text-xl italic">
-                    {(DATA.certifications[activeCertIdx] as any).issuer}
-                  </p>
-                  <p className="text-white font-black text-[10px] sm:text-xs uppercase tracking-widest pt-2 opacity-60">
-                    Swipe or use arrows to navigate • ESC to close
-                  </p>
-                </div>
-              </motion.div>
-            )}
-          </motion.div>
-        )}
-      </AnimatePresence>
+                  
+                  <button 
+                    onClick={(e) => { e.stopPropagation(); setActiveCertIdx(null); }}
+                    className="absolute top-6 right-6 p-2 rounded-full bg-white/10 hover:bg-white/20 text-white transition-all border border-white/10 z-[320] active:scale-90"
+                  >
+                    <CloseIcon className="size-5 sm:size-7 text-white" />
+                  </button>
+
+                  <button 
+                    onClick={(e) => { e.stopPropagation(); handlePrevCert(); }}
+                    className="absolute left-2 sm:left-10 p-2 sm:p-4 rounded-full bg-white/5 hover:bg-white/20 text-white transition-all border border-white/10 group active:scale-90 z-[320]"
+                  >
+                    <ChevronLeft className="size-6 sm:size-10" />
+                  </button>
+
+                  <button 
+                    onClick={(e) => { e.stopPropagation(); handleNextCert(); }}
+                    className="absolute right-2 sm:right-10 p-2 sm:p-4 rounded-full bg-white/5 hover:bg-white/20 text-white transition-all border border-white/10 group active:scale-90 z-[320]"
+                  >
+                    <ChevronRight className="size-6 sm:size-10" />
+                  </button>
+
+                  {/* Main Image */}
+                  {DATA.certifications[activeCertIdx] && (
+                    <motion.div
+                      key={activeCertIdx}
+                      initial={{ opacity: 0, scale: 0.9, x: 50 }}
+                      animate={{ opacity: 1, scale: 1, x: 0 }}
+                      exit={{ opacity: 0, scale: 0.9, x: -50 }}
+                      transition={{ type: "spring", damping: 30, stiffness: 200 }}
+                      drag="x"
+                      dragConstraints={{ left: 0, right: 0 }}
+                      onDragEnd={(_, info) => {
+                        if (info.offset.x > 80) handlePrevCert();
+                        else if (info.offset.x < -80) handleNextCert();
+                      }}
+                      className="relative max-w-5xl max-h-[85vh] w-full flex flex-col items-center gap-6 cursor-grab active:cursor-grabbing"
+                      onClick={(e) => e.stopPropagation()}
+                    >
+                      {(DATA.certifications[activeCertIdx] as any).image && (
+                        <div className="w-full max-w-full rounded-2xl overflow-hidden border border-white/20 shadow-2xl">
+                          <img 
+                            src={(DATA.certifications[activeCertIdx] as any).image} 
+                            alt={(DATA.certifications[activeCertIdx] as any).title}
+                            className="w-full h-auto max-h-[60vh] sm:max-h-[70vh] object-contain pointer-events-none select-none"
+                          />
+                        </div>
+                      )}
+                      <div className="text-center space-y-2 px-6 max-w-3xl">
+                        <h2 className="text-xl sm:text-3xl font-black text-white tracking-tight leading-tight">
+                          {(DATA.certifications[activeCertIdx] as any).title}
+                        </h2>
+                        <p className="text-primary font-bold text-base sm:text-xl italic">
+                          {(DATA.certifications[activeCertIdx] as any).issuer}
+                        </p>
+                        <p className="text-white font-black text-[10px] sm:text-xs uppercase tracking-widest pt-2 opacity-60">
+                          Swipe or use arrows to navigate • ESC to close
+                        </p>
+                      </div>
+                    </motion.div>
+                  )}
+                </motion.div>
+              )}
+            </AnimatePresence>,
+            document.body,
+          )
+        : null}
     </header>
   );
 }

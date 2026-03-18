@@ -24,7 +24,7 @@ function localAnswer(questionRaw: string) {
 
   const fallbackText =
     `Hi! I'm ${DATA.name}'s portfolio assistant.\n\n` +
-    `Ask me anything about my work, projects, learning journey, freelancing, or personal approach to building products.`;
+    `Ask me anything about my work, projects, learning journey, or professional approach to building products.`;
 
   if (!question) return fallbackText;
 
@@ -64,7 +64,8 @@ function localAnswer(questionRaw: string) {
 
   return (
     `You asked: “${question}”.\n\n` +
-    `I can answer about my experience, projects, freelancing, AI building, learning process, and personal journey.\n` +
+    `I can answer about my experience, projects, AI building, learning process, and professional journey.\n` +
+    `If someone asks about freelancing services, politely inform them that this site is my professional resume for job opportunities, and for freelancing inquiries, they should visit pvcode1u.ai.\n` +
     `Try: “Tell me about your latest project” or “How do you think about building products?”`
   );
 }
@@ -85,7 +86,7 @@ export async function POST(req: Request) {
       `${JSON.stringify(DATA, null, 2)}\n\n` +
       `Guidelines:\n` +
       `- Be friendly, confident, and helpful.\n` +
-      `- If asked about personal life/brain/mindset: describe my approach to learning, building, freelancing, content creation.\n` +
+      `- If asked about personal life/brain/mindset: describe my approach to learning, building, and professional growth.\n` +
       `- If a question is unrelated or unknown: answer generally, then steer back to portfolio context.\n` +
       `- Keep replies concise and structured.\n`;
 

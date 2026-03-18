@@ -70,11 +70,11 @@ export default function RootLayout({
       >
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
           <LoadingProvider>
-            <SiteLoader />
-            <Header />
-            <Toaster position="bottom-right" reverseOrder={false} />
-            <VantaBirds />
             <TooltipProvider delayDuration={0}>
+              <SiteLoader />
+              <Header />
+              <Toaster position="top-center" reverseOrder={false} />
+              <VantaBirds />
               {children}
               <Navbar />
               <AIChatbot />
