@@ -61,9 +61,25 @@ export default function Page() {
   };
 
   const submitComment = async () => {
+    const name = commentForm.name.trim();
+    const email = commentForm.email.trim();
     const comment = commentForm.comment.trim();
+
+    if (!name) {
+      toast.error("Please enter your name.");
+      return;
+    }
+    if (!email) {
+      toast.error("Please enter your email.");
+      return;
+    }
+    // Basic email validation
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      toast.error("Please enter a valid email address.");
+      return;
+    }
     if (!comment) {
-      toast.error("Write a comment first.");
+      toast.error("Please write your comment.");
       return;
     }
 
@@ -115,7 +131,15 @@ export default function Page() {
                 <h1 className="text-3xl sm:text-5xl font-black tracking-tighter text-foreground leading-[1.1]">
                   {DATA.name.split(" ")[0]} <span className="text-primary italic">{DATA.name.split(" ")[1] ?? ""}</span>
                 </h1>
-                <CheckCircle2 className="size-6 sm:size-8 text-primary fill-primary/10" />
+                <svg 
+                  viewBox="0 0 24 24" 
+                  aria-label="Verified account" 
+                  className="size-5 sm:size-7 fill-[#00a2ff] shrink-0"
+                >
+                  <g>
+                    <path d="M22.25 12c0-1.43-.88-2.67-2.19-3.34.46-1.39.2-2.97-.81-4.08s-2.47-1.49-3.89-1.29c-.73-1.1-1.97-1.79-3.36-1.79s-2.63.69-3.36 1.79c-1.42-.2-2.88.18-3.89 1.29s-1.27 2.69-.81 4.08C2.63 9.33 1.75 10.57 1.75 12s.88 2.67 2.19 3.34c-.46 1.39-.2 2.97.81 4.08s2.47 1.49 3.89 1.29c.73 1.1 1.97 1.79 3.36 1.79s2.63-.69 3.36-1.79c1.42.2 2.88-.18 3.89-1.29s1.27-2.69.81-4.08c1.31-.67 2.19-1.91 2.19-3.34zm-11.71 4.2L6.8 12.46l1.41-1.42 2.26 2.26 4.8-5.23 1.47 1.35-6.2 6.78z"></path>
+                  </g>
+                </svg>
               </div>
               <p className="text-base sm:text-xl font-bold text-muted-foreground italic max-w-[600px] mx-auto">
                 {(DATA as any).role} — {(DATA as any).subtitle}
