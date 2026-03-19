@@ -9,7 +9,7 @@ import { Button } from "@/components/ui/button";
 import { DATA } from "@/data/resume";
 import Link from "next/link";
 import Markdown from "react-markdown";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion, useMotionValue, useMotionTemplate } from "framer-motion";
 import React from "react";
 import toast from "react-hot-toast";
 import { Icons } from "@/components/icons";
@@ -17,6 +17,7 @@ import { cn } from "@/lib/utils";
 import { useLoading } from "@/hooks/use-loading";
 import { CertificationCard } from "@/components/certification-card";
 import { SkillsDrawer } from "@/components/skills-drawer";
+import { TestimonialsCarousel } from "@/components/testimonials-carousel";
 import { MessageCircle } from "lucide-react";
 import { 
   ExternalLink, 
@@ -54,6 +55,17 @@ export default function Page() {
   const [commentForm, setCommentForm] = React.useState({ name: "", email: "", comment: "" });
 
   const { startLoading } = useLoading();
+
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+
+  function handleMouseMove(e: React.MouseEvent<HTMLElement>) {
+    const { left, top } = e.currentTarget.getBoundingClientRect();
+    mouseX.set(e.clientX - left);
+    mouseY.set(e.clientY - top);
+  }
+
+  const spotlightBackground = useMotionTemplate`radial-gradient(600px circle at ${mouseX}px ${mouseY}px, rgba(249, 112, 21, 0.12), transparent 80%)`;
 
   const openSkillsDrawer = (category: string) => {
     setActiveSkillCategory(category);
@@ -109,8 +121,16 @@ export default function Page() {
   return (
     <main className="flex flex-col min-h-[100dvh] space-y-16 md:space-y-24">
       {/* 1. Hero Section */}
-      <section id="hero" className="relative pt-4 sm:pt-10 md:pt-12 pb-8 overflow-hidden">
-        <div className="mx-auto w-full max-w-4xl space-y-8 text-center px-4">
+      <section 
+        id="hero" 
+        className="relative pt-4 sm:pt-10 md:pt-12 pb-8 overflow-hidden group/hero"
+        onMouseMove={handleMouseMove}
+      >
+        <motion.div
+          className="pointer-events-none absolute -inset-px opacity-0 transition duration-500 group-hover/hero:opacity-100 z-0"
+          style={{ background: spotlightBackground }}
+        />
+        <div className="mx-auto w-full max-w-4xl space-y-6 sm:space-y-8 text-center px-4 relative z-10">
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             whileInView={{ opacity: 1, scale: 1 }}
@@ -118,18 +138,29 @@ export default function Page() {
             className="flex flex-col items-center space-y-4"
           >
 
-            <div className="relative group">
-              <div className="absolute -inset-1 bg-gradient-to-r from-primary via-orange-400 to-blue-600 rounded-full blur-md opacity-25 group-hover:opacity-60 transition duration-1000 group-hover:duration-200"></div>
-              <Avatar className="size-28 sm:size-36 md:size-40 border-4 border-background shadow-2xl relative z-10">
-                <AvatarImage alt={DATA.name} src={DATA.avatarUrl} className="object-cover" />
-                <AvatarFallback className="text-4xl">{DATA.initials}</AvatarFallback>
-              </Avatar>
+            <div className="relative group mx-auto w-fit">
+              <div className="absolute -inset-2 bg-gradient-to-r from-primary via-orange-400 to-blue-600 rounded-t-2xl rounded-b-full blur-lg opacity-30 group-hover:opacity-60 transition duration-1000 group-hover:duration-200"></div>
+              <div className="relative w-32 h-44 sm:w-48 sm:h-64 md:w-56 md:h-72 overflow-hidden border-4 border-background bg-secondary/20 shadow-2xl z-10 rounded-t-2xl rounded-b-full">
+                <img 
+                  alt={DATA.name} 
+                  src={DATA.avatarUrl} 
+                  className="w-full h-full object-cover object-top drop-shadow-2xl" 
+                />
+              </div>
             </div>
 
             <div className="space-y-2">
               <div className="flex items-center justify-center gap-2">
-                <h1 className="text-3xl sm:text-5xl font-black tracking-tighter text-foreground leading-[1.1]">
-                  {DATA.name.split(" ")[0]} <span className="text-primary italic">{DATA.name.split(" ")[1] ?? ""}</span>
+                <h1 className="text-3xl sm:text-5xl font-black tracking-tighter text-foreground leading-[1.1] pb-1">
+                  {DATA.name.split(" ")[0]}{" "}
+                  <motion.span 
+                    className="inline-block italic text-transparent bg-clip-text bg-gradient-to-r from-primary via-[#f97015] to-purple-500"
+                    style={{ backgroundSize: "200% auto" }}
+                    animate={{ backgroundPosition: ["0% center", "200% center"] }}
+                    transition={{ duration: 5, ease: "linear", repeat: Infinity }}
+                  >
+                    {DATA.name.split(" ")[1] ?? ""}
+                  </motion.span>
                 </h1>
                 <svg 
                   viewBox="0 0 24 24" 
@@ -146,12 +177,32 @@ export default function Page() {
               </p>
             </div>
 
-            <div className="max-w-[700px] text-sm sm:text-base text-foreground font-bold leading-relaxed px-4 drop-shadow-sm">
-              {DATA.description}
-            </div>
+            <motion.div 
+              className="max-w-[700px] text-sm sm:text-base text-foreground font-bold leading-relaxed px-4 drop-shadow-sm"
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              variants={{
+                visible: { transition: { staggerChildren: 0.03 } },
+                hidden: {}
+              }}
+            >
+              {DATA.description.split(" ").map((word, i) => (
+                <motion.span
+                  key={i}
+                  className="inline-block mr-1"
+                  variants={{
+                    hidden: { filter: "blur(10px)", opacity: 0, y: 4 },
+                    visible: { filter: "blur(0px)", opacity: 1, y: 0, transition: { duration: 0.4 } }
+                  }}
+                >
+                  {word}
+                </motion.span>
+              ))}
+            </motion.div>
 
-            <div className="flex flex-wrap items-center justify-center gap-3 pt-2">
-              <Button asChild size="sm" className="rounded-full px-6 font-bold shadow-lg shadow-primary/20 cursor-pointer">
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-4 w-full px-2 sm:px-0">
+              <Button asChild size="default" className="rounded-full w-full sm:w-auto px-8 font-black shadow-xl shadow-primary/20 cursor-pointer h-12 text-base">
                 <Link 
                   href="/resuma/resuma_pv.pdf" 
                   target="_blank" 
@@ -161,18 +212,18 @@ export default function Page() {
                     toast.success("Resume downloading...");
                   }}
                 >
-                  Hire Me <Download className="ml-2 size-4" />
+                  Hire Me <Download className="ml-2 size-5" />
                 </Link>
               </Button>
              
 
               <Button
-                size="sm"
+                size="default"
                 variant="outline"
-                className="rounded-full px-6 font-bold"
+                className="rounded-full w-full sm:w-auto px-8 font-black h-12 text-base border-primary/20 hover:bg-primary/5"
                 onClick={() => setIsCommentOpen(true)}
               >
-                <MessageCircle className="text-[#f97015]" size={20} /> Ask Me
+                <MessageCircle className="text-[#f97015] mr-2" size={20} /> Ask Me
               </Button>
             </div>
 
@@ -215,7 +266,7 @@ export default function Page() {
                initial={{ opacity: 0, y: 20 }}
                animate={{ opacity: 1, y: 0 }}
                transition={{ delay: 0.6 }}
-               className="flex items-center justify-center flex-wrap gap-1 pt-4"
+               className="hidden sm:flex items-center justify-center flex-wrap gap-1 pt-4"
             >
 
               {/* Dynamic social icons */}
@@ -260,7 +311,7 @@ export default function Page() {
           >
             <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" />
             <motion.div
-              className="relative w-full max-w-lg rounded-3xl border border-primary/20 bg-background p-6 shadow-2xl"
+              className="relative w-full max-w-lg max-h-[90dvh] overflow-y-auto rounded-3xl border border-primary/20 bg-background p-6 shadow-2xl hide-scrollbar"
               initial={{ y: 20, scale: 0.98, opacity: 0 }}
               animate={{ y: 0, scale: 1, opacity: 1 }}
               exit={{ y: 20, scale: 0.98, opacity: 0 }}
@@ -722,6 +773,8 @@ export default function Page() {
         </div>
       </section>
 
+     
+
       {/* 12. Contact Section */}
       <section id="contact" className="scroll-mt-20 px-4">
         <div className="grid items-center justify-center gap-4 px-4 text-center w-full py-12 sm:py-20 bg-primary/5 rounded-[3rem] border border-primary/10 mx-auto max-w-[1400px] relative overflow-hidden">
@@ -749,18 +802,10 @@ export default function Page() {
                 Looking for freelancing services? Visit <a href="https://pvcode1u.ai" target="_blank" className="text-primary font-bold hover:underline">pvcode1u.ai</a>
               </span>
             </p>
-            <div className="flex flex-wrap items-center justify-center gap-4 pt-4">
-               <Button asChild size="lg" className="rounded-full px-8 font-black shadow-xl shadow-primary/20 h-14">
-                  <a href={`mailto:${DATA.contact.email}`}>
-                    Email Me <Send className="ml-2 size-5" />
-                  </a>
-               </Button>
-               <Button asChild variant="outline" size="lg" className="rounded-full px-8 font-black h-14 border-primary/20 hover:bg-primary/5">
-                  <a href={DATA.contact.social.X.url} target="_blank" rel="noopener noreferrer">
-                    DM on X (Twitter)
-                  </a>
-               </Button>
-            </div>
+             {/* 11.5 Testimonials */}
+      <section id="testimonials" className="scroll-mt-16 overflow-hidden">
+        <TestimonialsCarousel />
+      </section>
           </motion.div>
         </div>
       </section>

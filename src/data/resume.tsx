@@ -7,11 +7,11 @@ export const DATA = {
   url: "https://pvcode.com",
   location: "Noida, Sector 15, Uttar Pradesh, India",
   locationLink: "https://maps.app.goo.gl/dFLbinrTMVHjkjcHA",
-  role: "Developer • AI Architect • Tech Creator",
+  role: "Developer | AI Architect | Tech Creator",
   subtitle: "Building the future with AI & Code",
-  description: "I share my journey of building AI tools and software development with my audience. Helping websites rank better on search engines using technical SEO, performance optimization, and content strategy.",
+  description: "Working a full-time job while actively freelancing, I share my journey of building AI-powered tools and modern software. I document real-world development experiences, helping others learn and grow along the way. I also help businesses improve their online presence through technical SEO, performance optimization, and data-driven content strategies.",
   summary:
-    "Founding Engineer & AI Architect building scalable AI-powered applications. I document my journey as a developer and AI builder—sharing AI experiments, startup ideas, and developer life insights across YouTube, Instagram, and X.",
+    "I’m a Founding Engineer & AI Architect focused on building scalable, AI-powered applications that solve real-world problems. My journey started with a deep curiosity for technology, which gradually evolved into a passion for development, automation, and artificial intelligence.\n\nToday, I work full-time while also freelancing—constantly building, experimenting, and improving my skills. I share my journey openly, documenting real-world projects, AI experiments, startup ideas, and developer life across platforms like YouTube, Instagram, and X.\n\nI also keep my audience updated with the latest trends in AI, helping developers and creators stay ahead in this fast-changing space. Along the way, I help businesses grow through technical SEO, performance optimization, and smart content strategies.\n\nThis journey is all about learning, building, and creating impact with AI and code.",
   stats: [
     { label: "10+ Systems Architected", icon: "Users" },
     { label: "25+ Projects Delivered", icon: "Briefcase" },
