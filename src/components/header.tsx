@@ -2,7 +2,7 @@
 
 import React from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { DATA } from "@/data/resume";
@@ -33,39 +33,48 @@ import { useLoading } from "@/hooks/use-loading";
 
 const NAV_ITEMS = [
   { name: "Home", href: "/", icon: Home },
-  { name: "About", href: "#about", icon: User },
-  { name: "Experience", href: "#work", icon: Briefcase },
-  { name: "Education", href: "#education", icon: GraduationCap },
-  { name: "Projects", href: "#projects", icon: Folder },
-  { name: "Certificates", href: "#certifications", icon: Award },
-  { name: "Contact", href: "#contact", icon: Mail },
+  { name: "About", href: "/#about", icon: User },
+  { name: "Experience", href: "/#work", icon: Briefcase },
+  { name: "Education", href: "/#education", icon: GraduationCap },
+  { name: "Projects", href: "/#projects", icon: Folder },
+  { name: "Certificates", href: "/#certifications", icon: Award },
+  { name: "Contact", href: "/#contact", icon: Mail },
 ];
 
 
 export function Header() {
   const pathname = usePathname();
+  const searchParams = useSearchParams();
+  
   const [mounted, setMounted] = React.useState(false);
   const [isDrawerOpen, setIsDrawerOpen] = React.useState(false);
   const [activeCertIdx, setActiveCertIdx] = React.useState<number | null>(null);
   const [activeHash, setActiveHash] = React.useState("/");
   const { startLoading } = useLoading();
 
+  const isHidden = pathname.startsWith("/systems/") || (pathname === "/projects" && searchParams.get("file"));
+
   React.useEffect(() => {
     setMounted(true);
     
+    if (isHidden) return;
+
     const handleScroll = () => {
       // Find the current section
       const sections = NAV_ITEMS
         .map(item => item.href)
-        .filter(href => href.startsWith("#"));
+        .filter(href => href.includes("#"));
       
       let current = "/";
       for (const section of sections) {
-        const element = document.querySelector(section);
-        if (element) {
-          const rect = element.getBoundingClientRect();
-          if (rect.top <= 150) {
-            current = section;
+        const id = section.split("#")[1];
+        if (id) {
+          const element = document.getElementById(id);
+          if (element) {
+            const rect = element.getBoundingClientRect();
+            if (rect.top <= 150) {
+              current = section;
+            }
           }
         }
       }
@@ -75,7 +84,7 @@ export function Header() {
     window.addEventListener("scroll", handleScroll, { passive: true });
     handleScroll(); // Initial check
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  }, [isHidden]);
 
   const closeCertificates = React.useCallback(() => {
     setIsDrawerOpen(false);
@@ -84,10 +93,10 @@ export function Header() {
 
   const handleNavClick = (e: React.MouseEvent, href: string) => {
     startLoading(1000);
-    if (href.startsWith("#")) {
+    if (href.includes("#")) {
       setActiveHash(href);
     }
-    if (href === "#certifications") {
+    if (href === "/#certifications") {
       e.preventDefault();
       setIsDrawerOpen(true);
     }
@@ -132,6 +141,8 @@ export function Header() {
       document.body.classList.remove("drawer-open");
     };
   }, [isDrawerOpen, activeCertIdx]);
+
+  if (isHidden) return null;
 
   const certifications = DATA.certifications as readonly { status?: string }[];
   const totalCerts = certifications.length;
@@ -220,11 +231,11 @@ export function Header() {
                     className="absolute inset-0 bg-black/60 backdrop-blur-sm"
                   />
                   <motion.div
-                    initial={{ x: "100%" }}
+                    initial={{ x: "-100%" }}
                     animate={{ x: 0 }}
-                    exit={{ x: "100%" }}
+                    exit={{ x: "-100%" }}
                     transition={{ type: "spring", damping: 25, stiffness: 200 }}
-                    className="absolute top-0 right-0 h-full w-full sm:w-[460px] bg-background border-l border-border/50 shadow-2xl flex flex-col pt-6"
+                    className="absolute top-0 left-0 h-full w-full sm:w-[460px] bg-background border-r border-border/50 shadow-2xl flex flex-col pt-6"
                     onClick={(e) => e.stopPropagation()}
                   >
                     <div className="px-6 flex items-start justify-between gap-4 mb-7">

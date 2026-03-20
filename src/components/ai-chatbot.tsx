@@ -9,6 +9,7 @@ import {
   Sparkles,
   ChevronDown,
 } from "lucide-react";
+import { usePathname, useSearchParams } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { DATA } from "@/data/resume";
 import { cn } from "@/lib/utils";
@@ -46,7 +47,9 @@ const AI_MODELS = [
 ];
 
 export default function AIChatbot() {
-  const [isOpen, setIsOpen] = useState(false);
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const [isOpen, setIsOpen] = useState(true);
   const [currentModel, setCurrentModel] = useState(AI_MODELS[0]);
   const [isTyping, setIsTyping] = useState(false);
   const [showModelSelector, setShowModelSelector] = useState(false);
@@ -149,6 +152,10 @@ export default function AIChatbot() {
     const interval = setInterval(checkDrawer, 100);
     return () => clearInterval(interval);
   }, []);
+
+  const isHidden = pathname.startsWith("/systems/") || (pathname === "/projects" && searchParams.get("file"));
+
+  if (isHidden) return null;
 
   return (
     <div className={cn(

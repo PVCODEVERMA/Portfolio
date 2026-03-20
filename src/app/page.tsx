@@ -7,10 +7,12 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { DATA } from "@/data/resume";
+import dynamic from "next/dynamic";
 import Link from "next/link";
 import Markdown from "react-markdown";
 import { AnimatePresence, motion, useMotionValue, useMotionTemplate } from "framer-motion";
 import React from "react";
+import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import { Icons } from "@/components/icons";
 import { cn } from "@/lib/utils";
@@ -18,6 +20,15 @@ import { useLoading } from "@/hooks/use-loading";
 import { CertificationCard } from "@/components/certification-card";
 import { SkillsDrawer } from "@/components/skills-drawer";
 import { TestimonialsCarousel } from "@/components/testimonials-carousel";
+import DomeGallery from "@/components/DomeGallery";
+const GithubActivity = dynamic(() => import("@/components/github-activity").then(mod => mod.GithubActivity), {
+  ssr: false,
+  loading: () => (
+    <div className="py-20 flex justify-center">
+      <div className="w-full max-w-4xl h-80 bg-secondary/5 rounded-[3rem] animate-pulse" />
+    </div>
+  )
+});
 import { MessageCircle } from "lucide-react";
 import { 
   ExternalLink, 
@@ -45,16 +56,20 @@ import {
   Phone,
   User,
   MessageSquare,
-  X
+  X,
+  Maximize2
 } from "lucide-react";
 
 export default function Page() {
   const [isSkillsDrawerOpen, setIsSkillsDrawerOpen] = React.useState(false);
   const [activeSkillCategory, setActiveSkillCategory] = React.useState<string | null>(null);
   const [isCommentOpen, setIsCommentOpen] = React.useState(false);
+  const [showFullGallery, setShowFullGallery] = React.useState(false);
+  const [galleryZoom, setGalleryZoom] = React.useState(0.9);
   const [commentForm, setCommentForm] = React.useState({ name: "", email: "", comment: "" });
 
   const { startLoading } = useLoading();
+  const router = useRouter();
 
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
@@ -120,6 +135,15 @@ export default function Page() {
 
   return (
     <main className="flex flex-col min-h-[100dvh] space-y-16 md:space-y-24">
+      <AnimatePresence mode="wait">
+        {!showFullGallery ? (
+          <motion.div
+            key="main-content"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="flex flex-col space-y-16 md:space-y-24"
+          >
       {/* 1. Hero Section */}
       <section 
         id="hero" 
@@ -130,28 +154,17 @@ export default function Page() {
           className="pointer-events-none absolute -inset-px opacity-0 transition duration-500 group-hover/hero:opacity-100 z-0"
           style={{ background: spotlightBackground }}
         />
-        <div className="mx-auto w-full max-w-4xl space-y-6 sm:space-y-8 text-center px-4 relative z-10">
+        <div className="mx-auto w-full max-w-4xl flex flex-col items-center gap-10 px-4 relative z-10 text-center">
+          {/* LEFT: Text & Buttons */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            whileInView={{ opacity: 1, scale: 1 }}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="flex flex-col items-center space-y-4"
+            className="flex-1 flex flex-col items-center space-y-6 lg:space-y-8 order-2 lg:order-1"
           >
-
-            <div className="relative group mx-auto w-fit">
-              <div className="absolute -inset-2 bg-gradient-to-r from-primary via-orange-400 to-blue-600 rounded-t-2xl rounded-b-full blur-lg opacity-30 group-hover:opacity-60 transition duration-1000 group-hover:duration-200"></div>
-              <div className="relative w-32 h-44 sm:w-48 sm:h-64 md:w-56 md:h-72 overflow-hidden border-4 border-background bg-secondary/20 shadow-2xl z-10 rounded-t-2xl rounded-b-full">
-                <img 
-                  alt={DATA.name} 
-                  src={DATA.avatarUrl} 
-                  className="w-full h-full object-cover object-top drop-shadow-2xl" 
-                />
-              </div>
-            </div>
-
-            <div className="space-y-2">
+            <div className="space-y-4 w-full">
               <div className="flex items-center justify-center gap-2">
-                <h1 className="text-3xl sm:text-5xl font-black tracking-tighter text-foreground leading-[1.1] pb-1">
+                <h1 className="text-3xl sm:text-5xl font-black tracking-tighter text-foreground leading-[1.1] pb-1 text-center">
                   {DATA.name.split(" ")[0]}{" "}
                   <motion.span 
                     className="inline-block italic text-transparent bg-clip-text bg-gradient-to-r from-primary via-[#f97015] to-purple-500"
@@ -178,7 +191,7 @@ export default function Page() {
             </div>
 
             <motion.div 
-              className="max-w-[700px] text-sm sm:text-base text-foreground font-bold leading-relaxed px-4 drop-shadow-sm"
+              className="max-w-[700px] text-sm sm:text-base text-foreground font-bold leading-relaxed px-4 drop-shadow-sm text-center"
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true }}
@@ -216,7 +229,6 @@ export default function Page() {
                 </Link>
               </Button>
              
-
               <Button
                 size="default"
                 variant="outline"
@@ -225,14 +237,21 @@ export default function Page() {
               >
                 <MessageCircle className="text-[#f97015] mr-2" size={20} /> Ask Me
               </Button>
+
+              <Button
+                size="default"
+                className="rounded-full w-full sm:w-auto px-8 font-black shadow-xl shadow-orange-500/20 h-12 text-base bg-gradient-to-r from-orange-500 to-primary hover:scale-105 transition-transform"
+                onClick={() => setShowFullGallery(true)}
+              >
+                <Layout className="mr-2 size-5" /> View Gallery
+              </Button>
             </div>
 
-            {/* Quick Contact Section */}
             <motion.div 
                initial={{ opacity: 0, y: 20 }}
                animate={{ opacity: 1, y: 0 }}
                transition={{ delay: 0.5 }}
-               className="hidden sm:flex flex-wrap items-center justify-center gap-x-6 gap-y-3 pt-6 border-t border-primary/10 mt-8 w-full max-w-2xl mx-auto px-4"
+               className="hidden sm:flex flex-wrap items-center justify-center gap-x-6 gap-y-3 pt-6 border-t border-primary/10 mt-8 w-full max-w-2xl px-4"
             >
               <Link 
                 href={`mailto:${DATA.contact.email}`}
@@ -261,18 +280,14 @@ export default function Page() {
               </Link>
             </motion.div>
 
-            {/* Social Links Section - Animated circular icons with branded tooltips */}
             <motion.div
                initial={{ opacity: 0, y: 20 }}
                animate={{ opacity: 1, y: 0 }}
                transition={{ delay: 0.6 }}
                className="hidden sm:flex items-center justify-center flex-wrap gap-1 pt-4"
             >
-
-              {/* Dynamic social icons */}
-
               {Object.entries(DATA.contact.social).map(([name, social]) => {
-                const Icon = social.icon;
+                const Icon = (social as any).icon;
                 const cls =
                   name === "LinkedIn" ? "si-linkedin" :
                   name === "GitHub"   ? "si-github" :
@@ -285,16 +300,7 @@ export default function Page() {
                   </a>
                 );
               })}
-
-              {/* Instagram from community */}
-              {(DATA as any).community?.filter((c: any) => c.platform === "Instagram").map((insta: any) => (
-                <a key="Instagram" href={insta.link} target="_blank" rel="noopener noreferrer" className="social-icon-btn si-instagram">
-                  <span className="social-icon-tip">Instagram</span>
-                  <Users className="size-5" />
-                </a>
-              ))}
             </motion.div>
-
           </motion.div>
         </div>
       </section>
@@ -435,15 +441,18 @@ export default function Page() {
           </div>
         </div>
       </section>
+
       {/* 3. Stats / Achievements */}
       <section id="stats" className="scroll-mt-16 px-4">
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-[1400px] mx-auto">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-[1400px] mx-auto">
           {DATA.stats?.map((stat, idx) => {
             const Icon = {
               Briefcase: Briefcase,
               Users: Users,
               Cpu: Cpu,
             }[stat.icon as string] || Trophy;
+
+            const isLink = stat.label.includes("Technologies") || stat.label.includes("Projects") || stat.label.includes("Systems");
 
             return (
               <motion.div
@@ -452,16 +461,42 @@ export default function Page() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: idx * 0.1 }}
-                className="p-6 rounded-3xl bg-secondary/15 backdrop-blur-md border border-primary/10 hover:border-primary/30 transition-all text-center space-y-2 group shadow-xl"
+                onClick={() => {
+                  if (stat.label.includes("Technologies")) router.push("/technologies");
+                  else if (stat.label.includes("Projects")) router.push("/projects");
+                  else if (stat.label.includes("Systems")) router.push("/systems");
+                }}
+                className={cn(
+                  "p-8 rounded-[2rem] bg-secondary/10 backdrop-blur-md border border-primary/10 transition-all duration-500 text-center space-y-3 group shadow-xl relative overflow-hidden",
+                  isLink && "cursor-pointer hover:border-primary/50 hover:bg-primary/5 hover:shadow-primary/10 active:scale-[0.97]"
+                )}
               >
-                <div className="mx-auto size-12 rounded-2xl bg-primary/10 flex items-center justify-center group-hover:scale-110 transition-transform">
-                  <Icon className="size-5 text-primary" />
+                {/* Blueprint Card Textures */}
+                {isLink && (
+                  <>
+                    <div className="absolute inset-0 z-0 opacity-[0.03] pointer-events-none" 
+                         style={{ backgroundImage: `radial-gradient(circle, #f97015 1px, transparent 1px)`, backgroundSize: '20px 20px' }} />
+                    <div className="absolute -bottom-2 -right-2 z-0 font-black italic text-primary/5 text-4xl uppercase select-none pointer-events-none group-hover:text-primary/10 transition-colors">
+                      {stat.label.includes("Systems") ? "LAB" : "MAP"}
+                    </div>
+                  </>
+                )}
+
+                {isLink && (
+                  <div className="absolute top-5 right-5 text-primary opacity-30 group-hover:opacity-100 transition-all group-hover:translate-x-1 group-hover:-translate-y-1">
+                    <ExternalLink className="size-4" />
+                  </div>
+                )}
+                
+                <div className="relative z-10 mx-auto size-14 rounded-2xl bg-primary/10 border border-primary/10 flex items-center justify-center group-hover:scale-110 group-hover:rotate-6 transition-all duration-500 shadow-lg">
+                  <Icon className="size-6 text-primary" />
                 </div>
-                <div className="space-y-1">
-                  <h3 className="text-xl font-black text-foreground">
+                
+                <div className="relative z-10 space-y-1">
+                  <h3 className="text-2xl font-black text-foreground tracking-tight group-hover:text-primary transition-colors">
                     {stat.label.split(" ").slice(0, 1).join(" ")}
                   </h3>
-                  <p className="text-xs font-bold text-foreground/60 uppercase tracking-widest">
+                  <p className="text-[10px] font-black text-muted-foreground/60 uppercase tracking-[0.2em]">
                     {stat.label.split(" ").slice(1).join(" ")}
                   </p>
                 </div>
@@ -471,72 +506,130 @@ export default function Page() {
         </div>
       </section>
 
-      {/* 4. Featured Projects */}
-      <section id="projects" className="scroll-mt-20 px-4">
-        <div className="space-y-10 w-full py-8">
-          <div className="space-y-4 text-center max-w-3xl mx-auto">
-            <h2 className="text-2xl sm:text-4xl font-black tracking-tighter text-foreground">
-               Creative & <span className="text-primary italic">Web Apps</span>
-            </h2>
-            <p className="text-foreground/70 text-sm sm:text-base font-medium">
-              Robust full-stack applications built with modern frameworks and performance in mind.
-            </p>
-          </div>
-          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 max-w-[1400px] mx-auto">
-            {DATA.projects.map((project, id) => (
-              <ProjectCard
-                href={project.href}
-                key={project.title}
-                title={project.title}
-                description={project.description}
-                dates={project.dates}
-                tags={project.technologies}
-                image={project.image}
-                video={project.video}
-                links={project.links}
-              />
-            ))}
-          </div>
+
+
+      {/* 4. System Blueprint Laboratory Preview */}
+      <section id="systems-preview" className="scroll-mt-16 relative overflow-hidden py-10 px-4">
+        {/* Section Watermark */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-0 pointer-events-none select-none opacity-[0.02]">
+           <h2 className="text-[15vw] font-black italic uppercase tracking-tighter">LABORATORY</h2>
+        </div>
+
+        <div className="max-w-[1400px] mx-auto space-y-12 relative z-10">
+           <div className="flex flex-col md:flex-row items-center justify-between gap-6 border-b border-primary/10 pb-10">
+              <div className="text-center md:text-left space-y-2">
+                 <h2 className="text-3xl sm:text-5xl font-[900] tracking-tighter text-foreground leading-none">
+                    SYSTEM <span className="text-primary italic">BLUEPRINTS</span>
+                 </h2>
+                 <p className="text-xs sm:text-sm font-black text-muted-foreground/60 uppercase tracking-[0.3em]">
+                    High-Precision Architectural Visualization
+                 </p>
+              </div>
+              <Link href="/systems">
+                 <Button variant="outline" className="rounded-2xl gap-2 font-black text-[10px] uppercase tracking-widest bg-primary/5 border-primary/20 hover:bg-primary hover:text-primary-foreground transition-all shadow-xl px-8 py-6">
+                    Explore Laboratory <Maximize2 className="size-3" />
+                 </Button>
+              </Link>
+           </div>
+
+           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+              {DATA.architectures.slice(0, 4).map((arch, idx) => (
+                 <motion.div
+                    key={arch.file}
+                    initial={{ opacity: 0, scale: 0.95 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: idx * 0.1 }}
+                    onClick={() => router.push(`/systems/${arch.file}`)}
+                    className="group relative cursor-pointer"
+                 >
+                    <div className="aspect-[4/3] rounded-[2rem] bg-secondary/10 border border-primary/5 group-hover:border-primary/40 transition-all duration-500 flex items-center justify-center p-6 relative overflow-hidden shadow-2xl">
+                       {/* In-card dot grid */}
+                       <div className="absolute inset-0 z-0 opacity-[0.05] pointer-events-none" 
+                            style={{ backgroundImage: `radial-gradient(circle, #f97015 1px, transparent 1px)`, backgroundSize: '16px 16px' }} />
+                       
+                       <img 
+                          src={`/SystemsArchitected/${arch.file}`} 
+                          alt={arch.name}
+                          className="max-w-full max-h-full object-contain group-hover:scale-110 transition-transform duration-700 relative z-10 drop-shadow-[0_0_20px_rgba(249,112,21,0.1)]"
+                       />
+                       
+                       <div className="absolute top-4 right-4 p-2 rounded-xl bg-primary/10 text-primary opacity-0 group-hover:opacity-100 transition-all">
+                          <Maximize2 className="size-3" />
+                       </div>
+                    </div>
+                    <div className="mt-4 px-2">
+                       <h3 className="text-sm font-black text-foreground group-hover:text-primary transition-colors truncate uppercase tracking-tight">
+                          {arch.name}
+                       </h3>
+                       <p className="text-[8px] font-black text-muted-foreground/40 uppercase tracking-widest">
+                          {arch.tag} • ARCH
+                       </p>
+                    </div>
+                 </motion.div>
+              ))}
+           </div>
         </div>
       </section>
 
-      {/* 5. AI Projects */}
-      <section id="ai-projects" className="scroll-mt-20 px-4">
-        <div className="space-y-10 w-full py-8">
-          <div className="space-y-4 text-center max-w-3xl mx-auto">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary border border-primary/20 text-[10px] font-black uppercase tracking-widest">
-              <Sparkles className="size-3" /> AI Engineering
+      {/* 6. GitHub Activity */}
+      <GithubActivity />
+
+      {/* 7. Featured Projects Stage */}
+      <section id="projects" className="scroll-mt-16 px-4">
+        <div className="max-w-[1400px] mx-auto space-y-12">
+          <div className="flex flex-col md:flex-row items-center justify-between gap-6 border-b border-primary/10 pb-10">
+            <div className="text-center md:text-left space-y-2">
+              <h2 className="text-3xl sm:text-5xl font-[900] tracking-tighter text-foreground uppercase leading-none">
+                Featured <span className="text-primary italic">Builds</span>
+              </h2>
+              <p className="text-xs sm:text-sm font-black text-muted-foreground/60 uppercase tracking-[0.3em]">
+                Production-Ready Engineering Showcase
+              </p>
             </div>
-            <h2 className="text-2xl sm:text-4xl font-black tracking-tighter text-foreground">
-               Intelligent <span className="text-primary italic">Systems</span>
-            </h2>
-            <p className="text-foreground/70 text-sm sm:text-base font-medium">
-              Exploring the frontiers of RAG, Agentic workflows, and LLM orchestration.
-            </p>
+            <Link href="/projects">
+              <Button variant="outline" className="rounded-2xl gap-2 font-black text-[10px] uppercase tracking-widest bg-primary/5 border-primary/20 hover:bg-primary hover:text-primary-foreground transition-all shadow-xl px-8 py-6">
+                View Full Archive <ArrowUpRight className="size-4" />
+              </Button>
+            </Link>
           </div>
-          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 max-w-[1400px] mx-auto">
-            {(DATA as any).aiProjects?.map((project: any, id: number) => (
-              <ProjectCard
-                href={project.href}
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            {(DATA.projects as readonly any[]).slice(0, 3).map((project, id) => (
+              <motion.div 
                 key={project.title}
-                title={project.title}
-                description={project.description}
-                dates={project.dates}
-                tags={project.technologies}
-                image={project.image}
-                video={project.video}
-                links={project.links}
-              />
+                initial={{ opacity: 0, scale: 0.95 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ delay: id * 0.1 }}
+                className="group"
+              >
+                <div className="relative group hover:-translate-y-2 transition-transform duration-500">
+                   <ProjectCard
+                    href={`/projects?file=${project.blueprint || project.title}`}
+                    title={project.title}
+                    description={project.description}
+                    dates={project.dates}
+                    tags={project.technologies}
+                    image={project.image}
+                    video={project.video}
+                    links={project.links}
+                  />
+                  <div className="absolute top-4 right-4 z-40 p-2 rounded-xl bg-primary/10 text-primary opacity-0 group-hover:opacity-100 transition-all shadow-xl">
+                      <Maximize2 className="size-4" />
+                  </div>
+                </div>
+              </motion.div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* 6. Work Experience */}
+      {/* 7.5 Work Experience */}
       <section id="work" className="scroll-mt-16 px-4 max-w-[1400px] mx-auto">
         <div className="space-y-8">
           <div className="flex items-center justify-between border-b border-primary/10 pb-4">
-            <h2 className="text-xl sm:text-2xl font-black text-foreground">Work Experience</h2>
+            <h2 className="text-xl sm:text-2xl font-black text-foreground uppercase tracking-tight">Work <span className="text-primary italic">History</span></h2>
             <Badge variant="secondary" className="bg-primary/10 text-primary font-bold text-[10px] sm:text-xs">
               1.5+ Years Exp.
             </Badge>
@@ -652,32 +745,43 @@ export default function Page() {
       <section id="github" className="scroll-mt-16 px-4 max-w-[1400px] mx-auto w-full">
         <div className="p-8 rounded-3xl bg-secondary/20 backdrop-blur-md border border-primary/10 space-y-6 shadow-xl">
           <div className="flex items-center justify-between">
-            <h2 className="text-xl sm:text-2xl font-black flex items-center gap-3">
-              <Github className="size-6 text-primary" />
-              GitHub Activity
-            </h2>
+            <div className="flex items-center gap-3">
+              <h2 className="text-xl sm:text-2xl font-black flex items-center gap-3">
+                <Github className="size-6 text-primary" />
+                GitHub Activity <span className="text-[10px] font-black text-primary/40 pt-1">2024 - 2025</span>
+              </h2>
+            </div>
             <Link href={`https://github.com/${DATA.githubActivity.username}`} target="_blank" className="text-xs font-bold text-primary hover:underline flex items-center gap-1">
               @{DATA.githubActivity.username} <ArrowUpRight className="size-3" />
             </Link>
           </div>
           
-          {/* Mock Heatmap Grid */}
+          {/* Mock Heatmap Grid with Months */}
           <div className="hide-scrollbar overflow-x-auto pb-2">
-            <div className="flex gap-1">
-              {Array.from({ length: 50 }).map((_, i) => (
-                <div key={i} className="flex flex-col gap-1 shrink-0">
-                  {Array.from({ length: 7 }).map((_, j) => {
-                    const opacity = Math.random();
-                    return (
-                      <div 
-                        key={j} 
-                        className="size-2 sm:size-3 rounded-sm bg-primary" 
-                        style={{ opacity: opacity < 0.3 ? 0.1 : opacity }}
-                      />
-                    );
-                  })}
-                </div>
-              ))}
+            <div className="flex flex-col gap-2 min-w-[700px]">
+              {/* Month Labels */}
+              <div className="flex text-[8px] font-black uppercase text-foreground/30 gap-1 ml-1 leading-none">
+                {["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"].map((m, i) => (
+                  <div key={m} style={{ width: "calc(100% / 12)" }}>{m}</div>
+                ))}
+              </div>
+              
+              <div className="flex gap-1">
+                {Array.from({ length: 50 }).map((_, i) => (
+                  <div key={i} className="flex flex-col gap-1 shrink-0">
+                    {Array.from({ length: 7 }).map((_, j) => {
+                      const opacity = Math.random();
+                      return (
+                        <div 
+                          key={j} 
+                          className="size-2 sm:size-3 rounded-sm bg-primary" 
+                          style={{ opacity: opacity < 0.3 ? 0.1 : opacity }}
+                        />
+                      );
+                    })}
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
 
@@ -772,9 +876,7 @@ export default function Page() {
           </div>
         </div>
       </section>
-
      
-
       {/* 12. Contact Section */}
       <section id="contact" className="scroll-mt-20 px-4">
         <div className="grid items-center justify-center gap-4 px-4 text-center w-full py-12 sm:py-20 bg-primary/5 rounded-[3rem] border border-primary/10 mx-auto max-w-[1400px] relative overflow-hidden">
@@ -791,6 +893,7 @@ export default function Page() {
             <div className="inline-block rounded-full bg-primary text-primary-foreground px-6 py-1.5 text-[10px] font-black uppercase tracking-[0.3em]">
               Get In Touch
             </div>
+
             <h2 className="text-3xl sm:text-5xl font-black tracking-tight">
               Ready to build <span className="text-primary italic">something insane?</span>
             </h2>
@@ -802,13 +905,96 @@ export default function Page() {
                 Looking for freelancing services? Visit <a href="https://pvcode1u.ai" target="_blank" className="text-primary font-bold hover:underline">pvcode1u.ai</a>
               </span>
             </p>
-             {/* 11.5 Testimonials */}
-      <section id="testimonials" className="scroll-mt-16 overflow-hidden">
-        <TestimonialsCarousel />
-      </section>
+
+            {/* Testimonials integrated inside Contact Section as requested */}
+            <section id="testimonials" className="scroll-mt-16 overflow-hidden">
+              <TestimonialsCarousel />
+            </section>
           </motion.div>
         </div>
       </section>
-    </main>
-  );
+    </motion.div>
+  ) : (
+    <motion.div
+      key="full-gallery"
+      initial={{ opacity: 0, scale: 0.5, borderRadius: "100%" }}
+      animate={{ opacity: 1, scale: 1, borderRadius: "0%" }}
+      exit={{ opacity: 0, scale: 0.5, borderRadius: "100%" }}
+      transition={{ type: "spring", damping: 25, stiffness: 200 }}
+      className="fixed inset-0 z-[500] bg-background overflow-hidden flex flex-col"
+    >
+      {/* Gallery Header / Back Button */}
+      <div className="absolute top-6 left-6 z-[600]">
+        <Button
+          onClick={() => setShowFullGallery(false)}
+          variant="outline"
+          className="rounded-full px-6 font-black bg-background/50 backdrop-blur-md border-primary/20 hover:bg-primary/10 group h-12"
+        >
+          <X className="mr-2 size-5 group-hover:rotate-90 transition-transform" /> 
+          Back to Home
+        </Button>
+      </div>
+
+      <div className="absolute top-6 right-6 z-[600] hidden md:block text-right">
+        <h2 className="text-2xl font-black text-foreground drop-shadow-md">
+          Interactive <span className="text-primary italic">Gallery</span>
+        </h2>
+        <p className="text-xs font-bold text-muted-foreground uppercase tracking-widest">
+          Drag to explore • Scroll to zoom
+        </p>
+      </div>
+
+      {/* Zoom Controls Overlay */}
+      <div className="absolute bottom-12 left-1/2 -translate-x-1/2 z-[600] flex flex-col items-center gap-4 w-[280px] sm:w-[400px] px-6 py-4 rounded-3xl bg-background/40 backdrop-blur-xl border border-primary/10 shadow-2xl">
+        <div className="flex items-center justify-between w-full text-[10px] font-black uppercase tracking-widest text-primary/70">
+          <span className="flex items-center gap-1.5"><Icons.x className="size-3" /> Minimum</span>
+          <span className="flex items-center gap-1.5">Maximum <Icons.youtube className="size-3" /></span>
+        </div>
+        <div className="relative w-full h-6 flex items-center">
+           <div className="absolute inset-0 bg-primary/5 rounded-full blur-sm" />
+           <input 
+            type="range"
+            min="0.3"
+            max="1.5"
+            step="0.01"
+            value={galleryZoom}
+            onChange={(e) => setGalleryZoom(parseFloat(e.target.value))}
+            className="w-full h-1.5 bg-primary/20 rounded-lg appearance-none cursor-pointer accent-primary relative z-10"
+            style={{
+              background: `linear-gradient(to right, #f97015 0%, #f97015 ${(galleryZoom - 0.3) / 1.2 * 100}%, rgba(249, 112, 21, 0.2) ${(galleryZoom - 0.3) / 1.2 * 100}%, rgba(249, 112, 21, 0.2) 100%)`
+            }}
+          />
+        </div>
+        <div className="text-[10px] font-bold text-foreground/40 uppercase tracking-tighter">
+          Current Fit: <span className="text-primary font-black">{(galleryZoom * 100).toFixed(0)}%</span>
+        </div>
+      </div>
+
+      {/* Full Screen Gallery Component */}
+      <div className="flex-1 w-full h-full relative flex items-center justify-center p-4 sm:p-12 overflow-hidden">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(249,112,21,0.08)_0%,transparent_70%)] pointer-events-none" />
+        
+        {/* The Circular Gallery Box */}
+        <motion.div 
+          className="relative w-full h-full max-w-[90vh] aspect-square rounded-full border-[10px] sm:border-[20px] border-secondary/20 shadow-[0_0_80px_rgba(249,112,21,0.15)] overflow-hidden bg-black/40 ring-1 ring-primary/20"
+          initial={{ scale: 0.8, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          transition={{ delay: 0.2, duration: 0.8 }}
+        >
+          <div className="absolute inset-0 z-20 pointer-events-none shadow-[inset_0_0_100px_rgba(0,0,0,0.8)]" />
+          <DomeGallery
+            fit={galleryZoom}
+            minRadius={400}
+            maxVerticalRotationDeg={15}
+            segments={40}
+            dragDampening={1.2}
+            grayscale={false}
+          />
+        </motion.div>
+      </div>
+    </motion.div>
+  )}
+</AnimatePresence>
+</main>
+);
 }

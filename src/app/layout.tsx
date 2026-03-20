@@ -1,6 +1,7 @@
 import AIChatbot from "@/components/ai-chatbot";
 import Navbar from "@/components/navbar";
 import { ThemeProvider } from "@/components/theme-provider";
+import { Suspense } from "react";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import VantaBirds from "@/components/vanta-birds";
 import { DATA } from "@/data/resume";
@@ -72,12 +73,18 @@ export default function RootLayout({
           <LoadingProvider>
             <TooltipProvider delayDuration={0}>
               <SiteLoader />
-              <Header />
+              <Suspense fallback={null}>
+                <Header />
+              </Suspense>
               <Toaster position="top-center" reverseOrder={false} />
               <VantaBirds />
               {children}
-              <Navbar />
-              <AIChatbot />
+              <Suspense fallback={null}>
+                <Navbar />
+              </Suspense>
+              <Suspense fallback={null}>
+                <AIChatbot />
+              </Suspense>
             </TooltipProvider>
           </LoadingProvider>
         </ThemeProvider>

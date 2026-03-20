@@ -13,10 +13,17 @@ import { DATA } from "@/data/resume";
 import { useLoading } from "@/hooks/use-loading";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
+import { usePathname, useSearchParams } from "next/navigation";
 import toast from "react-hot-toast";
 
 export default function Navbar() {
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
   const { startLoading } = useLoading();
+  
+  const isHidden = pathname.startsWith("/systems/") || (pathname === "/projects" && searchParams.get("file"));
+  
+  if (isHidden) return null;
 
   return (
     <div className="pointer-events-none fixed inset-x-0 bottom-0 z-30 mx-auto mb-4 flex origin-bottom h-full max-h-14 lg:hidden">
