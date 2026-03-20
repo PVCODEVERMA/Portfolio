@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Star, X, LogIn } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { supabase } from "@/lib/supabase-client";
+import { getSupabaseClient } from "@/lib/supabase-client";
 import toast from "react-hot-toast";
 
 export function RatingModal({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
@@ -15,21 +15,24 @@ export function RatingModal({ isOpen, onClose }: { isOpen: boolean; onClose: () 
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
-    supabase.auth.getSession().then(({ data: { session } }) => setSession(session));
-    const { data: authListener } = supabase.auth.onAuthStateChange((_event, session) => {
+    const client = getSupabaseClient();
+    if (!client) return;
+    client.auth.getSession().then(({ data: { session } }) => setSession(session));
+    const { data: authListener } = client.auth.onAuthStateChange((_event, session) => {
       setSession(session);
     });
     return () => authListener.subscription.unsubscribe();
   }, []);
 
   const handleGoogleLogin = async () => {
-    await supabase.auth.signInWithOAuth({
+    const client = getSupabaseClient();
+    if (!client) return toast.error("Supabase is not configured.");
+    await client.auth.signInWithOAuth({
       provider: "google",
-      options: {
-        redirectTo: window.location.origin
-      }
+      options: { redirectTo: window.location.origin }
     });
   };
+
 
   const handleSubmit = async () => {
     if (!session?.user) return;
@@ -151,7 +154,7 @@ export function RatingModal({ isOpen, onClose }: { isOpen: boolean; onClose: () 
                  </Button>
                  
                  <div className="text-center pt-2">
-                    <button onClick={() => supabase.auth.signOut()} className="text-[10px] text-muted-foreground hover:text-red-500 hover:underline uppercase tracking-widest font-black transition-colors">
+                    <button onClick={() => getSupabaseClient()?.auth.signOut()} className="text-[10px] text-muted-foreground hover:text-red-500 hover:underline uppercase tracking-widest font-black transition-colors">
                        Sign out from {session.user.email}
                     </button>
                  </div>
