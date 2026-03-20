@@ -73,7 +73,7 @@ export function TestimonialsCarousel() {
                   </div>
                   {rating.comment && (
                     <p className="text-sm text-foreground/80 leading-relaxed italic line-clamp-4 font-medium">
-                      "{rating.comment}"
+                      {'"'}{rating.comment}{'"'}
                     </p>
                   )}
                 </div>
