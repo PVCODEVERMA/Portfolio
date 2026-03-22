@@ -71,12 +71,20 @@ export function AuthModal({ isOpen, onClose }: { isOpen: boolean; onClose: () =>
         >
           <div className="absolute inset-0 bg-black/90 backdrop-blur-md" />
           <motion.div
-             className="relative w-full max-w-[400px] overflow-hidden rounded-[2.5rem] border border-primary/20 bg-background p-6 sm:p-8 shadow-2xl"
+             className="relative w-full max-w-[400px] overflow-hidden rounded-[2rem] sm:rounded-[2.5rem] border border-primary/20 bg-background p-6 sm:p-8 shadow-2xl"
              initial={{ y: 30, scale: 0.95, opacity: 0 }}
              animate={{ y: 0, scale: 1, opacity: 1 }}
              exit={{ y: 20, scale: 0.95, opacity: 0 }}
              onClick={(e) => e.stopPropagation()}
           >
+            {/* Close Button */}
+            <button 
+              onClick={onClose}
+              className="absolute top-4 right-4 z-10 p-2 rounded-xl bg-primary/5 hover:bg-primary/10 text-foreground/50 hover:text-foreground transition-colors"
+            >
+              <X className="size-5" />
+            </button>
+
             {/* Background Grain Effect */}
             <div className="absolute inset-0 opacity-[0.03] pointer-events-none" style={{ backgroundImage: `url('/images/noise.png')` }} />
 

@@ -579,7 +579,7 @@ export default function Page() {
       <section id="projects" className="scroll-mt-16 px-4">
         <div className="max-w-[1400px] mx-auto space-y-12">
           <div className="flex flex-col md:flex-row items-center justify-between gap-6 border-b border-primary/10 pb-10">
-            <div className="text-center md:text-left space-y-2">
+            <div className="text-center md:text-left space-y-2 flex-1">
               <h2 className="text-3xl sm:text-5xl font-[900] tracking-tighter text-foreground uppercase leading-none">
                 Featured <span className="text-primary italic">Builds</span>
               </h2>
@@ -587,11 +587,6 @@ export default function Page() {
                 Production-Ready Engineering Showcase
               </p>
             </div>
-            <Link href="/projects">
-              <Button variant="outline" className="rounded-2xl gap-2 font-black text-[10px] uppercase tracking-widest bg-primary/5 border-primary/20 hover:bg-primary hover:text-primary-foreground transition-all shadow-xl px-8 py-6">
-                View Full Archive <ArrowUpRight className="size-4" />
-              </Button>
-            </Link>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -602,9 +597,9 @@ export default function Page() {
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
                 transition={{ delay: id * 0.1 }}
-                className="group"
+                className="group h-full"
               >
-                <div className="relative group hover:-translate-y-2 transition-transform duration-500">
+                <div className="relative group hover:-translate-y-2 transition-transform duration-500 h-full">
                    <ProjectCard
                     href={`/projects?file=${project.blueprint || project.title}`}
                     title={project.title}
@@ -621,6 +616,14 @@ export default function Page() {
                 </div>
               </motion.div>
             ))}
+          </div>
+
+          <div className="flex justify-center mt-12 pb-4">
+            <Link href="/projects">
+              <Button variant="outline" className="rounded-2xl gap-2 font-black text-[10px] uppercase tracking-widest bg-primary/5 border-primary/20 hover:bg-primary hover:text-primary-foreground transition-all shadow-xl px-12 py-7 h-auto">
+                View Full Archive <ArrowUpRight className="size-5" />
+              </Button>
+            </Link>
           </div>
         </div>
       </section>
@@ -739,61 +742,6 @@ export default function Page() {
             skillsData={DATA.skills as any}
           />
         )}
-      </section>
-
-      {/* 8. GitHub Activity */}
-      <section id="github" className="scroll-mt-16 px-4 max-w-[1400px] mx-auto w-full">
-        <div className="p-8 rounded-3xl bg-secondary/20 backdrop-blur-md border border-primary/10 space-y-6 shadow-xl">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <h2 className="text-xl sm:text-2xl font-black flex items-center gap-3">
-                <Github className="size-6 text-primary" />
-                GitHub Activity <span className="text-[10px] font-black text-primary/40 pt-1">2024 - 2025</span>
-              </h2>
-            </div>
-            <Link href={`https://github.com/${DATA.githubActivity.username}`} target="_blank" className="text-xs font-bold text-primary hover:underline flex items-center gap-1">
-              @{DATA.githubActivity.username} <ArrowUpRight className="size-3" />
-            </Link>
-          </div>
-          
-          {/* Mock Heatmap Grid with Months */}
-          <div className="hide-scrollbar overflow-x-auto pb-2">
-            <div className="flex flex-col gap-2 min-w-[700px]">
-              {/* Month Labels */}
-              <div className="flex text-[8px] font-black uppercase text-foreground/30 gap-1 ml-1 leading-none">
-                {["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"].map((m, i) => (
-                  <div key={m} style={{ width: "calc(100% / 12)" }}>{m}</div>
-                ))}
-              </div>
-              
-              <div className="flex gap-1">
-                {Array.from({ length: 50 }).map((_, i) => (
-                  <div key={i} className="flex flex-col gap-1 shrink-0">
-                    {Array.from({ length: 7 }).map((_, j) => {
-                      const opacity = Math.random();
-                      return (
-                        <div 
-                          key={j} 
-                          className="size-2 sm:size-3 rounded-sm bg-primary" 
-                          style={{ opacity: opacity < 0.3 ? 0.1 : opacity }}
-                        />
-                      );
-                    })}
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-
-          <div className="grid grid-cols-3 gap-4 border-t border-primary/5 pt-6">
-            {DATA.githubActivity.stats.map((stat) => (
-              <div key={stat.label} className="text-center space-y-1">
-                <p className="text-lg sm:text-2xl font-black text-foreground">{stat.value}</p>
-                <p className="text-[10px] font-bold text-foreground/60 uppercase tracking-widest leading-tight">{stat.label}</p>
-              </div>
-            ))}
-          </div>
-        </div>
       </section>
 
       {/* 9. Blog / Articles */}

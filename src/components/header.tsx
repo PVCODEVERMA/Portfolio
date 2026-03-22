@@ -33,7 +33,6 @@ import {
 
 import { useLoading } from "@/hooks/use-loading";
 import { useAuth } from "@/hooks/use-auth";
-import { AuthModal } from "./auth-modal";
 import { LogOut, User as UserIcon } from "lucide-react";
 
 const NAV_ITEMS = [
@@ -43,7 +42,6 @@ const NAV_ITEMS = [
   { name: "Education", href: "/#education", icon: GraduationCap },
   { name: "Projects", href: "/#projects", icon: Folder },
   { name: "Certificates", href: "/#certifications", icon: Award },
-  { name: "Contact", href: "/#contact", icon: Mail },
 ];
 
 
@@ -53,11 +51,10 @@ export function Header() {
   
   const [mounted, setMounted] = React.useState(false);
   const [isDrawerOpen, setIsDrawerOpen] = React.useState(false);
-  const [isAuthModalOpen, setIsAuthModalOpen] = React.useState(false);
   const [activeCertIdx, setActiveCertIdx] = React.useState<number | null>(null);
   const [activeHash, setActiveHash] = React.useState("/");
   const { startLoading } = useLoading();
-  const { user, signOut } = useAuth();
+  const { user, signOut, setIsAuthModalOpen } = useAuth();
 
   const isHidden = pathname.startsWith("/systems/") || (pathname === "/projects" && searchParams.get("file"));
 
@@ -163,16 +160,32 @@ export function Header() {
         animate={{ y: 0, opacity: 1 }}
         className="w-[100%] sm:w-auto flex flex-nowrap items-center gap-0.5 sm:gap-2 px-1 py-1.5 sm:p-2 rounded-none sm:rounded-2xl bg-background/60 backdrop-blur-2xl border border-primary/20 shadow-[0_0_50px_-12px_rgba(0,0,0,0.3)] pointer-events-auto max-w-full overflow-x-auto hide-scrollbar"
       >
-        {/* Left: Profile Section */}
+        {/* Left: Profile Section / Login Trigger */}
         <div className="flex items-center gap-1 sm:gap-2 pr-1 sm:pr-2 border-r border-border/50">
-          <Avatar className="size-7 sm:size-8 border-2 border-primary/20 shrink-0">
-            <AvatarImage src={DATA.avatarUrl} />
-            <AvatarFallback>{DATA.initials}</AvatarFallback>
-          </Avatar>
+          {user && user.email === DATA.contact.email ? (
+            <Avatar className="size-7 sm:size-8 border-2 border-primary/20 shrink-0">
+              <AvatarImage src={DATA.avatarUrl} />
+              <AvatarFallback>{DATA.initials}</AvatarFallback>
+            </Avatar>
+          ) : (
+            <button 
+              onClick={() => !user && setIsAuthModalOpen(true)}
+              className={cn(
+                "p-1 px-2.5 sm:px-3 text-primary rounded-xl transition-all flex items-center gap-1.5 group",
+                !user ? "hover:bg-primary/10 active:scale-90 cursor-pointer" : "cursor-default"
+              )}
+              title={!user ? "Click to Login" : "Logged in as User"}
+            >
+              <LogIn className="size-4.5 sm:size-5 transition-transform group-hover:scale-110" />
+              <span className="text-[10px] sm:text-xs font-black uppercase tracking-widest hidden xs:inline">
+                {!user ? "Login" : "User"}
+              </span>
+            </button>
+          )}
         </div>
 
-        {/* Center: Navigation Links */}
-        <div className="flex items-center gap-0 sm:gap-1">
+        {/* Center: Navigation Links (Hidden on mobile, use bottom Dock instead) */}
+        <div className="hidden sm:flex items-center gap-0 sm:gap-1">
           {NAV_ITEMS.map((item) => {
             const Icon = item.icon;
             const isActive = activeHash === item.href;
@@ -223,7 +236,13 @@ export function Header() {
                 )}>
                   <AvatarImage src={user.user_metadata?.avatar_url || ""} />
                   <AvatarFallback className="bg-primary/10 text-primary font-black text-[10px]">
-                    {user.user_metadata?.full_name?.charAt(0) || user.email?.charAt(0) || "U"}
+                    {(() => {
+                      const name = user.user_metadata?.full_name || "";
+                      if (!name) return user.email?.charAt(0).toUpperCase() || "U";
+                      const parts = name.split(" ").filter(Boolean);
+                      if (parts.length === 1) return parts[0].charAt(0).toUpperCase();
+                      return (parts[0].charAt(0) + parts[parts.length - 1].charAt(0)).toUpperCase();
+                    })()}
                   </AvatarFallback>
                 </Avatar>
                 
@@ -252,26 +271,12 @@ export function Header() {
                 <LogOut className="size-3.5 sm:size-4" />
               </button>
             </div>
-          ) : (
-             <button 
-              onClick={() => setIsAuthModalOpen(true)}
-              className="group relative flex items-center gap-1.5 px-3 py-1.5 sm:px-4 sm:py-2 text-[10px] sm:text-xs font-black uppercase tracking-widest text-primary-foreground bg-primary rounded-xl overflow-hidden active:scale-95 transition-all shadow-xl shadow-primary/20"
-            >
-              <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/20 to-white/0 -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
-              <LogIn className="size-3.5 sm:size-4" />
-              <span className="hidden xs:inline">Login</span>
-            </button>
-          )}
+          ) : null}
           <div className="h-4 w-px bg-border/50 mx-0.5 sm:mx-1" />
           <ModeToggle />
         </div>
 
       </motion.nav>
-
-      <AuthModal 
-        isOpen={isAuthModalOpen} 
-        onClose={() => setIsAuthModalOpen(false)} 
-      />
 
       {mounted
         ? createPortal(
@@ -292,11 +297,11 @@ export function Header() {
                     className="absolute inset-0 bg-black/60 backdrop-blur-sm"
                   />
                   <motion.div
-                    initial={{ x: "-100%" }}
+                    initial={{ x: "100%" }}
                     animate={{ x: 0 }}
-                    exit={{ x: "-100%" }}
+                    exit={{ x: "100%" }}
                     transition={{ type: "spring", damping: 25, stiffness: 200 }}
-                    className="absolute top-0 left-0 h-full w-full sm:w-[460px] bg-background border-r border-border/50 shadow-2xl flex flex-col pt-6"
+                    className="absolute top-0 right-0 h-full w-full sm:w-[500px] lg:w-[650px] bg-background border-l border-border/50 shadow-2xl flex flex-col pt-6"
                     onClick={(e) => e.stopPropagation()}
                   >
                     <div className="px-6 flex items-start justify-between gap-4 mb-7">

@@ -16,7 +16,6 @@ import { cn } from "@/lib/utils";
 import ReactMarkdown from "react-markdown";
 import { ConfettiButton } from "@/registry/magicui/confetti";
 import { useAuth } from "@/hooks/use-auth";
-import { AuthModal } from "./auth-modal";
 import { LogIn, Lock } from "lucide-react";
 import toast from "react-hot-toast";
 
@@ -53,9 +52,8 @@ const AI_MODELS = [
 export default function AIChatbot() {
   const pathname = usePathname();
   const searchParams = useSearchParams();
-  const { user } = useAuth();
+  const { user, setIsAuthModalOpen } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
-  const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
   const [currentModel, setCurrentModel] = useState(AI_MODELS[0]);
   const [isTyping, setIsTyping] = useState(false);
   const [showModelSelector, setShowModelSelector] = useState(false);
@@ -171,7 +169,7 @@ export default function AIChatbot() {
 
   return (
     <div className={cn(
-      "fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-[100] flex flex-col items-end transition-all duration-500 ease-in-out",
+      "fixed bottom-20 right-4 sm:bottom-6 sm:right-6 z-[100] flex flex-col items-end transition-all duration-500 ease-in-out",
       isOpen && "inset-0 bottom-0 right-0 sm:inset-auto sm:bottom-6 sm:right-6",
       isExternalDrawerOpen && "translate-y-full opacity-0 pointer-events-none"
     )}>
@@ -358,11 +356,6 @@ export default function AIChatbot() {
                 </p>
               </div>
             </div>
-            
-            <AuthModal 
-              isOpen={isAuthModalOpen} 
-              onClose={() => setIsAuthModalOpen(false)} 
-            />
           </motion.div>
         )}
       </AnimatePresence>

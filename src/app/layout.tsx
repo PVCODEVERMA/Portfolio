@@ -13,6 +13,7 @@ import { SiteLoader } from "@/components/site-loader";
 import { Header } from "@/components/header";
 import { LoadingProvider } from "@/hooks/use-loading";
 import { AuthProvider } from "@/hooks/use-auth";
+import { GlobalAuthModal } from "@/components/global-auth-modal";
 import "./globals.css";
 
 const fontSans = FontSans({
@@ -80,6 +81,7 @@ export default function RootLayout({
                 </Suspense>
                 <Toaster position="top-center" reverseOrder={false} />
                 <VantaBirds />
+                <GlobalAuthModal />
                 {children}
                 <Suspense fallback={null}>
                   <Navbar />

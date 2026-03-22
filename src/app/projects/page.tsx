@@ -56,7 +56,7 @@ function ProjectsContent() {
   };
 
   return (
-    <main className="min-h-screen bg-background pt-24 pb-20 px-4 transition-all">
+    <main className="min-h-screen bg-transparent pt-24 pb-20 px-4 transition-all overflow-x-hidden">
       <div className="max-w-[1400px] mx-auto space-y-20">
         
         {/* Header Section */}
@@ -66,10 +66,13 @@ function ProjectsContent() {
           className="flex flex-col items-center gap-6 text-center"
         >
            <Link href="/" className="group">
-              <Button variant="ghost" className="rounded-full gap-2 text-muted-foreground hover:text-primary transition-all">
-                 <ArrowLeft className="size-4 group-hover:-translate-x-1 transition-transform" />
-                 Back to Home
-              </Button>
+               <Button 
+                variant="ghost" 
+                className="rounded-full gap-3 text-muted-foreground hover:bg-[#F97C39] hover:text-white dark:hover:bg-[#F97C39] dark:hover:text-white transition-all font-black text-[11px] uppercase tracking-widest px-6 py-2"
+               >
+                  <ArrowLeft className="size-4 group-hover:-translate-x-1 transition-transform" />
+                  Back to Home
+               </Button>
            </Link>
            <h1 className="text-4xl sm:text-6xl font-black tracking-tighter uppercase leading-none">
               TECHNICAL <span className="text-primary italic">LABORATORY</span>
@@ -94,7 +97,7 @@ function ProjectsContent() {
             </motion.div>
             <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-3">
               {DATA.projects.map((project, id) => (
-                <div key={project.title} onClick={() => setSelectedProject(project)} className="cursor-pointer transition-transform hover:scale-[1.02] active:scale-[0.98]">
+                <div key={project.title} onClick={() => setSelectedProject(project)} className="cursor-pointer transition-transform hover:scale-[1.02] active:scale-[0.98] h-full">
                     <ProjectCard
                       title={project.title}
                       description={project.description}
@@ -128,7 +131,7 @@ function ProjectsContent() {
             </motion.div>
             <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-3">
               {(DATA as any).aiProjects?.map((project: any, id: number) => (
-                <div key={project.title} onClick={() => setSelectedProject(project)} className="cursor-pointer transition-transform hover:scale-[1.02] active:scale-[0.98]">
+                <div key={project.title} onClick={() => setSelectedProject(project)} className="cursor-pointer transition-transform hover:scale-[1.02] active:scale-[0.98] h-full">
                     <ProjectCard
                       title={project.title}
                       description={project.description}
@@ -153,7 +156,7 @@ function ProjectsContent() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[1000] flex flex-col bg-[#020617] overflow-hidden"
+            className="fixed inset-0 z-[1000] flex flex-col bg-black/60 backdrop-blur-3xl overflow-hidden"
           >
             {/* Background Texture */}
             <div className="absolute inset-0 z-0 opacity-[0.05] pointer-events-none" 

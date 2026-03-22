@@ -50,7 +50,7 @@ export function ProjectCard({
       viewport={{ once: true }}
       transition={{ duration: 0.5 }}
       whileHover={{ y: -8, transition: { duration: 0.2 } }}
-      className="group"
+      className="group h-full"
     >
       <Card
         className={

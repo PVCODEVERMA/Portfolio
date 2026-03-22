@@ -6,15 +6,13 @@ import { Button } from "@/components/ui/button";
 import { useAuth } from "@/hooks/use-auth";
 import toast from "react-hot-toast";
 import { motion, AnimatePresence } from "framer-motion";
-import { AuthModal } from "./auth-modal";
 
 export function RatingModal({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
-  const { user: sessionUser, signOut } = useAuth();
+  const { user: sessionUser, signOut, setIsAuthModalOpen } = useAuth();
   const [rating, setRating] = useState(0);
   const [hoveredRating, setHoveredRating] = useState(0);
   const [comment, setComment] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
 
   const handleSubmit = async () => {
     if (!sessionUser) {
@@ -55,7 +53,6 @@ export function RatingModal({ isOpen, onClose }: { isOpen: boolean; onClose: () 
   };
 
   return (
-    <>
     <AnimatePresence>
       {isOpen && (
         <motion.div
@@ -133,11 +130,5 @@ export function RatingModal({ isOpen, onClose }: { isOpen: boolean; onClose: () 
         </motion.div>
       )}
     </AnimatePresence>
-    
-    <AuthModal 
-        isOpen={isAuthModalOpen} 
-        onClose={() => setIsAuthModalOpen(false)} 
-    />
-    </>
   );
 }
