@@ -48,7 +48,7 @@ export const ResumeCard = ({
       onClick={handleClick}
     >
       <Card className={cn(
-        "group flex flex-col sm:flex-row p-4 sm:p-5 transition-all duration-300 hover:shadow-md bg-card/60 backdrop-blur-xl border border-primary/20 hover:border-primary/40",
+        "group flex flex-col sm:flex-row p-4 sm:p-5 transition-all duration-300 hover:shadow-md bg-card/40 backdrop-blur-xl border border-border/40 rounded-xl hover:border-primary/40",
         className
       )}
       role="button"

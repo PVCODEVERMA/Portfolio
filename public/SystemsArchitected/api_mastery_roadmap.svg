@@ -1,0 +1,72 @@
+<svg width="800" height="600" viewBox="0 0 800 600" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background with subtle grid -->
+  <rect width="800" height="600" fill="#020617"/>
+  <defs>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#f97015" stroke-width="0.5" stroke-opacity="0.1"/>
+    </pattern>
+    <linearGradient id="glow" x1="400" y1="0" x2="400" y2="600" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#f97015" stop-opacity="0.2"/>
+      <stop offset="1" stop-color="#f97015" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="600" fill="url(#grid)"/>
+  <rect width="800" height="600" fill="url(#glow)"/>
+
+  <!-- Central Mastery Node -->
+  <circle cx="400" cy="300" r="80" stroke="#f97015" stroke-width="2" stroke-dasharray="8 4"/>
+  <circle cx="400" cy="300" r="60" fill="#f97015" fill-opacity="0.1" stroke="#f97015" stroke-width="1"/>
+  <text x="400" y="295" text-anchor="middle" fill="#f97015" font-family="monospace" font-size="14" font-weight="bold" letter-spacing="2">API_ARCHITECTURE</text>
+  <text x="400" y="315" text-anchor="middle" fill="#ffffff" font-family="monospace" font-size="18" font-weight="black" letter-spacing="4">MASTERCLASS</text>
+
+  <!-- 10 Roadmap Nodes -->
+  <!-- Node positions in a circular pattern -->
+  <g stroke="#f97015" stroke-width="1" stroke-opacity="0.3">
+    <line x1="400" y1="300" x2="400" y2="100"/>
+    <line x1="400" y1="300" x2="590" y2="160"/>
+    <line x1="400" y1="300" x2="685" y2="345"/>
+    <line x1="400" y1="300" x2="590" y2="530"/>
+    <line x1="400" y1="300" x2="400" y2="580"/>
+    <line x1="400" y1="300" x2="210" y2="530"/>
+    <line x1="400" y1="300" x2="115" y2="345"/>
+    <line x1="400" y1="300" x2="210" y2="160"/>
+  </g>
+
+  <!-- Nodes with Icons/Labels -->
+  <g font-family="monospace" font-size="10" font-weight="bold" fill="#ffffff">
+    <!-- 1. Intro -->
+    <circle cx="400" cy="100" r="6" fill="#f97015"/>
+    <text x="415" y="105" fill="#f97015">01_FUNDAMENTALS</text>
+    
+    <!-- 2. Terminology -->
+    <circle cx="590" cy="160" r="6" fill="#f97015"/>
+    <text x="605" y="165" fill="#f97015">02_TERMINOLOGIES</text>
+
+    <!-- 3. Styles -->
+    <circle cx="685" cy="345" r="6" fill="#f97015"/>
+    <text x="700" y="350" fill="#f97015">03_STYLES</text>
+
+    <!-- 4. Auth -->
+    <circle cx="590" cy="530" r="6" fill="#f97015"/>
+    <text x="605" y="535" fill="#f97015">04_AUTHENTICATION</text>
+
+    <!-- 5. Documentation -->
+    <circle cx="400" cy="580" r="6" fill="#f97015"/>
+    <text x="400" y="595" text-anchor="middle" fill="#f97015">05_DOCUMENTATION</text>
+
+    <!-- 6. Features -->
+    <circle cx="210" cy="530" r="6" fill="#f97015"/>
+    <text x="90" y="535" fill="#f97015">06_FEATURES</text>
+
+    <!-- 7. Performance -->
+    <circle cx="115" cy="345" r="6" fill="#f97015"/>
+    <text x="10" y="350" fill="#f97015">07_PERFORMANCE</text>
+
+    <!-- 8. Gateways -->
+    <circle cx="210" cy="160" r="6" fill="#f97015"/>
+    <text x="90" y="165" fill="#f97015">08_GATEWAYS</text>
+  </g>
+
+  <!-- Hexagonal frame effect -->
+  <path d="M400 50 L750 225 L750 375 L400 550 L50 375 L50 225 Z" stroke="#f97015" stroke-width="1" stroke-opacity="0.2" fill="none"/>
+</svg>

@@ -43,10 +43,25 @@ const INITIAL_QUICK_QUESTIONS = [
 ];
 
 const AI_MODELS = [
-  { id: "v1", name: "Gemini", fullName: "Gemini 1.5 Flash (free tier)", color: "text-blue-500", icon: "💎" },
-  { id: "v2", name: "Llama", fullName: "Groq Llama (free tier)", color: "text-orange-500", icon: "🦙" },
-  { id: "v3", name: "OpenAI", fullName: "OpenAI (paid/optional)", color: "text-purple-500", icon: "🧠" },
-  { id: "local", name: "Local", fullName: "Offline fallback (always works)", color: "text-emerald-500", icon: "🛟" },
+  { id: "gpt-5.2", name: "DeepThink", fullName: "GPT 5.2", description: "Complex work & reasoning", color: "text-blue-500", icon: "🧠" },
+  { id: "gpt-5.1", name: "Fast", fullName: "GPT 5.1", description: "Quick answers", color: "text-emerald-500", icon: "⚡" },
+  { id: "gemini-3.1", name: "Advanced+", fullName: "Gemini 3.1 Pro", description: "Improved reasoning", color: "text-blue-600", icon: "💎" },
+  { id: "gemini-3", name: "Balanced", fullName: "Gemini 3", description: "Everyday tasks", color: "text-blue-400", icon: "⚖️" },
+  { id: "claude-4.6-opus", name: "Master+", fullName: "Claude Opus 4.6", description: "Extreme creative work", color: "text-orange-600", icon: "🎭" },
+  { id: "claude-4.5-opus", name: "Master", fullName: "Claude Opus 4.5", description: "Complex analytical work", color: "text-orange-500", icon: "🏛️" },
+  { id: "claude-4.1-opus", name: "Expert", fullName: "Claude Opus 4.1", description: "Nuanced understanding", color: "text-orange-400", icon: "🎓" },
+  { id: "claude-4.5-sonnet", name: "Smart", fullName: "Claude Sonnet 4.5", description: "Intelligence & Speed", color: "text-purple-500", icon: "💡" },
+  { id: "claude-4.6-sonnet", name: "Smart+", fullName: "Claude Sonnet 4.6", description: "Better coding & logic", color: "text-purple-600", icon: "🚀" },
+  { id: "claude-4-sonnet", name: "Efficient", fullName: "Claude Sonnet 4", description: "Reliable & Fast", color: "text-purple-400", icon: "♻️" },
+  { id: "grok-4", name: "Reason", fullName: "Grok 4", description: "Logic expert", color: "text-zinc-200", icon: "🤖" },
+  { id: "llama-4", name: "Creative", fullName: "LLaMA 4", description: "Creative thinking", color: "text-red-500", icon: "🎨" },
+  { id: "mistral-3", name: "Research", fullName: "Mistral 3", description: "Advanced analysis", color: "text-cyan-500", icon: "🔬" },
+  { id: "deepseek-3.2", name: "HardSolve", fullName: "DeepSeek 3.2", description: "Technical problem solver", color: "text-blue-700", icon: "🛠️" },
+  { id: "qwen-3", name: "Reasoning", fullName: "Qwen 3", description: "Instruction following", color: "text-indigo-500", icon: "📜" },
+  { id: "gemma-3", name: "Lightweight", fullName: "Gemma 3", description: "General-purpose", color: "text-emerald-400", icon: "🌱" },
+  { id: "minimax-m2", name: "LongContext", fullName: "MiniMax M2", description: "400K tokens", color: "text-yellow-500", icon: "📚" },
+  { id: "nvidia", name: "Efficient", fullName: "NVIDIA", description: "Low-latency", color: "text-green-500", icon: "🟢" },
+  { id: "kimi-k2.5", name: "Kimi", fullName: "Kimi K2.5", description: "Fast & Balanced", color: "text-blue-300", icon: "🌙" },
 ];
 
 export default function AIChatbot() {
@@ -292,36 +307,41 @@ export default function AIChatbot() {
                           initial={{ opacity: 0, y: 10, scale: 0.95 }}
                           animate={{ opacity: 1, y: 0, scale: 1 }}
                           exit={{ opacity: 0, y: 10, scale: 0.95 }}
-                          className="absolute bottom-full left-0 mb-2 w-56 bg-card border border-primary/20 rounded-2xl shadow-2xl p-2 overflow-hidden z-[110] backdrop-blur-3xl"
+                          className="absolute bottom-full left-0 mb-2 w-[280px] bg-card border border-primary/20 rounded-2xl shadow-2xl p-2 overflow-hidden z-[110] backdrop-blur-3xl"
                         >
                           <div className="px-3 py-2 mb-2 border-b border-primary/10">
-                            <p className="text-sm font-medium text-foreground/60 whitespace-nowrap">
+                            <p className="text-sm font-black text-foreground tracking-tight">
                               Choose Your AI Brain
                             </p>
-                            <p className="text-[10px] text-primary/50 font-medium">
-                              3 active models available
+                            <p className="text-[10px] text-primary/60 font-black uppercase tracking-widest">
+                              19 active models available
                             </p>
                           </div>
-                          {AI_MODELS.map((model) => (
-                            <button
-                              key={model.id}
-                              type="button"
-                              onClick={() => {
-                                setCurrentModel(model);
-                                setShowModelSelector(false);
-                              }}
-                              className={cn(
-                                "w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-left transition-colors",
-                                currentModel.id === model.id ? "bg-primary/10 text-primary" : "hover:bg-primary/5 text-foreground/60"
-                              )}
-                            >
-                              <span className="text-lg">{model.icon}</span>
-                              <div>
-                                <p className="text-[11px] font-bold">{model.name}</p>
-                                <p className="text-[9px] opacity-60 font-medium">{model.fullName}</p>
-                              </div>
-                            </button>
-                          ))}
+                          <div className="max-h-[320px] overflow-y-auto pr-1 space-y-1 scrollbar-hide">
+                            {AI_MODELS.map((model) => (
+                              <button
+                                key={model.id}
+                                type="button"
+                                onClick={() => {
+                                  setCurrentModel(model);
+                                  setShowModelSelector(false);
+                                }}
+                                className={cn(
+                                  "w-full flex items-center gap-3 px-3 py-2 rounded-xl text-left transition-all group",
+                                  currentModel.id === model.id ? "bg-primary/20 text-primary" : "hover:bg-primary/5 text-foreground/60"
+                                )}
+                              >
+                                <span className="text-xl group-hover:scale-110 transition-transform">{model.icon}</span>
+                                <div className="min-w-0">
+                                  <div className="flex items-center gap-1.5">
+                                    <p className="text-[11px] font-black leading-none">{model.name}</p>
+                                    <span className="text-[8px] font-black opacity-40 uppercase truncate">{model.fullName}</span>
+                                  </div>
+                                  <p className="text-[9px] opacity-60 font-bold truncate">{model.description}</p>
+                                </div>
+                              </button>
+                            ))}
+                          </div>
                         </motion.div>
                       )}
                     </AnimatePresence>
@@ -347,13 +367,17 @@ export default function AIChatbot() {
                   </ConfettiButton>
                 </div>
               </form>
-              <div className="flex flex-col items-center gap-0.5 mt-3">
-                <p className="text-sm font-medium text-foreground/40 whitespace-nowrap">
-                   Chat with My Custom AI Models
+              <div className="flex flex-col items-center gap-1 mt-4">
+                <p className="text-[11px] font-black text-foreground/40 uppercase tracking-[0.15em] whitespace-nowrap">
+                   Build with Best Advanced Models
                 </p>
-                <p className="text-[10px] text-primary/40 font-medium">
-                  3 active models available
-                </p>
+                <div className="flex items-center gap-2">
+                   <div className="h-[1px] w-6 bg-primary/20" />
+                   <p className="text-[10px] text-primary/60 font-black uppercase tracking-widest">
+                     19 High-Performace Nodes Active
+                   </p>
+                   <div className="h-[1px] w-6 bg-primary/20" />
+                </div>
               </div>
             </div>
           </motion.div>

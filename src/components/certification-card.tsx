@@ -33,8 +33,8 @@ export function CertificationCard({ cert }: CertificationCardProps) {
   return (
     <motion.div
       layout
-      className={`border rounded-xl p-5 hover:shadow-lg transition-all duration-300 bg-card/40 backdrop-blur-md hover:bg-card/60 hover:border-primary/30 ${
-        cert.badgeColor || "border-primary/10"
+      className={`border border-border/40 rounded-xl p-5 hover:shadow-lg transition-all duration-300 bg-card/40 backdrop-blur-md hover:bg-card/60 hover:border-primary/30 ${
+        cert.badgeColor || ""
       }`}
     >
       <div className="flex items-start justify-between mb-4">

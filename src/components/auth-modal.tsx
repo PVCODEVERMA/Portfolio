@@ -31,9 +31,9 @@ export function AuthModal({ isOpen, onClose }: { isOpen: boolean; onClose: () =>
     setIsSubmitting(true);
     try {
       // Diagnostic check for key format
-      const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || "";
+      const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_DEFAULT_KEY || "";
       if (key && !key.startsWith('eyJ')) {
-        return toast.error("Invalid Supabase Key format. Please use the 'Anon Public' key starting with 'eyJ'.");
+        return toast.error("Invalid Supabase Key format. Please use the 'Anon Public' key starting with 'eyJ'. Your current key starts with '" + key.substring(0, 10) + "'");
       }
 
       if (mode === "register") {

@@ -9,9 +9,9 @@ export const DATA = {
   locationLink: "https://maps.app.goo.gl/dFLbinrTMVHjkjcHA",
   role: "Developer | AI Architect | Tech Creator",
   subtitle: "Building the future with AI & Code",
-  description: "Working a full-time job while actively freelancing, I share my journey of building AI-powered tools and modern software. I document real-world development experiences, helping others learn and grow along the way. I also help businesses improve their online presence through technical SEO, performance optimization, and data-driven content strategies.",
+  description: "Working a full-time job while actively freelancing, I build and ship AI-powered tools and modern software that solve real problems. I document my real-world development experiences openly — helping others learn, grow, and avoid the mistakes I made along the way. Beyond building, I also help businesses strengthen their online presence through technical SEO, performance optimization, and data-driven development strategies — turning slow, invisible websites into fast, discoverable products.",
   summary:
-    "I’m a Founding Engineer & AI Architect focused on building scalable, AI-powered applications that solve real-world problems. My journey started with a deep curiosity for technology, which gradually evolved into a passion for development, automation, and artificial intelligence.\n\nToday, I work full-time while also freelancing—constantly building, experimenting, and improving my skills. I share my journey openly, documenting real-world projects, AI experiments, startup ideas, and developer life across platforms like YouTube, Instagram, and X.\n\nI also keep my audience updated with the latest trends in AI, helping developers and creators stay ahead in this fast-changing space. Along the way, I help businesses grow through technical SEO, performance optimization, and smart content strategies.\n\nThis journey is all about learning, building, and creating impact with AI and code.",
+    "### Where it began\nGrowing up, I was always the person who wanted to understand why things worked, not just how to use them. That mindset pushed me toward Computer Science, and I pursued my B.Tech in CSE at B.N. College of Engineering and Technology, graduating in 2025.\n\n### Finding my passion\nDuring college, I didn't just study — I built. I experimented with frontend interfaces, backend systems, and databases. I realized I didn't just want to write code — I wanted to create products that people actually use and benefit from.\n\n### Entering the professional world\nMy professional journey took me through three companies in a short span — Marv Softwares India, Websbaba Technologies, and Quality Concept Pvt. Ltd. — where I currently serve as a Full Stack Developer. Across these roles, I've built corporate websites, admin panels, CRM systems, and AI-powered chatbots using tools like React, Node.js, Tailwind CSS, and n8n automation.\n\n### Going deeper into AI\nWhat truly changed my direction was diving into Artificial Intelligence — not just using AI tools, but building with them. I've worked with RAG stacks, AI Agents using LangGraph and CrewAI, Prompt Engineering, and Vector Search with databases like Pinecone. I now design systems where AI isn't a feature — it's the foundation.\n\n### Life as a builder\nToday, I work full-time while actively freelancing on the side — constantly building, experimenting, and improving. I don't believe in waiting until something is perfect before sharing it. I document my real journey — the wins, the failures, the lessons — openly on YouTube, Instagram, and X, because I believe the best way to grow is to build in public.\n\n### Why I do this\nTechnology is the greatest equalizer of our time. A developer with the right skills and the right tools can build something that reaches millions. That possibility excites me every single day. I want to be someone who not only builds those things — but also helps others believe they can too.",
   stats: [
     { label: "10+ Systems Architected", icon: "Users" },
     { label: "25+ Projects Delivered", icon: "Briefcase" },
@@ -29,6 +29,7 @@ export const DATA = {
     { name: "Notification System", file: "notification_system_architecture.svg", tag: "Microservices" },
     { name: "React Native Mobile", file: "react_native_architecture.svg", tag: "Mobile" },
     { name: "Web Application", file: "web_app_architecture.svg", tag: "Full Stack" },
+    { name: "API Architecture Roadmap", file: "api_mastery_roadmap.svg", tag: "Mastery" },
     { name: "Architecture Overview", file: "10_systems_architected.svg", tag: "Overview" }
   ],
   avatarUrl: "/me.png",
@@ -642,6 +643,20 @@ export const DATA = {
         { q: "What about channel preference?", a: "Users can set preferences (e.g., 'Email for reports, Push for alerts') in their profile.", insight: "Respecting user communication preference is key to avoiding 'notification fatigue'." },
         { q: "How are retries handled?", a: "If a provider (e.g., Twilio) fails, the message is requeued with exponential backoff.", insight: "Smart retries guarantee delivery even during third-party outages." },
         { q: "Is delivery tracked?", a: "Yes, through webhooks from providers that update the status to 'Delivered' or 'Opened' in real-time.", insight: "Closed-loop tracking is essential for measuring the impact of notifications." }
+      ]
+    },
+    "api_mastery_roadmap.svg": {
+      overview: "A comprehensive 10-point roadmap covering API Fundamentals, Styles, Authentication, Documentation, Performance, and Integration Patterns.",
+      tags: ["API", "REST", "GraphQL", "DevOps", "Microservices"],
+      insight: "Mastering APIs is the foundation of modern distributed systems and AI agent orchestration.",
+      qa: [
+        { 
+          q: "Show me the 10-Point API Roadmap", 
+          a: "### 1. Introduction to APIs\n- API Definition\n- Public & Private APIs\n\n### 2. API Terminologies\n- HTTP Versions, Methods, Status, Headers\n- Cookies & Caching\n\n### 3. API Styles\n- REST, GraphQL, gRPC, SOAP, WebSocket\n\n### 4. API Authentication\n- JWT, OAuth, Basic/Token/Session Auth\n\n### 5. API Documentation\n- Swagger, Postman, OpenAPI, Redoc\n\n### 6. API Features\n- Pagination, Idempotency, Versioning\n- URL/Query/Path Parameters\n\n### 7. API Performance\n- Caching, Rate Limiting, Balancing\n- Scaling & Performance Testing\n\n### 8. API Gateways\n- AWS Gateway, Kong, Nginx\n\n### 9. API Frameworks\n- Node.js, FastAPI, Django, Flask\n\n### 10. Integration Patterns\n- Sync/Async, Webhooks, Message Queues", 
+          insight: "This roadmap provides a complete architectural path from fundamentals to complex microservices integration." 
+        },
+        { q: "Which tool is best for API Documentation?", a: "Swagger and Postman are industry standards, while OpenAPI Spec provides a machine-readable format for documentation-as-code.", insight: "Standardized documentation reduces developer onboarding time by 50%." },
+        { q: "REST vs GraphQL: Which one to choose?", a: "REST is best for simple, standardized resources, while GraphQL excels in complex systems where clients need specific data shapes.", insight: "GraphQL reduces over-fetching and under-fetching, improving mobile performance." }
       ]
     }
   }

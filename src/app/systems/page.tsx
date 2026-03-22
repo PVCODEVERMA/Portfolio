@@ -25,15 +25,15 @@ export default function SystemsPage() {
         </h1>
       </div>
 
-      <div className="relative z-10 max-w-[1400px] mx-auto px-6 pt-28 pb-32 space-y-24">
+      <div className="relative z-10 max-w-[1400px] mx-auto px-4 sm:px-6 pt-16 sm:pt-28 pb-20 sm:pb-32 space-y-16 sm:space-y-24">
         
         {/* Superior Header Section */}
         <motion.div 
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
-          className="flex flex-col items-center gap-8 text-center"
+          className="flex flex-col items-center gap-6 sm:gap-8 text-center"
         >
-           <div className="space-y-4">
+           <div className="space-y-3 sm:space-y-4">
               <motion.div 
                  initial={{ opacity: 0, y: 10 }} 
                  animate={{ opacity: 1, y: 0 }} 
@@ -44,19 +44,19 @@ export default function SystemsPage() {
                  Industrial Systems Visualization
                  <span className="w-8 h-px bg-primary" />
               </motion.div>
-              <h1 className="text-5xl sm:text-7xl lg:text-8xl font-black tracking-tight text-foreground leading-tight">
+              <h1 className="text-4xl sm:text-7xl lg:text-8xl font-black tracking-tight text-foreground leading-tight px-4 sm:px-0">
                  THE <span className="text-primary italic font-[900]">BLUEPRINT</span> LAB
               </h1>
            </div>
 
-           <p className="max-w-xl text-muted-foreground font-medium text-sm sm:text-lg italic leading-relaxed opacity-90">
+           <p className="max-w-xl text-muted-foreground font-medium text-xs sm:text-lg italic leading-relaxed opacity-90 px-6 sm:px-0">
               Explore a curated laboratory of production-ready system designs. High-fidelity architectural maps for scalable digital products.
            </p>
         </motion.div>
 
         {/* Gallery Grid with Studio Card Experience */}
         <section className="scroll-mt-20">
-           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 pb-10">
+           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-10 pb-10">
               {architectures.map((arch, idx) => (
                  <motion.div 
                     key={arch.file}
@@ -65,7 +65,7 @@ export default function SystemsPage() {
                     viewport={{ once: true, margin: "-100px" }}
                     transition={{ delay: idx * 0.04, duration: 0.5 }}
                     onClick={() => router.push(`/systems/${arch.file}`)}
-                    className="group relative flex flex-col p-2.5 rounded-[2.5rem] bg-white/[0.03] border border-white/5 hover:border-primary/40 transition-all duration-500 hover:bg-white/[0.05] shadow-2xl cursor-pointer"
+                    className="group relative flex flex-col p-2 sm:p-2.5 rounded-[2.5rem] bg-white/[0.03] border border-white/5 hover:border-primary/40 transition-all duration-500 hover:bg-white/[0.05] shadow-2xl cursor-pointer"
                  >
                     {/* Floating Expander Tool */}
                     <div className="absolute top-6 right-6 z-30 flex gap-2">
@@ -97,7 +97,7 @@ export default function SystemsPage() {
                     </div>
 
                     {/* Card Body */}
-                    <div className="flex flex-col gap-1 p-5 pt-2">
+                    <div className="flex flex-col gap-1 p-4 sm:p-5 pt-2">
                        <div className="flex items-center justify-between gap-4">
                           <h3 className="font-[900] text-foreground/90 text-xl group-hover:text-primary transition-colors tracking-tight leading-tight">{arch.name}</h3>
                           <span className="shrink-0 px-2.5 py-1 rounded-lg bg-primary/5 border border-primary/10 text-[8px] font-black text-primary/60 uppercase tracking-widest">

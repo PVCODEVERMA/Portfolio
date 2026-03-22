@@ -120,7 +120,7 @@ function SystemDetailContent() {
       </div>
 
       {/* Top Command Bar */}
-      <div className="sticky top-0 z-[100] flex items-center justify-between px-6 sm:px-10 py-6 bg-black/60 backdrop-blur-3xl border-b border-primary/10 shadow-2xl">
+      <div className="sticky top-0 z-[100] flex items-center justify-between px-4 sm:px-10 py-3 sm:py-6 bg-black/60 backdrop-blur-3xl border-b border-primary/10 shadow-2xl">
         <div className="flex items-center gap-6">
            <Link href="/systems" className="group flex items-center gap-3 text-white/40 hover:text-white transition-colors">
              <div className="p-3 rounded-2xl bg-white/5 group-hover:bg-primary/20 transition-all border border-white/10">
@@ -137,10 +137,10 @@ function SystemDetailContent() {
            <Button 
              variant="outline" 
              onClick={handleCopy}
-             className="hidden sm:flex rounded-2xl gap-3 bg-white/5 hover:bg-white/10 text-foreground font-black text-[10px] uppercase tracking-widest border border-white/10 px-8 py-6 shadow-xl active:scale-95 transition-all"
+             className="flex rounded-2xl gap-3 bg-white/5 hover:bg-white/10 text-foreground font-black text-[10px] uppercase tracking-widest border border-white/10 px-4 sm:px-8 py-6 shadow-xl active:scale-95 transition-all"
            >
              {copied ? <Check className="size-4 text-emerald-500" /> : <Copy className="size-4 text-primary" />}
-             {copied ? "Link Copied" : "Share Blueprint"}
+             <span className="hidden xs:inline">{copied ? "Link Copied" : "Share Blueprint"}</span>
            </Button>
            
            <div className="w-px h-10 bg-white/10 hidden sm:block" />
@@ -154,9 +154,9 @@ function SystemDetailContent() {
       </div>
 
       {/* Laboratory Presentation Stage */}
-      <div className={`flex-1 relative z-20 flex flex-col items-center justify-center p-8 sm:p-24 transition-all duration-700 min-h-[80vh] overflow-hidden ${isChatOpen ? 'pr-0 lg:pr-[450px]' : ''}`}>
+      <div className={`flex-1 relative z-20 flex flex-col items-center justify-center p-4 sm:p-24 transition-all duration-700 min-h-[80vh] overflow-hidden ${isChatOpen ? 'pr-0 lg:pr-[450px]' : ''}`}>
          {/* Zoom Controls Overlay */}
-         <div className="absolute bottom-10 left-10 z-50 flex flex-col gap-3">
+         <div className="absolute bottom-6 left-6 sm:bottom-10 sm:left-10 z-50 flex flex-col gap-3">
             <button 
                onClick={handleZoomIn}
                className="p-4 rounded-2xl bg-black/60 backdrop-blur-xl border border-primary/20 text-primary hover:bg-primary hover:text-primary-foreground transition-all shadow-2xl group"
