@@ -158,10 +158,10 @@ export function Header() {
       <motion.nav
         initial={{ y: -100, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
-        className="w-[100%] sm:w-auto flex flex-nowrap items-center gap-0.5 sm:gap-2 px-1 py-1.5 sm:p-2 rounded-none sm:rounded-2xl bg-background/60 backdrop-blur-2xl border border-primary/20 shadow-[0_0_50px_-12px_rgba(0,0,0,0.3)] pointer-events-auto max-w-full overflow-x-auto hide-scrollbar"
+        className="w-[100%] sm:w-auto flex flex-nowrap items-center gap-0 sm:gap-2 px-0.5 py-1 sm:p-2 rounded-none sm:rounded-2xl bg-background/60 backdrop-blur-2xl border-b sm:border border-primary/20 shadow-[0_0_50px_-12px_rgba(0,0,0,0.3)] pointer-events-auto max-w-full overflow-x-auto hide-scrollbar"
       >
         {/* Left: Profile Section / Login Trigger */}
-        <div className="flex items-center gap-1 sm:gap-2 pr-1 sm:pr-2 border-r border-border/50">
+        <div className="flex items-center gap-0 sm:gap-2 pr-0.5 sm:pr-2 border-r border-border/50">
           {user && user.email === DATA.contact.email ? (
             <Avatar className="size-7 sm:size-8 border-2 border-primary/20 shrink-0">
               <AvatarImage src={DATA.avatarUrl} />
@@ -184,8 +184,8 @@ export function Header() {
           )}
         </div>
 
-        {/* Center: Navigation Links (Hidden on mobile, use bottom Dock instead) */}
-        <div className="hidden sm:flex items-center gap-0 sm:gap-1">
+        {/* Center: Navigation Links (Text labels hidden on small screens) */}
+        <div className="flex items-center gap-0 sm:gap-1">
           {NAV_ITEMS.map((item) => {
             const Icon = item.icon;
             const isActive = activeHash === item.href;
@@ -197,7 +197,7 @@ export function Header() {
                     href={item.href}
                     onClick={(e) => handleNavClick(e, item.href)}
                     className={cn(
-                      "relative flex items-center gap-1 sm:gap-1.5 px-2 py-2 sm:px-3 sm:py-2 text-[10px] sm:text-xs font-bold rounded-xl whitespace-nowrap transition-all duration-300 active:scale-95 group",
+                      "relative flex items-center gap-0.5 sm:gap-1.5 px-1.5 py-2 sm:px-3 sm:py-2 text-[10px] sm:text-xs font-bold rounded-xl whitespace-nowrap transition-all duration-300 active:scale-95 group",
                       isActive 
                         ? "text-primary-foreground scale-105" 
                         : "text-foreground font-black hover:text-primary opacity-80"
@@ -226,7 +226,7 @@ export function Header() {
         </div>
 
         {/* Right: Auth & Theme toggle */}
-        <div className="pl-1 sm:pl-2 border-l border-border/50 flex items-center gap-1 sm:gap-1.5">
+        <div className="pl-0.5 sm:pl-2 border-l border-border/50 flex items-center gap-0.5 sm:gap-1.5">
           {user ? (
             <div className="flex items-center gap-1.5 sm:gap-2 pr-1 sm:pr-2">
               <div className="relative group/avatar cursor-pointer">
