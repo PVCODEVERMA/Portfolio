@@ -9,6 +9,11 @@ export function getSupabaseClient(): SupabaseClient | null {
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ||
     process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_DEFAULT_KEY ||
     "";
+    
+  if (key && !key.startsWith('eyJ')) {
+    console.warn("Supabase Warning: Key format is invalid (starts with " + key.substring(0, 10) + ")");
+  }
+
   if (!url || !key) return null;
   _client = createClient(url, key);
   return _client;

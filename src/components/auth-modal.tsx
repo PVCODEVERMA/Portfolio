@@ -30,6 +30,12 @@ export function AuthModal({ isOpen, onClose }: { isOpen: boolean; onClose: () =>
 
     setIsSubmitting(true);
     try {
+      // Diagnostic check for key format
+      const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || "";
+      if (key && !key.startsWith('eyJ')) {
+        return toast.error("Invalid Supabase Key format. Please use the 'Anon Public' key starting with 'eyJ'.");
+      }
+
       if (mode === "register") {
         const { error } = await client.auth.signUp({
           email,
@@ -41,16 +47,24 @@ export function AuthModal({ isOpen, onClose }: { isOpen: boolean; onClose: () =>
           },
         });
         if (error) throw error;
-        toast.success("Registration successful! Please check your email for verification.");
+        toast.success("Registration successful! Check email for verification.");
       } else {
-        // Special check for Admin Key from .env.local via process.env
-        const isAdmin = email.toLowerCase() === "pankaj912978@gmail.com" && password === process.env.NEXT_PUBLIC_ADMIN_KEY;
+        // Handle admin login (ensure they sign up first)
+        const isAdminCreds = email.toLowerCase() === "pankaj912978@gmail.com" && password === process.env.NEXT_PUBLIC_ADMIN_KEY;
         
         const { error } = await client.auth.signInWithPassword({
           email,
           password, 
         });
-        if (error) throw error;
+        
+        if (error) {
+          if (isAdminCreds && error.message.includes("Invalid login credentials")) {
+            toast.error("Admin Credentials correct, but User not found in Supabase. Please 'Register' first!");
+            return;
+          }
+          throw error;
+        }
+        
         toast.success("Welcome back!");
         onClose();
       }
