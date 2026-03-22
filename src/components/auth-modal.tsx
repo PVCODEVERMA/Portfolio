@@ -44,12 +44,11 @@ export function AuthModal({ isOpen, onClose }: { isOpen: boolean; onClose: () =>
         toast.success("Registration successful! Please check your email for verification.");
       } else {
         // Special check for Admin Key from .env.local via process.env
-        // Note: The user provided Admin_key=mylife@#912978 and email: pankaj912978@gmail.com
-        const isAdmin = email.toLowerCase() === "pankaj912978@gmail.com" && password === "mylife@#912978";
+        const isAdmin = email.toLowerCase() === "pankaj912978@gmail.com" && password === process.env.NEXT_PUBLIC_ADMIN_KEY;
         
         const { error } = await client.auth.signInWithPassword({
           email,
-          password: isAdmin ? password : password, // Standard login
+          password, 
         });
         if (error) throw error;
         toast.success("Welcome back!");
