@@ -12,6 +12,7 @@ import { Toaster } from "react-hot-toast";
 import { SiteLoader } from "@/components/site-loader";
 import { Header } from "@/components/header";
 import { LoadingProvider } from "@/hooks/use-loading";
+import { AuthProvider } from "@/hooks/use-auth";
 import "./globals.css";
 
 const fontSans = FontSans({
@@ -71,21 +72,23 @@ export default function RootLayout({
       >
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
           <LoadingProvider>
-            <TooltipProvider delayDuration={0}>
-              <SiteLoader />
-              <Suspense fallback={null}>
-                <Header />
-              </Suspense>
-              <Toaster position="top-center" reverseOrder={false} />
-              <VantaBirds />
-              {children}
-              <Suspense fallback={null}>
-                <Navbar />
-              </Suspense>
-              <Suspense fallback={null}>
-                <AIChatbot />
-              </Suspense>
-            </TooltipProvider>
+            <AuthProvider>
+              <TooltipProvider delayDuration={0}>
+                <SiteLoader />
+                <Suspense fallback={null}>
+                  <Header />
+                </Suspense>
+                <Toaster position="top-center" reverseOrder={false} />
+                <VantaBirds />
+                {children}
+                <Suspense fallback={null}>
+                  <Navbar />
+                </Suspense>
+                <Suspense fallback={null}>
+                  <AIChatbot />
+                </Suspense>
+              </TooltipProvider>
+            </AuthProvider>
           </LoadingProvider>
         </ThemeProvider>
       </body>

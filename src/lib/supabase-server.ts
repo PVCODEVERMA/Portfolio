@@ -13,6 +13,14 @@ export function getSupabaseServerClient() {
     return null;
   }
 
+  // Basic validation to ensure it's a Supabase key (JWT format)
+  if (!key.startsWith('eyJ')) {
+    console.error("Supabase Error: The provided key does NOT look like a valid Supabase JWT. It starts with:", key.substring(0, 15));
+    if (key.startsWith('sb_publishable_')) {
+      console.error("HINT: This looks like a Stytch publishable key. Please check your .env.local file.");
+    }
+  }
+
   return createClient(url, key, {
     auth: { persistSession: false },
   });

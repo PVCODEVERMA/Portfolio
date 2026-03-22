@@ -79,7 +79,7 @@ export default function Navbar() {
           <Tooltip>
             <TooltipTrigger asChild>
               <Link
-                href="/resuma/resuma_pv.pdf"
+                href="/resume/resume_pv.pdf"
                 target="_blank"
                 rel="noopener noreferrer"
                 className={cn(

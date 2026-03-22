@@ -217,7 +217,7 @@ export default function Page() {
             <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-4 w-full px-2 sm:px-0">
               <Button asChild size="default" className="rounded-full w-full sm:w-auto px-8 font-black shadow-xl shadow-primary/20 cursor-pointer h-12 text-base">
                 <Link 
-                  href="/resuma/resuma_pv.pdf" 
+                  href="/resume/resume_pv.pdf" 
                   target="_blank" 
                   rel="noopener noreferrer"
                   onClick={() => {

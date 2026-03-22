@@ -20,7 +20,9 @@ import {
   Award,
   ChevronLeft,
   ChevronRight,
-  X as CloseIcon
+  X as CloseIcon,
+  LogIn,
+  ShieldCheck
 } from "lucide-react";
 import { AnimatePresence } from "framer-motion";
 import {
@@ -30,6 +32,9 @@ import {
 } from "@/components/ui/tooltip";
 
 import { useLoading } from "@/hooks/use-loading";
+import { useAuth } from "@/hooks/use-auth";
+import { AuthModal } from "./auth-modal";
+import { LogOut, User as UserIcon } from "lucide-react";
 
 const NAV_ITEMS = [
   { name: "Home", href: "/", icon: Home },
@@ -48,9 +53,11 @@ export function Header() {
   
   const [mounted, setMounted] = React.useState(false);
   const [isDrawerOpen, setIsDrawerOpen] = React.useState(false);
+  const [isAuthModalOpen, setIsAuthModalOpen] = React.useState(false);
   const [activeCertIdx, setActiveCertIdx] = React.useState<number | null>(null);
   const [activeHash, setActiveHash] = React.useState("/");
   const { startLoading } = useLoading();
+  const { user, signOut } = useAuth();
 
   const isHidden = pathname.startsWith("/systems/") || (pathname === "/projects" && searchParams.get("file"));
 
@@ -205,12 +212,66 @@ export function Header() {
           })}
         </div>
 
-        {/* Right: Theme toggle */}
-        <div className="pl-1 sm:pl-2 border-l border-border/50 flex items-center">
+        {/* Right: Auth & Theme toggle */}
+        <div className="pl-1 sm:pl-2 border-l border-border/50 flex items-center gap-1 sm:gap-1.5">
+          {user ? (
+            <div className="flex items-center gap-1.5 sm:gap-2 pr-1 sm:pr-2">
+              <div className="relative group/avatar cursor-pointer">
+                <Avatar className={cn(
+                  "size-8 sm:size-9 transition-all duration-300 ring-2 ring-primary/10 group-hover/avatar:ring-primary/40",
+                  user.email === DATA.contact.email && "ring-purple-500/30 group-hover/avatar:ring-purple-500/60"
+                )}>
+                  <AvatarImage src={user.user_metadata?.avatar_url || ""} />
+                  <AvatarFallback className="bg-primary/10 text-primary font-black text-[10px]">
+                    {user.user_metadata?.full_name?.charAt(0) || user.email?.charAt(0) || "U"}
+                  </AvatarFallback>
+                </Avatar>
+                
+                {user.email === DATA.contact.email && (
+                  <div className="absolute -top-1 -right-1 bg-purple-500 text-[8px] font-black text-white px-1 py-0.5 rounded-full border border-background shadow-lg flex items-center gap-0.5">
+                    <ShieldCheck className="size-2" />
+                    <span>ADMIN</span>
+                  </div>
+                )}
+              </div>
+
+              <div className="hidden md:flex flex-col -space-y-0.5 max-w-[80px]">
+                <p className="text-[10px] font-black truncate text-foreground/80">
+                  {user.email === DATA.contact.email ? "Admin" : (user.user_metadata?.full_name || "User")}
+                </p>
+                <p className="text-[8px] font-medium truncate text-muted-foreground opacity-60 italic">
+                   {user.email === DATA.contact.email ? "Portfolio Owner" : "Verified User"}
+                </p>
+              </div>
+
+              <button 
+                onClick={() => signOut()}
+                className="p-1.5 sm:p-2 transition-all hover:bg-red-500/10 hover:text-red-500 text-muted-foreground rounded-xl active:scale-90"
+                title="Sign Out"
+              >
+                <LogOut className="size-3.5 sm:size-4" />
+              </button>
+            </div>
+          ) : (
+             <button 
+              onClick={() => setIsAuthModalOpen(true)}
+              className="group relative flex items-center gap-1.5 px-3 py-1.5 sm:px-4 sm:py-2 text-[10px] sm:text-xs font-black uppercase tracking-widest text-primary-foreground bg-primary rounded-xl overflow-hidden active:scale-95 transition-all shadow-xl shadow-primary/20"
+            >
+              <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/20 to-white/0 -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
+              <LogIn className="size-3.5 sm:size-4" />
+              <span className="hidden xs:inline">Login</span>
+            </button>
+          )}
+          <div className="h-4 w-px bg-border/50 mx-0.5 sm:mx-1" />
           <ModeToggle />
         </div>
 
       </motion.nav>
+
+      <AuthModal 
+        isOpen={isAuthModalOpen} 
+        onClose={() => setIsAuthModalOpen(false)} 
+      />
 
       {mounted
         ? createPortal(

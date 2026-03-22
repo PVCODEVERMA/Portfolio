@@ -11,11 +11,25 @@ export async function GET() {
       .select("*")
       .order("created_at", { ascending: false });
 
-    if (error) throw error;
+    if (error) {
+      console.warn("Ratings DB Fetch Error:", error.message);
+      // Return empty array instead of 500 if database is unconfigured or table missing
+      return NextResponse.json({ 
+        ok: true, 
+        ratings: [], 
+        warning: "Database is not configured or 'ratings' table is missing. Please check your Supabase setup." 
+      });
+    }
     
-    return NextResponse.json({ ok: true, ratings });
+    return NextResponse.json({ ok: true, ratings: ratings || [] });
   } catch (error: any) {
-    return NextResponse.json({ ok: false, error: error.message }, { status: 500 });
+    console.error("Ratings API Critical Error:", error);
+    return NextResponse.json({ 
+      ok: false, 
+      error: error.message,
+      details: error,
+      stack: process.env.NODE_ENV === 'development' ? error.stack : undefined
+    }, { status: 500 });
   }
 }
 

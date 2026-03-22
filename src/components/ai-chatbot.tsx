@@ -15,6 +15,10 @@ import { DATA } from "@/data/resume";
 import { cn } from "@/lib/utils";
 import ReactMarkdown from "react-markdown";
 import { ConfettiButton } from "@/registry/magicui/confetti";
+import { useAuth } from "@/hooks/use-auth";
+import { AuthModal } from "./auth-modal";
+import { LogIn, Lock } from "lucide-react";
+import toast from "react-hot-toast";
 
 interface Message {
   id: string;
@@ -49,7 +53,9 @@ const AI_MODELS = [
 export default function AIChatbot() {
   const pathname = usePathname();
   const searchParams = useSearchParams();
-  const [isOpen, setIsOpen] = useState(true);
+  const { user } = useAuth();
+  const [isOpen, setIsOpen] = useState(false);
+  const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
   const [currentModel, setCurrentModel] = useState(AI_MODELS[0]);
   const [isTyping, setIsTyping] = useState(false);
   const [showModelSelector, setShowModelSelector] = useState(false);
@@ -95,8 +101,14 @@ export default function AIChatbot() {
     };
   }, [isOpen]);
 
-  const handleSendMessage = async (text: string) => {
+   const handleSendMessage = async (text: string) => {
     if (!text.trim()) return;
+
+    if (!user) {
+      setIsAuthModalOpen(true);
+      toast.error("Please login to chat with AI");
+      return;
+    }
 
     const userMessage: Message = {
       id: Date.now().toString(),
@@ -198,7 +210,7 @@ export default function AIChatbot() {
             </div>
 
             {/* Messages Area */}
-            <div className="flex-1 overflow-y-auto p-5 space-y-6 scrollbar-hide bg-gradient-to-b from-transparent to-background/20">
+              <div className="flex-1 overflow-y-auto p-5 space-y-6 scrollbar-hide bg-gradient-to-b from-transparent to-background/20">
               {messages.map((message) => (
                 <motion.div
                   key={message.id}
@@ -223,6 +235,7 @@ export default function AIChatbot() {
                   </div>
                 </motion.div>
               ))}
+
               {isTyping && (
                 <motion.div
                   initial={{ opacity: 0 }}
@@ -338,13 +351,18 @@ export default function AIChatbot() {
               </form>
               <div className="flex flex-col items-center gap-0.5 mt-3">
                 <p className="text-sm font-medium text-foreground/40 whitespace-nowrap">
-                  Chat with My Custom AI Models
+                   Chat with My Custom AI Models
                 </p>
                 <p className="text-[10px] text-primary/40 font-medium">
                   3 active models available
                 </p>
               </div>
             </div>
+            
+            <AuthModal 
+              isOpen={isAuthModalOpen} 
+              onClose={() => setIsAuthModalOpen(false)} 
+            />
           </motion.div>
         )}
       </AnimatePresence>
