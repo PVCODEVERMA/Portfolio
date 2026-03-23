@@ -15,8 +15,6 @@ import { DATA } from "@/data/resume";
 import { cn } from "@/lib/utils";
 import ReactMarkdown from "react-markdown";
 import { ConfettiButton } from "@/registry/magicui/confetti";
-import { useAuth } from "@/hooks/use-auth";
-import { LogIn, Lock } from "lucide-react";
 import toast from "react-hot-toast";
 
 interface Message {
@@ -67,7 +65,6 @@ const AI_MODELS = [
 export default function AIChatbot() {
   const pathname = usePathname();
   const searchParams = useSearchParams();
-  const { user, setIsAuthModalOpen } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
   const [currentModel, setCurrentModel] = useState(AI_MODELS[0]);
   const [isTyping, setIsTyping] = useState(false);
@@ -114,14 +111,8 @@ export default function AIChatbot() {
     };
   }, [isOpen]);
 
-   const handleSendMessage = async (text: string) => {
+  const handleSendMessage = async (text: string) => {
     if (!text.trim()) return;
-
-    if (!user) {
-      setIsAuthModalOpen(true);
-      toast.error("Please login to chat with AI");
-      return;
-    }
 
     const userMessage: Message = {
       id: Date.now().toString(),

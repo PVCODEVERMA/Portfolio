@@ -57,11 +57,10 @@ export function ProjectCard({
           "flex flex-col overflow-hidden border border-border/40 rounded-xl hover:shadow-2xl hover:shadow-primary/10 transition-all duration-500 ease-out h-full bg-card/40 backdrop-blur-sm hover:border-primary/30 p-0"
         }
       >
-        <Link
-          href={href || "#"}
-          className={cn("block cursor-pointer relative overflow-hidden", className)}
+        <div
+          className={cn("block relative overflow-hidden rounded-t-xl group/media", className)}
         >
-          <div className="relative overflow-hidden">
+          <div className="relative overflow-hidden group-hover/media:scale-105 transition-transform duration-500">
             {video && (
               <video
                 src={video}
@@ -69,7 +68,7 @@ export function ProjectCard({
                 loop
                 muted
                 playsInline
-                className="pointer-events-none mx-auto h-40 sm:h-48 lg:h-52 w-full object-cover object-top transition-transform duration-500 group-hover:scale-110"
+                className="pointer-events-none mx-auto h-40 sm:h-48 lg:h-52 w-full object-cover object-top"
               />
             )}
             {image && (
@@ -78,12 +77,12 @@ export function ProjectCard({
                 alt={title}
                 width={500}
                 height={300}
-                className="h-40 sm:h-48 lg:h-52 w-full overflow-hidden object-cover object-top transition-transform duration-500 group-hover:scale-110"
+                className="h-40 sm:h-48 lg:h-52 w-full overflow-hidden object-cover object-top"
               />
             )}
             <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent sm:opacity-0 sm:group-hover:opacity-100 transition-opacity duration-300" />
           </div>
-        </Link>
+        </div>
         <CardHeader className="px-3 pt-4">
           <div className="space-y-2">
             <CardTitle className="text-base sm:text-lg group-hover:text-primary transition-colors duration-300 text-foreground font-bold tracking-tight">{title}</CardTitle>

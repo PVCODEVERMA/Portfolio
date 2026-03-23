@@ -301,8 +301,7 @@ export function Header() {
                   animate={{ x: 0 }}
                   exit={{ x: "100%" }}
                   transition={{ type: "spring", damping: 25, stiffness: 200 }}
-                  className="absolute top-0 right-0 h-full w-full sm:w-[500px] lg:w-[650px] bg-background border-l border-border/50 shadow-2xl flex flex-col pt-6"
-                  onClick={(e) => e.stopPropagation()}
+                  className="absolute top-0 right-0 h-full w-full sm:w-[500px] lg:w-[650px] bg-background border-l border-border/50 shadow-2xl flex flex-col pt-6 z-[101]"
                 >
                   <div className="px-6 flex items-start justify-between gap-4 mb-7">
                     <div className="min-w-0">
@@ -329,11 +328,8 @@ export function Header() {
                       </p>
                     </div>
                     <button
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        closeCertificates();
-                      }}
-                      className="shrink-0 p-2 rounded-xl hover:bg-primary/10 transition-colors active:scale-90"
+                      onClick={closeCertificates}
+                      className="shrink-0 p-2 rounded-xl hover:bg-primary/10 transition-colors active:scale-90 relative z-50 overflow-visible"
                       aria-label="Close certificates"
                       type="button"
                     >
@@ -397,11 +393,8 @@ export function Header() {
                   {/* Drawer Footer */}
                   <div className="absolute bottom-0 left-0 w-full p-6 bg-gradient-to-t from-background via-background/95 to-transparent">
                     <button
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        closeCertificates();
-                      }}
-                      className="w-full py-4 rounded-2xl bg-primary text-primary-foreground font-bold shadow-xl shadow-primary/20 active:scale-95 transition-all"
+                      onClick={closeCertificates}
+                      className="w-full py-4 rounded-2xl bg-primary text-primary-foreground font-bold shadow-xl shadow-primary/20 active:scale-95 transition-all relative z-50"
                       type="button"
                     >
                       Close Certificates

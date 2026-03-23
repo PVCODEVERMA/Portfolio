@@ -14,7 +14,7 @@ export const DATA = {
     "### Where it began\nGrowing up, I was always the person who wanted to understand why things worked, not just how to use them. That mindset pushed me toward Computer Science, and I pursued my B.Tech in CSE at B.N. College of Engineering and Technology, graduating in 2025.\n\n### Finding my passion\nDuring college, I didn't just study — I built. I experimented with frontend interfaces, backend systems, and databases. I realized I didn't just want to write code — I wanted to create products that people actually use and benefit from.\n\n### Entering the professional world\nMy professional journey took me through three companies in a short span — Marv Softwares India, Websbaba Technologies, and Quality Concept Pvt. Ltd. — where I currently serve as a Full Stack Developer. Across these roles, I've built corporate websites, admin panels, CRM systems, and AI-powered chatbots using tools like React, Node.js, Tailwind CSS, and n8n automation.\n\n### Going deeper into AI\nWhat truly changed my direction was diving into Artificial Intelligence — not just using AI tools, but building with them. I've worked with RAG stacks, AI Agents using LangGraph and CrewAI, Prompt Engineering, and Vector Search with databases like Pinecone. I now design systems where AI isn't a feature — it's the foundation.\n\n### Life as a builder\nToday, I work full-time while actively freelancing on the side — constantly building, experimenting, and improving. I don't believe in waiting until something is perfect before sharing it. I document my real journey — the wins, the failures, the lessons — openly on YouTube, Instagram, and X, because I believe the best way to grow is to build in public.\n\n### Why I do this\nTechnology is the greatest equalizer of our time. A developer with the right skills and the right tools can build something that reaches millions. That possibility excites me every single day. I want to be someone who not only builds those things — but also helps others believe they can too.",
   stats: [
     { label: "10+ Systems Architected", icon: "Users" },
-    { label: "25+ Projects Delivered", icon: "Briefcase" },
+    { label: "6+ Projects Delivered", icon: "Briefcase" },
     { label: "15+ Technologies Used", icon: "Cpu" }
   ],
   architectures: [
@@ -64,17 +64,24 @@ export const DATA = {
   community: [
     {
       platform: "Instagram",
-      handle: "@pv_code421",
+      handle: "@pvcode1u.ai",
       followers: "10K+",
-      link: "https://www.instagram.com/pv_code421",
+      link: "https://www.instagram.com/pvcode1u.ai/",
       description: "Sharing daily coding tips and AI insights."
     },
     {
       platform: "X (Twitter)",
-      handle: "@pv_code421",
-      followers: "1.2K+",
-      link: "https://x.com/pv_code421",
+      handle: "@PankajK77053572",
+      followers: "",
+      link: "https://x.com/PankajK77053572",
       description: "Active in the AI & Web Architecture community."
+    },
+    {
+      platform: "YouTube",
+      handle: "PV CODE",
+      followers: "551",
+      link: "https://www.youtube.com/channel/UCAHuQt0idElWoQ35KOqO15A",
+      description: "Coding tutorials and tech insights on modern web development."
     }
   ],
   timeline: [
@@ -184,7 +191,7 @@ export const DATA = {
       },
       X: {
         name: "X",
-        url: "https://x.com/pv_code421",
+        url: "https://x.com/PankajK77053572",
         icon: Icons.x,
 
         navbar: true,
@@ -206,55 +213,38 @@ export const DATA = {
   },
 
   work: [
-
     {
-      company: "Quality Concept Pvt. Ltd.",
+      company: "Quality Concept Welding Solutions Pvt. Ltd.",
       href: "https://qualityconcept.in/",
       badges: ["Full-time"],
       location: "Greater Noida",
-      title: "Full Stack Developer",
+      title: "Full Stack Developer (CRM Platform)",
       logoUrl: "/Qc_logo.png",
-      start: "10 Dec 2026",
+      start: "Jan 2026",
       end: "Present",
-      description:
-        "Leading the development of the official company website and AI-powered chatbot using n8n automation. Architecting and building a scalable multi-role CRM system with React.js, Node.js, Express, and MongoDB. Implementing secure REST APIs, JWT-based authentication, and role-based access control. Optimizing performance, SEO, and accessibility (Lighthouse best practices) to deliver a fully responsive, production-ready application aligned with business requirements.",
-
+      description: "Independently developing and managing a multi-module CRM system using MERN stack. Built modules including Environmental Survey, Accounts, Admin & HR, Industrial Safety, Inventory Management, ISO Certifications, Marketing, NDT Services, PWHT Services. Developed scalable REST APIs, implemented RBAC, and optimized dashboards for performance.",
     },
     {
       company: "Websbaba Technologies Pvt. Ltd.",
       href: "https://websbaba.in/",
       badges: ["Full-time"],
       location: "Lucknow, India (Hybrid)",
-      title: "Full Stack Developer",
+      title: "Full Stack Developer (Real Estate Platform)",
       logoUrl: "/webs_baba_logo.png",
-      start: "10 Jun 2025",
+      start: "Oct 2025",
       end: "Dec 2025",
-      description:
-        "Developing the official company website with an admin panel and modern UI using React and Tailwind CSS. Improving website performance, SEO, and accessibility while delivering a responsive, production-ready application.",
+      description: "Developed MERN dashboards with role-based access. Integrated Razorpay payments, auto-invoicing, and lead distribution. Improved frontend UI/UX and backend API efficiency.",
     },
     {
-      company: "Marv Softwares India Pvt Ltd",
+      company: "Marv Softwares Pvt. Ltd.",
       href: "https://www.marvsoftwares.com/",
-      badges: ["Full-time"],
+      badges: ["Intern"],
       location: "Lucknow, India (Hybrid)",
-      title: "Frontend Developer",
+      title: "Full Stack Developer Intern",
       logoUrl: "/waterloo.jpg",
-      start: "Jan 2025",
+      start: "Dec 2024",
       end: "May 2025",
-      description:
-        "Working as a Frontend Developer building responsive user interfaces using React and Tailwind CSS. Integrating APIs, improving UI/UX, and collaborating with backend teams to deliver scalable features.",
-    },
-    {
-      company: "Z.N. Infotech Pvt. Ltd.",
-      href: "https://zninfotech.com/",
-      badges: ["Training Institute"],
-      location: "Lucknow, India",
-      title: "Web Developer Intern",
-      logoUrl: "/znlogo.png",
-      start: "Jul 2023",
-      end: "Nov 2023",
-      description:
-        "Completed a comprehensive MERN Stack Developer course and contributed to live projects, focusing on building end-to-end web applications with MongoDB, Express.js, React, and Node.js.",
+      description: "Developed MERN features and integrated REST APIs. Enhanced UI/UX performance and responsiveness. Implemented Stripe Connect payments and payout systems.",
     },
   ],
   aiProjects: [

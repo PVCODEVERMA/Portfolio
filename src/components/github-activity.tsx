@@ -58,8 +58,8 @@ export function GithubActivity() {
           <div className="absolute top-0 right-0 w-64 h-64 bg-primary/10 blur-[100px] rounded-full pointer-events-none -mr-32 -mt-32" />
           <div className="absolute bottom-0 left-0 w-64 h-64 bg-primary/5 blur-[100px] rounded-full pointer-events-none -ml-32 -mb-32" />
           
-          <div className="relative z-10 flex flex-col items-center overflow-x-auto hide-scrollbar">
-            <div className="min-w-[800px] lg:min-w-fit flex justify-center py-4">
+          <div className="relative z-10 w-full overflow-x-auto hide-scrollbar">
+            <div className="w-[800px] md:w-full flex justify-start md:justify-center py-4 pb-6">
               <GitHubCalendar 
                 username={DATA.githubActivity.username}
                 year={year}

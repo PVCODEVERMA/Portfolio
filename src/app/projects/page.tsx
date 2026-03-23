@@ -6,12 +6,13 @@ import { motion, AnimatePresence } from "framer-motion";
 import React, { Suspense } from "react";
 import { Sparkles, ArrowLeft, X, Copy, Check, Info, Layout, Send, Bot, User, Maximize2 } from "lucide-react";
 import Link from "next/link";
-import { useSearchParams } from "next/navigation";
+import { useSearchParams, useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import toast from "react-hot-toast";
 
 function ProjectsContent() {
   const searchParams = useSearchParams();
+  const router = useRouter();
   const fileParam = searchParams.get("file");
   const [selectedProject, setSelectedProject] = React.useState<null | any>(null);
   const [copied, setCopied] = React.useState(false);
@@ -142,6 +143,62 @@ function ProjectsContent() {
                       links={project.links}
                     />
                 </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* 3. System Blueprint Laboratory Preview */}
+        <section id="systems-preview" className="scroll-mt-20 border-t border-primary/10 pt-20">
+          <div className="space-y-12 w-full pb-8 relative z-10">
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="space-y-4 text-center max-w-3xl mx-auto"
+            >
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary border border-primary/20 text-[10px] font-black uppercase tracking-widest leading-none">
+                <Layout className="size-3" /> Architecture Stage 
+              </div>
+              <h2 className="text-2xl sm:text-4xl font-black tracking-tighter text-foreground uppercase">
+                SYSTEM <span className="text-primary italic">BLUEPRINTS</span>
+              </h2>
+            </motion.div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+              {DATA.architectures.map((arch, idx) => (
+                <motion.div
+                  key={arch.file}
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: idx * 0.1 }}
+                  onClick={() => router.push(`/systems/${arch.file}`)}
+                  className="group relative cursor-pointer"
+                >
+                  <div className="aspect-[4/3] rounded-xl bg-secondary/10 border border-primary/5 group-hover:border-primary/40 transition-all duration-500 flex items-center justify-center p-6 relative overflow-hidden shadow-2xl">
+                    <div className="absolute inset-0 z-0 opacity-[0.05] pointer-events-none"
+                      style={{ backgroundImage: `radial-gradient(circle, #f97015 1px, transparent 1px)`, backgroundSize: '16px 16px' }} />
+
+                    <img
+                      src={`/SystemsArchitected/${arch.file}`}
+                      alt={arch.name}
+                      className="max-w-full max-h-full object-contain group-hover:scale-110 transition-transform duration-700 relative z-10 drop-shadow-[0_0_20px_rgba(249,112,21,0.1)]"
+                    />
+
+                    <div className="absolute top-4 right-4 p-2 rounded-xl bg-primary/10 text-primary opacity-0 group-hover:opacity-100 transition-all">
+                      <Maximize2 className="size-3" />
+                    </div>
+                  </div>
+                  <div className="mt-4 px-2">
+                    <h3 className="text-sm font-black text-foreground group-hover:text-primary transition-colors truncate uppercase tracking-tight">
+                      {arch.name}
+                    </h3>
+                    <p className="text-[8px] font-black text-muted-foreground/40 uppercase tracking-widest">
+                      {arch.tag} • ARCH
+                    </p>
+                  </div>
+                </motion.div>
               ))}
             </div>
           </div>

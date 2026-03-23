@@ -68,7 +68,7 @@ function computeItemBaseRotation(offsetX: number, offsetY: number, sizeX: number
 }
 
 export default function DomeGallery({
-  images = DEFAULT_IMAGES,
+  images = DEFAULT_IMAGES as { src: string; alt: string }[],
   fit = 0.5,
   fitBasis = 'auto',
   minRadius = 600,
@@ -592,8 +592,8 @@ export default function DomeGallery({
                   onPointerUp={onTilePointerUp}
                 >
                   <img 
-                    alt={DATA.name} 
-                    src={DATA.avatarUrl} 
+                    alt={it.alt || DATA.name} 
+                    src={it.src || DATA.avatarUrl} 
                     className="w-full h-full object-cover object-top drop-shadow-2xl" 
                     draggable={false}
                   />

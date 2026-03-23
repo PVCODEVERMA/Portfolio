@@ -107,7 +107,7 @@ export function SkillsDrawer({ isOpen, onClose, initialCategory, skillsData }: S
             onClick={onClose}
             className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[100]"
           />
-            <motion.div
+          <motion.div
             initial={{ x: "100%" }}
             animate={{ x: 0 }}
             exit={{ x: "100%" }}
