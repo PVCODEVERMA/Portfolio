@@ -235,12 +235,12 @@ export default function Page() {
                     >
                       <Button asChild size="default" className="rounded-full w-full px-2 sm:px-8 font-black shadow-xl shadow-primary/20 cursor-pointer h-10 sm:h-12 text-[10px] sm:text-base">
                         <Link
-                          href="/resume/resume_pv.pdf"
+                          href="https://drive.google.com/file/d/1pXuqzTE61kCT36sQuE0RyQLFXmJiFs-8/view?usp=sharing"
                           target="_blank"
                           rel="noopener noreferrer"
                           onClick={() => {
                             startLoading(1500);
-                            toast.success("Resume downloading...");
+                            toast.success("Opening Resume...");
                           }}
                           className="flex items-center justify-center gap-1"
                         >

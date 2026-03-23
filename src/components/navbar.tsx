@@ -79,14 +79,14 @@ export default function Navbar() {
           <Tooltip>
             <TooltipTrigger asChild>
               <Link
-                href="/resume/resume_pv.pdf"
+                href="https://drive.google.com/file/d/1pXuqzTE61kCT36sQuE0RyQLFXmJiFs-8/view?usp=sharing"
                 target="_blank"
                 rel="noopener noreferrer"
                 className={cn(
                   buttonVariants({ variant: "ghost", size: "icon" }),
                   "size-12"
                 )}
-                onClick={() => toast.success("Resume downloading...")}
+                onClick={() => toast.success("Opening Resume...")}
               >
                 <FileText className="size-4" />
               </Link>
