@@ -31,12 +31,12 @@ export function GithubActivity() {
             My Open Source <span className="text-primary italic">Journey</span>
           </h2>
           
-          <div className="flex flex-wrap justify-center gap-2 p-1.5 bg-secondary/20 rounded-2xl border border-primary/10 backdrop-blur-md">
+          <div className="flex flex-nowrap justify-center gap-1 sm:gap-2 p-1.5 bg-secondary/20 rounded-2xl border border-primary/10 backdrop-blur-md">
             {years.map((y) => (
               <button
                 key={y}
                 onClick={() => setYear(y)}
-                className={`px-6 py-2 rounded-xl text-xs font-black transition-all duration-300 ${
+                className={`px-4 sm:px-6 py-2 rounded-xl text-xs font-black transition-all duration-300 ${
                   year === y 
                     ? "bg-primary text-primary-foreground shadow-lg shadow-primary/30 scale-105" 
                     : "hover:bg-primary/10 text-muted-foreground hover:text-foreground"

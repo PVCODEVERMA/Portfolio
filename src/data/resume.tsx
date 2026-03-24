@@ -4,7 +4,7 @@ import { HomeIcon } from "lucide-react";
 export const DATA = {
   name: "Pankaj Verma",
   initials: "PV",
-  url: "https://pvcode.com",
+  url: "https://pvcode.netlify.app",
   location: "Noida, Sector 15, Uttar Pradesh, India",
   locationLink: "https://maps.app.goo.gl/dFLbinrTMVHjkjcHA",
   role: "Developer | AI Architect | Tech Creator",
@@ -414,6 +414,50 @@ export const DATA = {
     },
   ],
   certifications: [
+       {
+      title: "MERN Stack Certification",
+      issuer: "PW Skills",
+      date: "2024",
+      description: "Advanced certification in MERN Stack development, covering MongoDB, Express, React, and Node.js.",
+      status: "completed",
+      image: "/CertificateAll/PW-certification-MERN.png"
+        },
+        {
+      title: "Full Stack Development Webinar",
+      issuer: "Shri Balaji Infotech",
+      date: "January 2023",
+      credentialId: "WS/5022/45",
+      url: "https://drive.google.com/file/d/1vNzkzF4tby5ixDrfRpkg-UUyildg7Bq-/view?usp=sharing",
+      description: "Participated in industry webinar exploring full-stack development trends, tools, and career opportunities in web development.",
+      skills: [
+        "Industry Trends", "Development Tools", "Career Guidance",
+        "Technology Stack Overview"
+      ],
+      status: "completed",
+      type: "webinar",
+      duration: "1 day",
+      verified: true,
+      badgeColor: "bg-orange-500/10 border-orange-500/20",
+      image: "/CertificateAll/Certificate_webinar.png"
+    },
+    {
+      title: "Java Software Development Workshop",
+      issuer: "Analyze Infotech",
+      date: "December 2022",
+      credentialId: "WS-Java-Dec2022",
+      url: "https://drive.google.com/file/d/1WrQAxxx6piENkv6qz9ZVc1qGLJX5ZrZ9/view?usp=sharing",
+      description: "Completed 5-day intensive hands-on workshop focused on Java programming fundamentals, object-oriented concepts, and practical software development exercises.",
+      skills: [
+        "Java", "Object-Oriented Programming", "Software Development Lifecycle",
+        "Debugging", "Problem Solving", "Basic Algorithms"
+      ],
+      status: "completed",
+      type: "workshop",
+      duration: "5 days",
+      verified: true,
+      badgeColor: "bg-green-500/10 border-green-500/20",
+      image: "/CertificateAll/Certificate_Workshop.png"
+    },
     {
       title: "Data Science Fundamentals",
       issuer: "PW Skills",
@@ -468,50 +512,7 @@ export const DATA = {
       verified: true,
       badgeColor: "bg-orange-500/10 border-orange-500/20"
     },
-    {
-      title: "Full Stack Development Webinar",
-      issuer: "Shri Balaji Infotech",
-      date: "January 2023",
-      credentialId: "WS/5022/45",
-      url: "https://drive.google.com/file/d/1vNzkzF4tby5ixDrfRpkg-UUyildg7Bq-/view?usp=sharing",
-      description: "Participated in industry webinar exploring full-stack development trends, tools, and career opportunities in web development.",
-      skills: [
-        "Industry Trends", "Development Tools", "Career Guidance",
-        "Technology Stack Overview"
-      ],
-      status: "completed",
-      type: "webinar",
-      duration: "1 day",
-      verified: true,
-      badgeColor: "bg-orange-500/10 border-orange-500/20",
-      image: "/CertificateAll/Certificate_webinar.png"
-    },
-    {
-      title: "Java Software Development Workshop",
-      issuer: "Analyze Infotech",
-      date: "December 2022",
-      credentialId: "WS-Java-Dec2022",
-      url: "https://drive.google.com/file/d/1WrQAxxx6piENkv6qz9ZVc1qGLJX5ZrZ9/view?usp=sharing",
-      description: "Completed 5-day intensive hands-on workshop focused on Java programming fundamentals, object-oriented concepts, and practical software development exercises.",
-      skills: [
-        "Java", "Object-Oriented Programming", "Software Development Lifecycle",
-        "Debugging", "Problem Solving", "Basic Algorithms"
-      ],
-      status: "completed",
-      type: "workshop",
-      duration: "5 days",
-      verified: true,
-      badgeColor: "bg-green-500/10 border-green-500/20",
-      image: "/CertificateAll/Certificate_Workshop.png"
-    },
-    {
-      title: "MERN Stack Certification",
-      issuer: "PW Skills",
-      date: "2024",
-      description: "Advanced certification in MERN Stack development, covering MongoDB, Express, React, and Node.js.",
-      status: "completed",
-      image: "/CertificateAll/PW-certification-MERN.png"
-    }
+
   ],
   systemKnowledge: {
     "chatbot_system_architecture.svg": {
