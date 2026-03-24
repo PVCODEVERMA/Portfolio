@@ -98,10 +98,10 @@ export const DATA = {
         { name: "RAG Stack (Pinecone, FAISS)", level: "Medium", years: "1+ yrs", projects: "1+ projects", trend: "High", progress: 60 },
         { name: "LLM Advanced (Function Calling, structured output)", level: "Medium", years: "1+ yrs", projects: "2+ projects", trend: "High", progress: 60 },
         { name: "AI Agents (LangGraph, CrewAI)", level: "Medium", years: "1+ yrs", projects: "+ projects", trend: "High", progress: 70 },
-        { name: "Prompt Engineering & Chaining", level: "Medium", years: "2+ yrs", projects: "2+ projects", trend: "High", progress: 65 },
-        { name: "LlamaIndex / LangChain", level: "Medium", years: "2+ yrs", projects: "1+ projects", trend: "High", progress: 70 },
+        { name: "Prompt Engineering & Chaining", level: "Medium", years: "1+ yrs", projects: "2+ projects", trend: "High", progress: 65 },
+        { name: "LlamaIndex / LangChain", level: "Medium", years: "1+ yrs", projects: "1+ projects", trend: "High", progress: 70 },
         { name: "Vector Search & Embeddings", level: "Medium", years: "1+ yrs", projects: "1+ projects", trend: "High", progress: 75},
-        { name: "OpenAI / Gemini API", level: "Medium", years: "2+ yrs", projects: "2+ projects", trend: "Stable", progress: 70 },
+        { name: "OpenAI / Gemini API", level: "Medium", years: "1+ yrs", projects: "2+ projects", trend: "Stable", progress: 70 },
       ]
     },
     "Frontend": {
