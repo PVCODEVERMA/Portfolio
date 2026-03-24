@@ -95,13 +95,13 @@ export const DATA = {
       icon: "Cpu",
       description: "Advanced AI Orchestration & LLM Engineering",
       list: [
-        { name: "RAG Stack (Pinecone, FAISS)", level: "Medium", years: "1+ yrs", projects: "1+ projects", trend: "High", progress: 60 },
-        { name: "LLM Advanced (Function Calling, structured output)", level: "Medium", years: "1+ yrs", projects: "2+ projects", trend: "High", progress: 60 },
-        { name: "AI Agents (LangGraph, CrewAI)", level: "Medium", years: "1+ yrs", projects: "+ projects", trend: "High", progress: 70 },
-        { name: "Prompt Engineering & Chaining", level: "Medium", years: "1+ yrs", projects: "2+ projects", trend: "High", progress: 65 },
-        { name: "LlamaIndex / LangChain", level: "Medium", years: "1+ yrs", projects: "1+ projects", trend: "High", progress: 70 },
-        { name: "Vector Search & Embeddings", level: "Medium", years: "1+ yrs", projects: "1+ projects", trend: "High", progress: 75},
-        { name: "OpenAI / Gemini API", level: "Medium", years: "1+ yrs", projects: "2+ projects", trend: "Stable", progress: 70 },
+        { name: "RAG Stack (Pinecone, FAISS)", level: "Medium", years: "1+ yrs", projects: "1+ projects", trend: "Growing", progress: 60 },
+        { name: "LLM Advanced (Function Calling, structured output)", level: "Medium", years: "1+ yrs", projects: "2+ projects", trend: "Growing", progress: 60 },
+        { name: "AI Agents (LangGraph, CrewAI)", level: "Medium", years: "1+ yrs", projects: "+ projects", trend: "Growing", progress: 70 },
+        { name: "Prompt Engineering & Chaining", level: "Medium", years: "1+ yrs", projects: "2+ projects", trend: "Growing", progress: 65 },
+        { name: "LlamaIndex / LangChain", level: "Medium", years: "1+ yrs", projects: "1+ projects", trend: "Growing", progress: 70 },
+        { name: "Vector Search & Embeddings", level: "Medium", years: "1+ yrs", projects: "1+ projects", trend: "Growing", progress: 75},
+        { name: "OpenAI / Gemini API", level: "Medium", years: "1+ yrs", projects: "2+ projects", trend: "Growing", progress: 70 },
       ]
     },
     "Frontend": {
@@ -133,7 +133,7 @@ export const DATA = {
       description: "CI/CD, Deployment & Infrastructure",
       list: [
         { name: "Docker & Docker Compose", level: "Medium", years: "1+ yrs", projects: "5+ projects", trend: "Essential", progress: 78 },
-        { name: "CI/CD Pipelines (GitHub Actions)", level: "Advanced", years: "2+ yrs", projects: "10+ projects", trend: "High", progress: 92 },
+        { name: "CI/CD Pipelines (GitHub Actions)", level: "Medium", years: "2+ yrs", projects: "10+ projects", trend: "High", progress: 92 },
         { name: "Nginx & Server Management", level: "Medium", years: "1+ yrs", projects: "4+ projects", trend: "Stable", progress: 70 },
         { name: "Vercel / VPS Deployment", level: "Advanced", years: "3+ yrs", projects: "20+ projects", trend: "Stable", progress: 98 },
         { name: "Web Security (CSRF, Protection)", level: "Medium", years: "1+ yrs", projects: "5+ projects", trend: "Essential", progress: 75 },
