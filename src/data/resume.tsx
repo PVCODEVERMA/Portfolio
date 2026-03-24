@@ -95,13 +95,13 @@ export const DATA = {
       icon: "Cpu",
       description: "Advanced AI Orchestration & LLM Engineering",
       list: [
-        { name: "RAG Stack (Pinecone, FAISS)", level: "Advanced", years: "2+ yrs", projects: "8+ projects", trend: "High", progress: 95 },
-        { name: "LLM Advanced (Function Calling, structured output)", level: "Advanced", years: "2+ yrs", projects: "6+ projects", trend: "High", progress: 92 },
-        { name: "AI Agents (LangGraph, CrewAI)", level: "Advanced", years: "1+ yrs", projects: "4+ projects", trend: "High", progress: 88 },
-        { name: "Prompt Engineering & Chaining", level: "Advanced", years: "2+ yrs", projects: "10+ projects", trend: "High", progress: 95 },
-        { name: "LlamaIndex / LangChain", level: "Advanced", years: "2+ yrs", projects: "5+ projects", trend: "High", progress: 90 },
-        { name: "Vector Search & Embeddings", level: "Advanced", years: "1+ yrs", projects: "4+ projects", trend: "High", progress: 85 },
-        { name: "OpenAI / Gemini API", level: "Advanced", years: "2+ yrs", projects: "10+ projects", trend: "Stable", progress: 92 },
+        { name: "RAG Stack (Pinecone, FAISS)", level: "Medium", years: "1+ yrs", projects: "1+ projects", trend: "High", progress: 60 },
+        { name: "LLM Advanced (Function Calling, structured output)", level: "Medium", years: "1+ yrs", projects: "2+ projects", trend: "High", progress: 60 },
+        { name: "AI Agents (LangGraph, CrewAI)", level: "Medium", years: "1+ yrs", projects: "+ projects", trend: "High", progress: 70 },
+        { name: "Prompt Engineering & Chaining", level: "Medium", years: "2+ yrs", projects: "2+ projects", trend: "High", progress: 65 },
+        { name: "LlamaIndex / LangChain", level: "Medium", years: "2+ yrs", projects: "1+ projects", trend: "High", progress: 70 },
+        { name: "Vector Search & Embeddings", level: "Medium", years: "1+ yrs", projects: "1+ projects", trend: "High", progress: 75},
+        { name: "OpenAI / Gemini API", level: "Medium", years: "2+ yrs", projects: "2+ projects", trend: "Stable", progress: 70 },
       ]
     },
     "Frontend": {
