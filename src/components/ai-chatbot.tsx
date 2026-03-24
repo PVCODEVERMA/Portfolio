@@ -72,7 +72,7 @@ export default function AIChatbot() {
   const [messages, setMessages] = useState<Message[]>([
     {
       id: "1",
-      text: `Hi! I'm **${DATA.name}'s AI Assistant**. How can I help you today? \n\nI can tell you about my **1.5+ years of experience**, skills in **React/Node.js**, or show you my latest projects!`,
+      text: `Hi! I'm **${DATA.name}'s AI Assistant**. How can I help you today? \n\nI can tell you about my **1.3+ years of experience**, skills in **React/Node.js**, or show you my latest projects!`,
       sender: "ai",
     },
   ]);

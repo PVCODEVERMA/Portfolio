@@ -114,7 +114,7 @@ export function SiteLoader() {
             <div className="flex flex-row items-center justify-center gap-4 pt-6 w-full text-[10px] sm:text-[11px] font-bold text-muted-foreground/80 tracking-tight">
               <div className="flex items-center gap-1.5">
                 <Briefcase className="size-3.5 text-foreground/60" />
-                <span className="whitespace-nowrap">1.5+ Years Exp.</span>
+                <span className="whitespace-nowrap">1.3+ Years Exp.</span>
               </div>
               <div className="flex items-center gap-1.5">
                 <FileText className="size-3.5 text-foreground/60" />

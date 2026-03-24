@@ -5,6 +5,19 @@ import { useGesture } from '@use-gesture/react';
 import { DATA } from '@/data/resume';
 import './DomeGallery.css';
 
+// Preload and cache unique image URLs with small in-memory blobs
+const imageCache = new Map<string, string>();
+function preloadImages(urls: string[]) {
+  const unique = Array.from(new Set(urls));
+  unique.forEach(url => {
+    if (imageCache.has(url)) return;
+    const img = new Image();
+    img.decoding = 'async';
+    img.src = url;
+    imageCache.set(url, url);
+  });
+}
+
 const DEFAULT_IMAGES = Array.from({ length: 15 }, () => ({
   src: DATA.avatarUrl,
   alt: DATA.name
@@ -119,6 +132,12 @@ export default function DomeGallery({
   }, []);
 
   const items = useMemo(() => buildItems(images, segments), [images, segments]);
+
+  // Preload unique images on mount
+  useEffect(() => {
+    const urls = items.map(it => it.src).filter(Boolean);
+    preloadImages(urls);
+  }, [items]);
 
   const applyTransform = (xDeg: number, yDeg: number) => {
     const el = sphereRef.current;
@@ -596,6 +615,12 @@ export default function DomeGallery({
                     src={it.src || DATA.avatarUrl} 
                     className="w-full h-full object-cover object-top drop-shadow-2xl" 
                     draggable={false}
+                    loading="lazy"
+                    decoding="async"
+                    width={200}
+                    height={200}
+                    // @ts-ignore
+                    fetchpriority="low"
                   />
                 </div>
               </div>
