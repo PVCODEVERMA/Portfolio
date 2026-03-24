@@ -162,23 +162,50 @@ export function Header() {
       >
         {/* Left: Profile Section / Login Trigger */}
         <div className="flex items-center gap-0 sm:gap-2 pr-0.5 sm:pr-2 border-r border-border/50">
-          {user && user.email === DATA.contact.email ? (
-            <Avatar className="size-7 sm:size-8 border-2 border-primary/20 shrink-0">
-              <AvatarImage src={DATA.avatarUrl} />
-              <AvatarFallback>{DATA.initials}</AvatarFallback>
-            </Avatar>
+          {user ? (
+            <>
+              <div className="relative group/avatar cursor-pointer">
+                <Avatar className={cn(
+                  "size-7 sm:size-8 transition-all duration-300 ring-2 ring-primary/10 group-hover/avatar:ring-primary/40 bg-white",
+                  user.email === DATA.contact.email && "ring-purple-500/30 group-hover/avatar:ring-purple-500/60"
+                )}>
+                  <AvatarImage src={user.user_metadata?.avatar_url || ""} />
+                  <AvatarFallback className="bg-white text-primary font-black text-[8px] sm:text-[10px]">
+                    {(() => {
+                      const name = user.user_metadata?.full_name || "";
+                      if (!name) return user.email?.charAt(0).toUpperCase() || "U";
+                      const parts = name.split(" ").filter(Boolean);
+                      if (parts.length === 1) return parts[0].charAt(0).toUpperCase();
+                      return (parts[0].charAt(0) + parts[parts.length - 1].charAt(0)).toUpperCase();
+                    })()}
+                  </AvatarFallback>
+                </Avatar>
+                
+                {user.email === DATA.contact.email && (
+                  <div className="absolute -top-1 -right-1 bg-purple-500 text-[6px] font-black text-white px-0.5 py-0.5 rounded-full border border-background shadow-lg">
+                    <ShieldCheck className="size-2" />
+                  </div>
+                )}
+              </div>
+              
+              <button
+                onClick={() => signOut()}
+                className="p-1 px-2.5 sm:px-3 text-red-500 rounded-xl transition-all flex items-center gap-1.5 group hover:bg-red-500/10 active:scale-90"
+                title="Sign Out"
+              >
+                <LogOut className="size-4.5 sm:size-5 transition-transform group-hover:scale-110" />
+                
+              </button>
+            </>
           ) : (
             <button
-              onClick={() => !user && setIsAuthModalOpen(true)}
-              className={cn(
-                "p-1 px-2.5 sm:px-3 text-primary rounded-xl transition-all flex items-center gap-1.5 group",
-                !user ? "hover:bg-primary/10 active:scale-90 cursor-pointer" : "cursor-default"
-              )}
-              title={!user ? "Click to Login" : "Logged in as User"}
+              onClick={() => setIsAuthModalOpen(true)}
+              className="p-1 px-2.5 sm:px-3 text-primary rounded-xl transition-all flex items-center gap-1.5 group hover:bg-primary/10 active:scale-90 cursor-pointer"
+              title="Click to Login"
             >
               <LogIn className="size-4.5 sm:size-5 transition-transform group-hover:scale-110" />
               <span className="text-[10px] sm:text-xs font-black uppercase tracking-widest hidden xs:inline">
-                {!user ? "Login" : "User"}
+                Login
               </span>
             </button>
           )}
@@ -225,54 +252,8 @@ export function Header() {
           })}
         </div>
 
-        {/* Right: Auth & Theme toggle */}
-        <div className="pl-0.5 sm:pl-2 border-l border-border/50 flex items-center gap-0.5 sm:gap-1.5">
-          {user ? (
-            <div className="flex items-center gap-1.5 sm:gap-2 pr-1 sm:pr-2">
-              <div className="relative group/avatar cursor-pointer">
-                <Avatar className={cn(
-                  "size-8 sm:size-9 transition-all duration-300 ring-2 ring-primary/10 group-hover/avatar:ring-primary/40",
-                  user.email === DATA.contact.email && "ring-purple-500/30 group-hover/avatar:ring-purple-500/60"
-                )}>
-                  <AvatarImage src={user.user_metadata?.avatar_url || ""} />
-                  <AvatarFallback className="bg-primary/10 text-primary font-black text-[10px]">
-                    {(() => {
-                      const name = user.user_metadata?.full_name || "";
-                      if (!name) return user.email?.charAt(0).toUpperCase() || "U";
-                      const parts = name.split(" ").filter(Boolean);
-                      if (parts.length === 1) return parts[0].charAt(0).toUpperCase();
-                      return (parts[0].charAt(0) + parts[parts.length - 1].charAt(0)).toUpperCase();
-                    })()}
-                  </AvatarFallback>
-                </Avatar>
-
-                {user.email === DATA.contact.email && (
-                  <div className="absolute -top-1 -right-1 bg-purple-500 text-[8px] font-black text-white px-1 py-0.5 rounded-full border border-background shadow-lg flex items-center gap-0.5">
-                    <ShieldCheck className="size-2" />
-                    <span>ADMIN</span>
-                  </div>
-                )}
-              </div>
-
-              <div className="hidden md:flex flex-col -space-y-0.5 max-w-[80px]">
-                <p className="text-[10px] font-black truncate text-foreground/80">
-                  {user.email === DATA.contact.email ? "Admin" : (user.user_metadata?.full_name || "User")}
-                </p>
-                <p className="text-[8px] font-medium truncate text-muted-foreground opacity-60 italic">
-                  {user.email === DATA.contact.email ? "Portfolio Owner" : "Verified User"}
-                </p>
-              </div>
-
-              <button
-                onClick={() => signOut()}
-                className="p-1.5 sm:p-2 transition-all hover:bg-red-500/10 hover:text-red-500 text-muted-foreground rounded-xl active:scale-90"
-                title="Sign Out"
-              >
-                <LogOut className="size-3.5 sm:size-4" />
-              </button>
-            </div>
-          ) : null}
-          <div className="h-4 w-px bg-border/50 mx-0.5 sm:mx-1" />
+        {/* Right: Theme toggle only */}
+        <div className="pl-0.5 sm:pl-2 border-l border-border/50 flex items-center">
           <ModeToggle />
         </div>
 
