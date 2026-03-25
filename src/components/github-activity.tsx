@@ -28,7 +28,7 @@ export function GithubActivity() {
              GitHub Contribution Graph
           </div>
           <h2 className="text-3xl sm:text-5xl font-black tracking-tight text-center">
-            My Open Source <span className="text-primary italic">Journey</span>
+            GitHub <span className="text-primary italic">Activity</span>
           </h2>
           
           <div className="flex flex-nowrap justify-center gap-1 sm:gap-2 p-1.5 bg-secondary/20 rounded-2xl border border-primary/10 backdrop-blur-md">

@@ -17,10 +17,34 @@ export function RatingModal({ isOpen, onClose }: { isOpen: boolean; onClose: () 
   const handleSubmit = async () => {
     if (!sessionUser) {
       setIsAuthModalOpen(true);
-      toast.error("Please login to submit your rating");
+      toast.error("Please login to submit your rating", {
+        duration: 4000,
+        position: 'top-center',
+        style: {
+          background: '#ef4444',
+          color: '#ffffff',
+          fontSize: '14px',
+          fontWeight: 'bold',
+          padding: '12px 20px',
+          borderRadius: '12px',
+          boxShadow: '0 10px 25px rgba(0,0,0,0.2)'
+        }
+      });
       return;
     }
-    if (rating === 0) return toast.error("Please select a rating.");
+    if (rating === 0) return toast.error( "Please select a rating.", {
+      duration: 3000,
+      position: 'top-center',
+      style: {
+        background: '#f59e0b',
+        color: '#ffffff',
+        fontSize: '14px',
+        fontWeight: 'bold',
+        padding: '12px 20px',
+        borderRadius: '12px',
+        boxShadow: '0 10px 25px rgba(0,0,0,0.2)'
+      }
+    });
 
     setIsSubmitting(true);
     try {
@@ -42,7 +66,19 @@ export function RatingModal({ isOpen, onClose }: { isOpen: boolean; onClose: () 
       const data = await res.json();
       if (!data.ok) throw new Error(data.error);
 
-      toast.success("Thank you for your rating!");
+      toast.success("Thank you for your rating!", {
+        duration: 4000,
+        position: 'top-center',
+        style: {
+          background: '#22c55e',
+          color: '#ffffff',
+          fontSize: '14px',
+          fontWeight: 'bold',
+          padding: '12px 20px',
+          borderRadius: '12px',
+          boxShadow: '0 10px 25px rgba(0,0,0,0.2)'
+        }
+      });
       onClose();
       setTimeout(() => window.location.reload(), 1500); 
     } catch(err: any) {

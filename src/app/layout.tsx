@@ -79,7 +79,16 @@ export default function RootLayout({
                 <Suspense fallback={null}>
                   <Header />
                 </Suspense>
-                <Toaster position="top-center" reverseOrder={false} />
+                <Toaster 
+                  position="top-center" 
+                  reverseOrder={false}
+                  toastOptions={{
+                    style: {
+                      background: 'transparent',
+                      zIndex: 9999,
+                    },
+                  }}
+                />
                 <VantaBirds />
                 <GlobalAuthModal />
                 {children}
