@@ -620,9 +620,7 @@ export default function Page() {
               </div>
             </section>
 
-            {/* 6. GitHub Activity */}
-            <GithubActivity />
-
+            
 
 
             {/* 7.5 Work Experience */}
