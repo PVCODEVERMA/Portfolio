@@ -3,6 +3,7 @@
 import { HackathonCard } from "@/components/hackathon-card";
 import { ProjectCard } from "@/components/project-card";
 import { ResumeCard } from "@/components/resume-card";
+import AnimeReveal from "@/components/anime-reveal";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -144,6 +145,7 @@ export default function Page() {
             exit={{ opacity: 0 }}
             className="flex flex-col space-y-16 md:space-y-24"
           >
+            <AnimeReveal delay={100}>
             {/* 1. Hero Section */}
             <section
               id="hero"
@@ -235,7 +237,7 @@ export default function Page() {
                     >
                       <Button asChild size="default" className="rounded-full w-full px-2 sm:px-8 font-black shadow-xl shadow-primary/20 cursor-pointer h-10 sm:h-12 text-[10px] sm:text-base">
                         <Link
-                          href="https://drive.google.com/file/d/1pXuqzTE61kCT36sQuE0RyQLFXmJiFs-8/view?usp=sharing"
+                          href="https://drive.google.com/file/d/1Cbbx05lspTunaePTrem1YZq6MZ_rHZAJ/view?usp=sharing"
                           target="_blank"
                           rel="noopener noreferrer"
                           onClick={() => {
@@ -344,6 +346,7 @@ export default function Page() {
                 </motion.div>
               </div>
             </section>
+            </AnimeReveal>
 
             {/* Comment Modal */}
             <AnimatePresence>
@@ -426,6 +429,7 @@ export default function Page() {
             </AnimatePresence>
 
             {/* 2. About Section with Timeline */}
+            <AnimeReveal delay={200}>
             <section id="about" className="scroll-mt-16 px-4 max-w-[1400px] mx-auto w-full">
               <div className="space-y-12 max-w-4xl lg:max-w-none">
                 <motion.div
@@ -481,72 +485,11 @@ export default function Page() {
                 </div>
               </div>
             </section>
+            </AnimeReveal>
 
-            {/* 3. Stats / Achievements */}
-            <section id="stats" className="scroll-mt-16 px-4">
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-[1400px] mx-auto">
-                {DATA.stats?.map((stat, idx) => {
-                  const Icon = {
-                    Briefcase: Briefcase,
-                    Users: Users,
-                    Cpu: Cpu,
-                  }[stat.icon as string] || Trophy;
-
-                  const isLink = stat.label.includes("Technologies") || stat.label.includes("Projects") || stat.label.includes("Systems");
-
-                  return (
-                    <motion.div
-                      key={stat.label}
-                      initial={{ opacity: 0, y: 15 }}
-                      whileInView={{ opacity: 1, y: 0 }}
-                      viewport={{ once: true }}
-                      transition={{ delay: idx * 0.1 }}
-                      onClick={() => {
-                        if (stat.label.includes("Technologies")) router.push("/technologies");
-                        else if (stat.label.includes("Projects")) router.push("/projects");
-                        else if (stat.label.includes("Systems")) router.push("/systems");
-                      }}
-                      className={cn(
-                        "p-8 rounded-[2rem] bg-secondary/10 backdrop-blur-md border border-primary/10 transition-all duration-500 text-left space-y-3 group shadow-xl relative overflow-hidden",
-                        isLink && "cursor-pointer hover:border-primary/50 hover:bg-primary/5 hover:shadow-primary/10 active:scale-[0.97]"
-                      )}
-                    >
-                      {/* Blueprint Card Textures */}
-                      {isLink && (
-                        <>
-                          <div className="absolute inset-0 z-0 opacity-[0.03] pointer-events-none"
-                            style={{ backgroundImage: `radial-gradient(circle, #f97015 1px, transparent 1px)`, backgroundSize: '20px 20px' }} />
-                          <div className="absolute -bottom-2 -right-2 z-0 font-black italic text-primary/5 text-4xl uppercase select-none pointer-events-none group-hover:text-primary/10 transition-colors">
-                            {stat.label.includes("Systems") ? "LAB" : "MAP"}
-                          </div>
-                        </>
-                      )}
-
-                      {isLink && (
-                        <div className="absolute top-5 right-5 text-primary opacity-30 group-hover:opacity-100 transition-all group-hover:translate-x-1 group-hover:-translate-y-1">
-                          <ExternalLink className="size-4" />
-                        </div>
-                      )}
-
-                      <div className="relative z-10 mr-auto size-14 rounded-2xl bg-primary/10 border border-primary/10 flex items-center justify-center group-hover:scale-110 group-hover:rotate-6 transition-all duration-500 shadow-lg">
-                        <Icon className="size-6 text-primary" />
-                      </div>
-
-                      <div className="relative z-10 space-y-1">
-                        <h3 className="text-2xl font-black text-foreground tracking-tight group-hover:text-primary transition-colors">
-                          {stat.label.split(" ").slice(0, 1).join(" ")}
-                        </h3>
-                        <p className="text-[10px] font-black text-muted-foreground/60 uppercase tracking-[0.2em]">
-                          {stat.label.split(" ").slice(1).join(" ")}
-                        </p>
-                      </div>
-                    </motion.div>
-                  );
-                })}
-              </div>
-            </section>
 
             {/* 10. Certifications */}
+            <AnimeReveal delay={250}>
             <section id="certifications" className="scroll-mt-24 px-4">
               <div className="space-y-8 py-8">
                 <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-primary/10 pb-6">
@@ -559,10 +502,8 @@ export default function Page() {
                     <span>{(DATA.certifications as readonly any[])?.filter((c) => c.status === "completed")?.length || 0} Done</span>
                     <span className="mx-1 opacity-20">|</span>
                     <Flame className="size-3 text-orange-500 animate-pulse" />
-                    <span>{(DATA.certifications as readonly any[])?.filter((c) => c.status === "ongoing")?.length || 0} High-Speed Learning</span>
                   </div>
                 </div>
-
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 max-w-[1400px] mx-auto w-full">
                   {DATA.certifications?.map((cert, id) => (
                     <CertificationCard key={cert.title} cert={cert as any} />
@@ -570,8 +511,10 @@ export default function Page() {
                 </div>
               </div>
             </section>
+            </AnimeReveal>
 
             {/* 7. Featured Projects Stage */}
+            <AnimeReveal delay={300}>
             <section id="projects" className="scroll-mt-16 px-4">
               <div className="max-w-[1400px] mx-auto space-y-12">
                 <div className="flex flex-col md:flex-row items-center justify-between gap-6 border-b border-primary/10 pb-10">
@@ -619,11 +562,13 @@ export default function Page() {
                 </div>
               </div>
             </section>
+            </AnimeReveal>
 
             
 
 
             {/* 7.5 Work Experience */}
+            <AnimeReveal delay={400}>
             <section id="work" className="scroll-mt-16 px-4 max-w-[1400px] mx-auto">
               <div className="space-y-8">
                 <div className="flex items-center justify-between border-b border-primary/10 pb-4">
@@ -649,8 +594,10 @@ export default function Page() {
                 </div>
               </div>
             </section>
+            </AnimeReveal>
 
             {/* 6.5 Education (Integrated) */}
+            <AnimeReveal delay={450}>
             <section id="education" className="scroll-mt-16 px-4 max-w-[1400px] mx-auto">
               <div className="space-y-8">
                 <h2 className="text-xl sm:text-2xl font-black text-foreground">Education</h2>
@@ -669,8 +616,10 @@ export default function Page() {
                 </div>
               </div>
             </section>
+            </AnimeReveal>
 
             {/* 7. Skills Section */}
+            <AnimeReveal delay={350}>
             <section id="skills" className="scroll-mt-24 px-4">
               <div className="space-y-12 py-8">
                 <div className="text-left space-y-4 max-w-3xl ml-0">
@@ -738,8 +687,10 @@ export default function Page() {
                 />
               )}
             </section>
+            </AnimeReveal>
 
             {/* 9. Blog / Articles */}
+            <AnimeReveal delay={500}>
             <section id="blog" className="scroll-mt-16 px-4 max-w-[1400px] mx-auto w-full">
               <div className="space-y-8">
                 <h2 className="text-2xl sm:text-3xl font-black flex items-center gap-3">
@@ -762,8 +713,10 @@ export default function Page() {
                 </div>
               </div>
             </section>
+            </AnimeReveal>
 
             {/* 11. Community / Content Creator */}
+            <AnimeReveal delay={550}>
             <section id="community" className="scroll-mt-16 px-4 max-w-[1400px] mx-auto w-full">
               <div className="space-y-8">
                 <div className="space-y-2">
@@ -794,8 +747,10 @@ export default function Page() {
                 </div>
               </div>
             </section>
+            </AnimeReveal>
 
             {/* 12. Contact Section */}
+            <AnimeReveal delay={600}>
             <section id="contact" className="scroll-mt-20 px-4">
               <div className="grid items-center justify-center gap-4 px-4 text-center w-full py-12 sm:py-20 bg-primary/5 rounded-[3rem] border border-primary/10 mx-auto max-w-[1400px] relative overflow-hidden">
                 <div className="absolute top-0 right-0 p-12 opacity-10">
@@ -831,6 +786,7 @@ export default function Page() {
                 </motion.div>
               </div>
             </section>
+            </AnimeReveal>
           </motion.div>
         ) : (
           <motion.div

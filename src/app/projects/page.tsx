@@ -24,7 +24,7 @@ function ProjectsContent() {
   React.useEffect(() => {
     if (fileParam) {
       const allProjects = [...DATA.projects, ...(DATA as any).aiProjects];
-      const project = allProjects.find(p => p.blueprint === fileParam || p.title.toLowerCase().includes(fileParam.toLowerCase()));
+      const project = allProjects.find(p => p.title.toLowerCase().includes(fileParam.toLowerCase()));
       if (project) {
         setSelectedProject(project);
       }
@@ -32,7 +32,7 @@ function ProjectsContent() {
   }, [fileParam]);
 
   const handleCopy = (file: string) => {
-    const url = `${window.location.origin}/SystemsArchitected/${file}`;
+    const url = `${window.location.origin}/projects/${file}`;
     navigator.clipboard.writeText(url);
     setCopied(true);
     toast.success("Blueprint Link Copied");
@@ -148,61 +148,7 @@ function ProjectsContent() {
           </div>
         </section>
 
-        {/* 3. System Blueprint Laboratory Preview */}
-        <section id="systems-preview" className="scroll-mt-20 border-t border-primary/10 pt-20">
-          <div className="space-y-12 w-full pb-8 relative z-10">
-            <motion.div 
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="space-y-4 text-center max-w-3xl mx-auto"
-            >
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary border border-primary/20 text-[10px] font-black uppercase tracking-widest leading-none">
-                <Layout className="size-3" /> Architecture Stage 
-              </div>
-              <h2 className="text-2xl sm:text-4xl font-black tracking-tighter text-foreground uppercase">
-                SYSTEM <span className="text-primary italic">BLUEPRINTS</span>
-              </h2>
-            </motion.div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-              {DATA.architectures.map((arch, idx) => (
-                <motion.div
-                  key={arch.file}
-                  initial={{ opacity: 0, scale: 0.95 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: idx * 0.1 }}
-                  onClick={() => router.push(`/systems/${arch.file}`)}
-                  className="group relative cursor-pointer"
-                >
-                  <div className="aspect-[4/3] rounded-xl bg-secondary/10 border border-primary/5 group-hover:border-primary/40 transition-all duration-500 flex items-center justify-center p-6 relative overflow-hidden shadow-2xl">
-                    <div className="absolute inset-0 z-0 opacity-[0.05] pointer-events-none"
-                      style={{ backgroundImage: `radial-gradient(circle, #f97015 1px, transparent 1px)`, backgroundSize: '16px 16px' }} />
-
-                    <img
-                      src={`/SystemsArchitected/${arch.file}`}
-                      alt={arch.name}
-                      className="max-w-full max-h-full object-contain group-hover:scale-110 transition-transform duration-700 relative z-10 drop-shadow-[0_0_20px_rgba(249,112,21,0.1)]"
-                    />
-
-                    <div className="absolute top-4 right-4 p-2 rounded-xl bg-primary/10 text-primary opacity-0 group-hover:opacity-100 transition-all">
-                      <Maximize2 className="size-3" />
-                    </div>
-                  </div>
-                  <div className="mt-4 px-2">
-                    <h3 className="text-sm font-black text-foreground group-hover:text-primary transition-colors truncate uppercase tracking-tight">
-                      {arch.name}
-                    </h3>
-                    <p className="text-[8px] font-black text-muted-foreground/40 uppercase tracking-widest">
-                      {arch.tag} • ARCH
-                    </p>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-          </div>
-        </section>
 
       </div>
 
@@ -237,16 +183,7 @@ function ProjectsContent() {
               </div>
               
               <div className="flex items-center gap-5">
-                 {selectedProject.blueprint && (
-                    <Button 
-                        variant="outline" 
-                        onClick={() => handleCopy(selectedProject.blueprint)}
-                        className="rounded-2xl gap-3 bg-white/5 border border-white/10 hover:bg-white/10 text-foreground font-black text-[11px] uppercase tracking-widest px-8 py-6"
-                    >
-                        {copied ? <Check className="size-4 text-emerald-500" /> : <Copy className="size-4 text-primary" />}
-                        Clone Blueprint
-                    </Button>
-                 )}
+
                  <Link href={selectedProject.href || "#"} target="_blank">
                     <Button className="rounded-2xl gap-3 bg-primary hover:bg-primary/90 text-primary-foreground font-black text-[11px] uppercase tracking-widest px-8 py-6 shadow-xl shadow-primary/20">
                         Launch System <Maximize2 className="size-4" />
@@ -266,33 +203,20 @@ function ProjectsContent() {
                  animate={{ scale: 1, opacity: 1, y: 0 }}
                  className="w-full h-full relative flex flex-col items-center justify-center gap-8"
                >
-                  {selectedProject.blueprint ? (
-                     <div className="relative group w-full h-full flex items-center justify-center">
-                        <div className="absolute top-[-5%] left-[-2%] z-0 font-black italic text-primary/5 text-[15vw] leading-none select-none uppercase">
-                            MAP_PROJ
-                        </div>
-                        <img 
-                            src={`/SystemsArchitected/${selectedProject.blueprint}`} 
-                            alt={selectedProject.title}
-                            className="max-w-full max-h-full object-contain drop-shadow-[0_0_80px_rgba(249,112,21,0.25)] select-none pointer-events-none relative z-10"
-                        />
+                     <div className="w-full h-full rounded-[3rem] bg-secondary/10 border border-primary/10 overflow-hidden relative group">
+                          {selectedProject.video ? (
+                             <video src={selectedProject.video} autoPlay loop muted playsInline className="w-full h-full object-cover opacity-80" />
+                          ) : (
+                             <div className="w-full h-full flex items-center justify-center">
+                                 <span className="text-primary/20 text-8xl font-black italic">NO_PREVIEW</span>
+                             </div>
+                          )}
+                          <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-60" />
+                          <div className="absolute bottom-12 left-12 right-12 space-y-4">
+                             <h2 className="text-4xl font-black text-white leading-none uppercase tracking-tighter">System Overview</h2>
+                             <p className="text-white/60 font-medium max-w-2xl leading-relaxed italic">{selectedProject.description}</p>
+                          </div>
                      </div>
-                  ) : (
-                    <div className="w-full h-full rounded-[3rem] bg-secondary/10 border border-primary/10 overflow-hidden relative group">
-                         {selectedProject.video ? (
-                            <video src={selectedProject.video} autoPlay loop muted playsInline className="w-full h-full object-cover opacity-80" />
-                         ) : (
-                            <div className="w-full h-full flex items-center justify-center">
-                                <span className="text-primary/20 text-8xl font-black italic">NO_PREVIEW</span>
-                            </div>
-                         )}
-                         <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-60" />
-                         <div className="absolute bottom-12 left-12 right-12 space-y-4">
-                            <h2 className="text-4xl font-black text-white leading-none uppercase tracking-tighter">System Overview</h2>
-                            <p className="text-white/60 font-medium max-w-2xl leading-relaxed italic">{selectedProject.description}</p>
-                         </div>
-                    </div>
-                  )}
 
                   <div className="px-6 py-2.5 rounded-2xl bg-primary/5 border border-primary/10 backdrop-blur-md flex items-center gap-3 text-muted-foreground/70">
                      <Info className="size-4 text-primary" />

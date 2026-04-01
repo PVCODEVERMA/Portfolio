@@ -211,3 +211,8 @@ code[data-line-numbers-max-digits="3"]>[data-line]::before {
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
+
+body.skills-drawer-open header {
+  display: none !important;
+}
+

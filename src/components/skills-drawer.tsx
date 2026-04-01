@@ -87,10 +87,15 @@ export function SkillsDrawer({ isOpen, onClose, initialCategory, skillsData }: S
     if (isOpen) {
       setActiveCategory(initialCategory);
       document.body.style.overflow = "hidden";
+      document.body.classList.add("skills-drawer-open");
     } else {
       document.body.style.overflow = "unset";
+      document.body.classList.remove("skills-drawer-open");
     }
-    return () => { document.body.style.overflow = "unset"; };
+    return () => { 
+      document.body.style.overflow = "unset";
+      document.body.classList.remove("skills-drawer-open");
+    };
   }, [isOpen, initialCategory]);
 
   const activeInfo = skillsData[activeCategory];

@@ -1,9 +1,10 @@
 import AIChatbot from "@/components/ai-chatbot";
 import Navbar from "@/components/navbar";
+import GranimBackground from "@/components/granim-background";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Suspense } from "react";
 import { TooltipProvider } from "@/components/ui/tooltip";
-import VantaBirds from "@/components/vanta-birds";
+
 import { DATA } from "@/data/resume";
 import { cn } from "@/lib/utils";
 import type { Metadata } from "next";
@@ -89,7 +90,7 @@ export default function RootLayout({
                     },
                   }}
                 />
-                <VantaBirds />
+
                 <GlobalAuthModal />
                 {children}
                 <Suspense fallback={null}>
