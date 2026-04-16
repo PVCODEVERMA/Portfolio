@@ -15,12 +15,30 @@ export function AuthModal({ isOpen, onClose }: { isOpen: boolean; onClose: () =>
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleGoogleLogin = async () => {
-    const client = getSupabaseClient();
-    if (!client) return toast.error("Supabase is not configured.");
-    await client.auth.signInWithOAuth({
-      provider: "google",
-      options: { redirectTo: window.location.origin }
-    });
+    try {
+      const client = getSupabaseClient();
+      if (!client) {
+        toast.error("Authentication service is not configured. Please contact the admin.");
+        return;
+      }
+      const { error } = await client.auth.signInWithOAuth({
+        provider: "google",
+        options: { 
+          redirectTo: window.location.origin,
+          queryParams: {
+            access_type: 'offline',
+            prompt: 'consent',
+          }
+        }
+      });
+      if (error) {
+        console.error("Google OAuth error:", error);
+        toast.error(error.message || "Failed to sign in with Google.");
+      }
+    } catch (err: any) {
+      console.error("Google login error:", err);
+      toast.error(err.message || "Something went wrong with Google login.");
+    }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -30,11 +48,6 @@ export function AuthModal({ isOpen, onClose }: { isOpen: boolean; onClose: () =>
 
     setIsSubmitting(true);
     try {
-      // Diagnostic check for key format
-      const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_DEFAULT_KEY || "";
-      if (key && !key.startsWith('eyJ')) {
-        return toast.error("Invalid Supabase Key format. Please use the 'Anon Public' key starting with 'eyJ'. Your current key starts with '" + key.substring(0, 10) + "'");
-      }
 
       if (mode === "register") {
         const { error } = await client.auth.signUp({

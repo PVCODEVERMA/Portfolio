@@ -175,7 +175,7 @@ export default function AIChatbot() {
 
   return (
     <div className={cn(
-      "fixed bottom-20 right-4 sm:bottom-6 sm:right-6 z-[100] flex flex-col items-end transition-all duration-500 ease-in-out",
+      "fixed bottom-28 right-4 sm:bottom-6 sm:right-6 z-[100] flex flex-col items-end transition-all duration-500 ease-in-out",
       isOpen && "inset-0 bottom-0 right-0 sm:inset-auto sm:bottom-6 sm:right-6",
       isExternalDrawerOpen && "translate-y-full opacity-0 pointer-events-none"
     )}>
@@ -395,22 +395,6 @@ export default function AIChatbot() {
         </Button>
       </motion.div>
 
-      <style jsx global>{`
-        @keyframes pulse-subtle {
-          0%, 100% { transform: scale(1); }
-          50% { transform: scale(1.08); }
-        }
-        .animate-pulse-subtle {
-          animation: pulse-subtle 2s infinite ease-in-out;
-        }
-        .scrollbar-hide::-webkit-scrollbar {
-          display: none;
-        }
-        .scrollbar-hide {
-          -ms-overflow-style: none;
-          scrollbar-width: none;
-        }
-      `}</style>
     </div>
   );
 }

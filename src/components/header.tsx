@@ -90,6 +90,18 @@ export function Header() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, [isHidden]);
 
+  // Lock body scroll when certifications drawer or lightbox is open
+  React.useEffect(() => {
+    if (isDrawerOpen || activeCertIdx !== null) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [isDrawerOpen, activeCertIdx]);
+
   const closeCertificates = React.useCallback(() => {
     setIsDrawerOpen(false);
     setActiveCertIdx(null);
@@ -318,7 +330,10 @@ export function Header() {
                     </button>
                   </div>
 
-                  <div className="flex-1 overflow-y-auto px-6 pb-24 scrollbar-hide">
+                  <div 
+                    className="flex-1 overflow-y-auto px-6 pb-24 scrollbar-hide"
+                    data-lenis-prevent
+                  >
                     <div className="space-y-6">
                       {DATA.certifications.map((cert: any, idx) => (
                         <motion.div

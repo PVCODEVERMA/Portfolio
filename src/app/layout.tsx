@@ -4,6 +4,7 @@ import GranimBackground from "@/components/granim-background";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Suspense } from "react";
 import { TooltipProvider } from "@/components/ui/tooltip";
+import SmoothScrollProvider from "@/components/smooth-scroll-provider";
 
 import { DATA } from "@/data/resume";
 import { cn } from "@/lib/utils";
@@ -67,7 +68,7 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body
         className={cn(
-          "min-h-screen bg-background font-sans antialiased max-w-screen-xl mx-auto pt-2 pb-12 sm:pt-8 sm:pb-24 px-0 sm:px-6",
+          "min-h-screen bg-background font-sans antialiased max-w-screen-xl mx-auto pt-0 pb-28 sm:pt-8 sm:pb-24 px-0 sm:px-6",
           fontSans.variable
         )}
         suppressHydrationWarning
@@ -76,29 +77,31 @@ export default function RootLayout({
           <LoadingProvider>
             <AuthProvider>
               <TooltipProvider delayDuration={0}>
-                <SiteLoader />
-                <Suspense fallback={null}>
-                  <Header />
-                </Suspense>
-                <Toaster 
-                  position="top-center" 
-                  reverseOrder={false}
-                  toastOptions={{
-                    style: {
-                      background: 'transparent',
-                      zIndex: 9999,
-                    },
-                  }}
-                />
+                <SmoothScrollProvider>
+                  <SiteLoader />
+                  <Suspense fallback={null}>
+                    <Header />
+                  </Suspense>
+                  <Toaster 
+                    position="top-center" 
+                    reverseOrder={false}
+                    toastOptions={{
+                      style: {
+                        background: 'transparent',
+                        zIndex: 9999,
+                      },
+                    }}
+                  />
 
-                <GlobalAuthModal />
-                {children}
-                <Suspense fallback={null}>
-                  <Navbar />
-                </Suspense>
-                <Suspense fallback={null}>
-                  <AIChatbot />
-                </Suspense>
+                  <GlobalAuthModal />
+                  {children}
+                  <Suspense fallback={null}>
+                    <Navbar />
+                  </Suspense>
+                  <Suspense fallback={null}>
+                    <AIChatbot />
+                  </Suspense>
+                </SmoothScrollProvider>
               </TooltipProvider>
             </AuthProvider>
           </LoadingProvider>

@@ -135,7 +135,7 @@ export default function Page() {
   };
 
   return (
-    <main className="flex flex-col min-h-[100dvh] space-y-16 md:space-y-24">
+    <main className="flex flex-col min-h-[100dvh] space-y-12 md:space-y-20 lg:space-y-24">
       <AnimatePresence mode="wait">
         {!showFullGallery ? (
           <motion.div
@@ -149,7 +149,7 @@ export default function Page() {
             {/* 1. Hero Section */}
             <section
               id="hero"
-              className="relative pt-4 sm:pt-10 md:pt-12 pb-8 overflow-hidden group/hero"
+              className="relative pt-6 sm:pt-10 md:pt-12 pb-8 overflow-hidden group/hero"
               onMouseMove={handleMouseMove}
             >
               <motion.div
@@ -162,7 +162,7 @@ export default function Page() {
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
-                  className="flex-1 flex flex-col items-start space-y-2.5 sm:space-y-6 lg:space-y-8 order-2 lg:order-1"
+                  className="flex-1 flex flex-col items-start space-y-4 sm:space-y-6 lg:space-y-8 order-2 lg:order-1"
                 >
                   <div className="space-y-4 w-full">
                     <div className="flex items-center justify-start gap-2">
@@ -235,7 +235,7 @@ export default function Page() {
                       whileTap={{ scale: 0.95 }}
                       className="flex-1 sm:flex-none"
                     >
-                      <Button asChild size="default" className="rounded-full w-full px-2 sm:px-8 font-black shadow-xl shadow-primary/20 cursor-pointer h-10 sm:h-12 text-[10px] sm:text-base">
+                      <Button asChild size="default" className="rounded-full w-full px-3 sm:px-8 font-black shadow-xl shadow-primary/20 cursor-pointer h-10 sm:h-12 text-xs sm:text-base">
                         <Link
                           href="https://drive.google.com/file/d/1Cbbx05lspTunaePTrem1YZq6MZ_rHZAJ/view?usp=sharing"
                           target="_blank"
@@ -244,9 +244,9 @@ export default function Page() {
                             startLoading(1500);
                             toast.success("Opening Resume...");
                           }}
-                          className="flex items-center justify-center gap-1"
+                          className="flex items-center justify-center gap-1.5"
                         >
-                          Hire <span className="hidden xs:inline">Me</span> <Download className="size-3.5 sm:size-5" />
+                          Hire Me <Download className="size-3.5 sm:size-5" />
                         </Link>
                       </Button>
                     </motion.div>
@@ -263,10 +263,10 @@ export default function Page() {
                       <Button
                         size="default"
                         variant="outline"
-                        className="rounded-full w-full px-2 sm:px-8 font-black h-10 sm:h-12 text-[10px] sm:text-base border-primary/20 hover:bg-primary/5 flex items-center justify-center gap-1"
+                        className="rounded-full w-full px-3 sm:px-8 font-black h-10 sm:h-12 text-xs sm:text-base border-primary/20 hover:bg-primary/5 flex items-center justify-center gap-1.5"
                         onClick={() => setIsCommentOpen(true)}
                       >
-                        <MessageCircle className="text-[#f97015] size-3.5 sm:size-5" /> Ask <span className="hidden xs:inline">Me</span>
+                        <MessageCircle className="text-[#f97015] size-3.5 sm:size-5" /> Ask Me
                       </Button>
                     </motion.div>
 
@@ -281,7 +281,7 @@ export default function Page() {
                     >
                       <Button
                         size="default"
-                        className="rounded-full w-full px-2 sm:px-8 font-black shadow-xl shadow-orange-500/20 h-10 sm:h-12 text-[10px] sm:text-base bg-gradient-to-r from-orange-500 to-primary hover:scale-105 transition-transform flex items-center justify-center gap-1"
+                        className="rounded-full w-full px-3 sm:px-8 font-black shadow-xl shadow-orange-500/20 h-10 sm:h-12 text-xs sm:text-base bg-gradient-to-r from-orange-500 to-primary hover:scale-105 transition-transform flex items-center justify-center gap-1.5"
                         onClick={() => setShowFullGallery(true)}
                       >
                         <Layout className="size-3.5 sm:size-5" /> Gallery
@@ -293,30 +293,30 @@ export default function Page() {
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.5 }}
-                    className="hidden sm:flex flex-wrap items-center justify-start gap-x-6 gap-y-3 pt-6 border-t border-primary/10 mt-8 w-full max-w-2xl px-0"
+                    className="flex flex-wrap items-center justify-start gap-x-4 gap-y-2 pt-4 border-t border-primary/10 mt-4 sm:mt-8 w-full max-w-2xl px-0"
                   >
                     <Link
                       href={`mailto:${DATA.contact.email}`}
                       className="flex items-center gap-2 group transition-all duration-300"
                     >
-                      <div className="p-2 rounded-xl bg-red-500/10 text-red-500 group-hover:scale-110 group-hover:bg-red-500/20 transition-all">
-                        <Mail className="size-4" />
+                      <div className="p-1.5 sm:p-2 rounded-xl bg-red-500/10 text-red-500 group-hover:scale-110 group-hover:bg-red-500/20 transition-all">
+                        <Mail className="size-3.5 sm:size-4" />
                       </div>
-                      <span className="text-sm font-black text-foreground group-hover:text-primary transition-colors whitespace-nowrap">
+                      <span className="text-xs sm:text-sm font-black text-foreground group-hover:text-primary transition-colors whitespace-nowrap">
                         {DATA.contact.email}
                       </span>
                     </Link>
 
-                    <div className="hidden sm:block w-[1px] h-4 bg-primary/20" />
+                    <div className="w-[1px] h-4 bg-primary/20" />
 
                     <Link
                       href={`tel:${DATA.contact.tel.replace(/\s+/g, '')}`}
                       className="flex items-center gap-2 group transition-all duration-300"
                     >
-                      <div className="p-2 rounded-xl bg-blue-500/10 text-blue-500 group-hover:scale-110 group-hover:bg-blue-500/20 transition-all">
-                        <Phone className="size-4" />
+                      <div className="p-1.5 sm:p-2 rounded-xl bg-blue-500/10 text-blue-500 group-hover:scale-110 group-hover:bg-blue-500/20 transition-all">
+                        <Phone className="size-3.5 sm:size-4" />
                       </div>
-                      <span className="text-sm font-black text-foreground group-hover:text-primary transition-colors whitespace-nowrap">
+                      <span className="text-xs sm:text-sm font-black text-foreground group-hover:text-primary transition-colors whitespace-nowrap">
                         {DATA.contact.tel}
                       </span>
                     </Link>
@@ -326,7 +326,7 @@ export default function Page() {
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.6 }}
-                    className="hidden sm:flex items-center justify-start flex-wrap gap-1 pt-4"
+                    className="flex items-center justify-start flex-wrap gap-1.5 pt-2"
                   >
                     {Object.entries(DATA.contact.social).map(([name, social]) => {
                       const Icon = (social as any).icon;
@@ -338,7 +338,7 @@ export default function Page() {
                       return (
                         <a key={name} href={social.url} target="_blank" rel="noopener noreferrer" className={`social-icon-btn ${cls}`}>
                           <span className="social-icon-tip">{name}</span>
-                          <Icon className="size-5" />
+                          <Icon className="size-4 sm:size-5" />
                         </a>
                       );
                     })}
