@@ -7,17 +7,17 @@ export const DATA = {
   url: "https://pvcode.netlify.app",
   location: "Noida, Sector 15, Uttar Pradesh, India",
   locationLink: "https://maps.app.goo.gl/dFLbinrTMVHjkjcHA",
-  role: "Developer | AI Architect | Tech Creator",
-  subtitle: "Building the future with AI & Code",
-  description: "Working a full-time job while actively freelancing, I build and ship AI-powered tools and modern software that solve real problems. I document my real-world development experiences openly — helping others learn, grow, and avoid the mistakes I made along the way. Beyond building, I also help businesses strengthen their online presence through technical SEO, performance optimization, and data-driven development strategies — turning slow, invisible websites into fast, discoverable products.",
+  role: "Developer | Tech Creator",
+  subtitle: "Building the future with Code",
+  description: "Working a full-time job while actively freelancing, I build and ship modern software and intuitive digital tools that solve real problems. I document my real-world development experiences openly — helping others learn, grow, and avoid the mistakes I made along the way. Beyond building, I also help businesses strengthen their online presence through technical SEO, performance optimization, and data-driven development strategies — turning slow, invisible websites into fast, discoverable products.",
   summary:
-    "### Where it began\nGrowing up, I was always the person who wanted to understand why things worked, not just how to use them. That mindset pushed me toward Computer Science, and I pursued my B.Tech in CSE at B.N. College of Engineering and Technology, graduating in 2025.\n\n### Finding my passion\nDuring college, I didn't just study — I built. I experimented with frontend interfaces, backend systems, and databases. I realized I didn't just want to write code — I wanted to create products that people actually use and benefit from.\n\n### Entering the professional world\nMy professional journey took me through three companies in a short span — Marv Softwares India, Websbaba Technologies, and Quality Concept Pvt. Ltd. — where I currently serve as a Full Stack Developer. Across these roles, I've built corporate websites, admin panels, CRM systems, and AI-powered chatbots using tools like React, Node.js, Tailwind CSS, and n8n automation.\n\n### Going deeper into AI\nWhat truly changed my direction was diving into Artificial Intelligence — not just using AI tools, but building with them. I've worked with RAG stacks, AI Agents using LangGraph and CrewAI, Prompt Engineering, and Vector Search with databases like Pinecone. I now design systems where AI isn't a feature — it's the foundation.\n\n### Life as a builder\nToday, I work full-time while actively freelancing on the side — constantly building, experimenting, and improving. I don't believe in waiting until something is perfect before sharing it. I document my real journey — the wins, the failures, the lessons — openly on YouTube, Instagram, and X, because I believe the best way to grow is to build in public.\n\n### Why I do this\nTechnology is the greatest equalizer of our time. A developer with the right skills and the right tools can build something that reaches millions. That possibility excites me every single day. I want to be someone who not only builds those things — but also helps others believe they can too.",
+    "### Where it began\nGrowing up, I was always the person who wanted to understand why things worked, not just how to use them. That mindset pushed me toward Computer Science, and I pursued my B.Tech in CSE at B.N. College of Engineering and Technology, graduating in 2025.\n\n### Finding my passion\nDuring college, I didn't just study — I built. I experimented with frontend interfaces, backend systems, and databases. I realized I didn't just want to write code — I wanted to create products that people actually use and benefit from.\n\n### Entering the professional world\nMy professional journey took me through three companies in a short span — Marv Softwares India, Websbaba Technologies, and Quality Concept Pvt. Ltd. — where I currently serve as a Full Stack Developer. Across these roles, I've built corporate websites, admin panels, CRM systems, and automated workflows using tools like React, Node.js, Tailwind CSS, and n8n automation.\n\n### Going deeper into Architecture\nWhat truly changed my direction was diving into System Architecture — not just using frameworks, but understanding the core of scalable software. I've worked with distributed systems, cloud-native patterns, and performance optimization. I now design systems where scalability and security are the foundation.\n\n### Life as a builder\nToday, I work full-time while actively freelancing on the side — constantly building, experimenting, and improving. I don't believe in waiting until something is perfect before sharing it. I document my real journey — the wins, the failures, the lessons — openly on YouTube, Instagram, and X, because I believe the best way to grow is to build in public.\n\n### Why I do this\nTechnology is the greatest equalizer of our time. A developer with the right skills and the right tools can build something that reaches millions. That possibility excites me every single day. I want to be someone who not only builds those things — but also helps others believe they can too.",
 
 
   avatarUrl: "/me.png",
   nowBuilding: [
-    { title: "AI Automation Tools", icon: "Cpu", description: "Testing and sharing new AI coding and productivity tools." },
-    { title: "System Architecture", icon: "Layout", description: "Designing scalable, high-performance web systems & AI workflows." },
+    { title: "SaaS Starter Kits", icon: "Cpu", description: "Building and sharing optimized boilerplates for full-stack apps." },
+    { title: "System Architecture", icon: "Layout", description: "Designing scalable, high-performance web systems & serverless workflows." },
     { title: "SEO Optimization", icon: "Globe", description: "Technical SEO & performance optimization for businesses." },
     { title: "Developer Content", icon: "Video", description: "Coding tutorials and tech insights on YouTube & Socials." }
   ],
@@ -29,34 +29,21 @@ export const DATA = {
       { label: "Pull Requests", value: "45+" }
     ]
   },
-  blogPosts: [
-    {
-      title: "Building Scalable AI Agents with LangGraph",
-      publishedAt: "March 2026",
-      summary: "A deep dive into orchestration patterns for multi-agent systems.",
-      url: "#"
-    },
-    {
-      title: "The Future of MERN: Next.js 15 & Beyond",
-      publishedAt: "Feb 2026",
-      summary: "Exploring the next evolution of full-stack web development.",
-      url: "#"
-    }
-  ],
+
   community: [
     {
       platform: "Instagram",
       handle: "@pvcode1u.ai",
       followers: "10K+",
       link: "https://www.instagram.com/pvcode1u.ai/",
-      description: "Sharing daily coding tips and AI insights."
+      description: "Sharing daily coding tips and tech insights."
     },
     {
       platform: "X (Twitter)",
       handle: "@PankajK77053572",
       followers: "",
       link: "https://x.com/PankajK77053572",
-      description: "Active in the AI & Web Architecture community."
+      description: "Active in the Web Architecture and Dev community."
     },
     {
       platform: "YouTube",
@@ -70,34 +57,9 @@ export const DATA = {
     { year: "2023", title: "Started Coding Journey", description: "Mastered HTML/CSS and basic Javascript.", icon: "CheckCircle2" },
     { year: "2024", title: "MERN Stack Era", description: "Built 10+ full-stack projects using React, Node, and MongoDB.", icon: "Briefcase" },
     { year: "2025", title: "Full Stack Developer", description: "Professional experience building scalable production apps.", icon: "CheckCircle2" },
-    { year: "2026", title: "AI Product Builder", description: "Architecting LLM-based solutions & AI agents.", icon: "Sparkles" }
+    { year: "2026", title: "Product Engineer", description: "Architecting high-performance cloud solutions.", icon: "Sparkles" }
   ],
   skills: {
-    "AI / ML": {
-      icon: "Cpu",
-      description: "Advanced AI Orchestration & LLM Engineering",
-      list: [
-        { name: "RAG Stack (Pinecone, FAISS)", level: "Medium", years: "1+ yrs", projects: "1+ projects", trend: "Growing", progress: 60 },
-        { name: "LLM Advanced (Function Calling, structured output)", level: "Medium", years: "1+ yrs", projects: "2+ projects", trend: "Growing", progress: 60 },
-        { name: "AI Agents (LangGraph, CrewAI)", level: "Medium", years: "1+ yrs", projects: "+ projects", trend: "Growing", progress: 70 },
-        { name: "Prompt Engineering & Chaining", level: "Medium", years: "1+ yrs", projects: "2+ projects", trend: "Growing", progress: 65 },
-        { name: "LlamaIndex / LangChain", level: "Medium", years: "1+ yrs", projects: "1+ projects", trend: "Growing", progress: 70 },
-        { name: "Vector Search & Embeddings", level: "Medium", years: "1+ yrs", projects: "1+ projects", trend: "Growing", progress: 75},
-        { name: "OpenAI / Gemini API", level: "Medium", years: "1+ yrs", projects: "2+ projects", trend: "Growing", progress: 70 },
-      ]
-    },
-    "Frontend": {
-      icon: "Layout",
-      description: "Scalable UI Architecture & Performance",
-      list: [
-        { name: "Next.js 14/15", level: "Advanced", years: "2+ yrs", projects: "15+ projects", trend: "High", progress: 98 },
-        { name: "React (Context, Hooks)", level: "Advanced", years: "3+ yrs", projects: "20+ projects", trend: "Stable", progress: 95 },
-        { name: "State (Redux, Zustand, React Query)", level: "Advanced", years: "2+ yrs", projects: "10+ projects", trend: "Growing", progress: 92 },
-        { name: "Tailwind CSS", level: "Advanced", years: "3+ yrs", projects: "25+ projects", trend: "Stable", progress: 100 },
-        { name: "Performance (Lazy Loading, Code Splitting)", level: "Advanced", years: "1+ yrs", projects: "8+ projects", trend: "High", progress: 88 },
-        { name: "TypeScript", level: "Advanced", years: "2+ yrs", projects: "12+ projects", trend: "High", progress: 90 },
-      ]
-    },
     "Backend & Architecture": {
       icon: "Server",
       description: "Scalable Systems & API Design",
@@ -127,7 +89,7 @@ export const DATA = {
       list: [
         { name: "MongoDB (Mongoose)", level: "Advanced", years: "3+ yrs", projects: "15+ projects", trend: "High", progress: 95 },
         { name: "PostgreSQL / Redis", level: "Medium", years: "1+ yrs", projects: "5+ projects", trend: "Growing", progress: 75 },
-        { name: "Vector Databases (Pinecone, Chroma)", level: "Advanced", years: "2+ yrs", projects: "8+ projects", trend: "High", progress: 92 },
+        { name: "Distributed Databases (Redis, Cassandra)", level: "Medium", years: "1+ yrs", projects: "3+ projects", trend: "High", progress: 80 },
       ]
     },
     "Testing & Tools": {
@@ -196,6 +158,17 @@ export const DATA = {
 
   work: [
     {
+      company: "Daakit Technologies Pvt Ltd",
+      href: "https://daakit.com/",
+      badges: ["Full-time"],
+      location: "Delhi",
+      title: "Software Engineer",
+      logoUrl: "/image.png",
+      start: "April 2026",
+      end: "Present",
+      description: "Optimizing logistics platform efficiency and architecting scalable backend solutions. Focused on streamlining supply chain workflows, improving data processing pipelines, and delivering high-performance features for logistics operations.",
+    },
+    {
       company: "Quality Concept Welding Solutions Pvt. Ltd.",
       href: "https://qualityconcept.in/",
       badges: ["Full-time"],
@@ -203,7 +176,7 @@ export const DATA = {
       title: "Full Stack Developer (CRM Platform)",
       logoUrl: "/Qc_logo.png",
       start: "Jan 2026",
-      end: "Present",
+      end: " 25 March 2026",
       description: "Independently developing and managing a multi-module CRM system using MERN stack. Built modules including Environmental Survey, Accounts, Admin & HR, Industrial Safety, Inventory Management, ISO Certifications, Marketing, NDT Services, PWHT Services. Developed scalable REST APIs, implemented RBAC, and optimized dashboards for performance.",
     },
     {
@@ -229,30 +202,6 @@ export const DATA = {
       description: "Developed MERN features and integrated REST APIs. Enhanced UI/UX performance and responsiveness. Implemented Stripe Connect payments and payout systems.",
     },
   ],
-  aiProjects: [
-    {
-      title: "Agentic Workflow Orchestrator",
-      href: "#",
-      dates: "Jan 2026 - Present",
-      active: true,
-      description: "A specialized framework for building and debugging multi-agent LLM workflows with state management.",
-      technologies: ["Next.js", "Python", "LangGraph", "OpenAI", "Tailwind CSS"],
-      links: [],
-      image: "",
-      video: "",
-    },
-    {
-      title: "RAG Knowledge Base",
-      href: "#",
-      dates: "Dec 2025",
-      active: true,
-      description: "Enterprise-grade RAG system with multi-modal support and hybrid search capabilities.",
-      technologies: ["Pinecone", "LangChain", "Node.js", "Gemini Pro"],
-      links: [],
-      image: "",
-      video: "",
-    }
-  ],
 
   education: [
     {
@@ -271,7 +220,7 @@ export const DATA = {
         "Computer Networks",
         "Object-Oriented Programming",
         "Operating Systems",
-        "Artificial Intelligence"
+        "System Design"
       ]
     },
     {
@@ -396,15 +345,15 @@ export const DATA = {
     },
   ],
   certifications: [
-       {
+    {
       title: "MERN Stack Certification",
       issuer: "PW Skills",
       date: "2024",
       description: "Advanced certification in MERN Stack development, covering MongoDB, Express, React, and Node.js.",
       status: "completed",
       image: "/CertificateAll/PW-certification-MERN.png"
-        },
-        {
+    },
+    {
       title: "Full Stack Development Webinar",
       issuer: "Shri Balaji Infotech",
       date: "January 2023",
@@ -495,5 +444,6 @@ export const DATA = {
       badgeColor: "bg-orange-500/10 border-orange-500/20"
     }
   ],
+
 
 } as const;

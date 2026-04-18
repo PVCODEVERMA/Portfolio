@@ -14,8 +14,6 @@ import { Toaster } from "react-hot-toast";
 import { SiteLoader } from "@/components/site-loader";
 import { Header } from "@/components/header";
 import { LoadingProvider } from "@/hooks/use-loading";
-import { AuthProvider } from "@/hooks/use-auth";
-import { GlobalAuthModal } from "@/components/global-auth-modal";
 import "./globals.css";
 
 const fontSans = FontSans({
@@ -73,37 +71,35 @@ export default function RootLayout({
         )}
         suppressHydrationWarning
       >
-        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
+        <ThemeProvider attribute="class" defaultTheme="light" enableSystem={false}>
           <LoadingProvider>
-            <AuthProvider>
-              <TooltipProvider delayDuration={0}>
-                <SmoothScrollProvider>
-                  <SiteLoader />
-                  <Suspense fallback={null}>
-                    <Header />
-                  </Suspense>
-                  <Toaster 
-                    position="top-center" 
-                    reverseOrder={false}
-                    toastOptions={{
-                      style: {
-                        background: 'transparent',
-                        zIndex: 9999,
-                      },
-                    }}
-                  />
+            <TooltipProvider delayDuration={0}>
+              <SmoothScrollProvider>
+                <SiteLoader />
+                <Suspense fallback={null}>
+                  <Header />
+                </Suspense>
+                <Toaster
+                  position="top-center"
+                  reverseOrder={false}
+                  toastOptions={{
+                    style: {
+                      background: 'transparent',
+                      zIndex: 9999,
+                    },
+                  }}
+                />
 
-                  <GlobalAuthModal />
-                  {children}
-                  <Suspense fallback={null}>
-                    <Navbar />
-                  </Suspense>
-                  <Suspense fallback={null}>
-                    <AIChatbot />
-                  </Suspense>
-                </SmoothScrollProvider>
-              </TooltipProvider>
-            </AuthProvider>
+
+                {children}
+                <Suspense fallback={null}>
+                  <Navbar />
+                </Suspense>
+                <Suspense fallback={null}>
+                  <AIChatbot />
+                </Suspense>
+              </SmoothScrollProvider>
+            </TooltipProvider>
           </LoadingProvider>
         </ThemeProvider>
       </body>

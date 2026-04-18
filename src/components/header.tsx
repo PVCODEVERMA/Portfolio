@@ -21,8 +21,6 @@ import {
   ChevronLeft,
   ChevronRight,
   X as CloseIcon,
-  LogIn,
-  ShieldCheck
 } from "lucide-react";
 import { AnimatePresence } from "framer-motion";
 import {
@@ -32,8 +30,6 @@ import {
 } from "@/components/ui/tooltip";
 
 import { useLoading } from "@/hooks/use-loading";
-import { useAuth } from "@/hooks/use-auth";
-import { LogOut, User as UserIcon } from "lucide-react";
 
 const NAV_ITEMS = [
   { name: "Home", href: "/", icon: Home },
@@ -54,7 +50,6 @@ export function Header() {
   const [activeCertIdx, setActiveCertIdx] = React.useState<number | null>(null);
   const [activeHash, setActiveHash] = React.useState("/");
   const { startLoading } = useLoading();
-  const { user, signOut, setIsAuthModalOpen } = useAuth();
 
   const isHidden = pathname.startsWith("/systems/") || (pathname === "/projects" && searchParams.get("file"));
 
@@ -172,56 +167,7 @@ export function Header() {
         animate={{ y: 0, opacity: 1 }}
         className="w-full sm:w-auto flex flex-nowrap items-center justify-center gap-1.5 sm:gap-2 px-0 sm:px-2 py-1.5 sm:p-2 rounded-none sm:rounded-2xl bg-background/60 backdrop-blur-2xl border-b sm:border border-primary/20 shadow-[0_0_50px_-12px_rgba(0,0,0,0.3)] pointer-events-auto max-w-full overflow-x-auto hide-scrollbar"
       >
-        {/* Left: Profile Section / Login Trigger */}
-        <div className="flex items-center gap-0 sm:gap-2 pr-0.5 sm:pr-2 border-r border-border/50">
-          {user ? (
-            <>
-              <div className="relative group/avatar cursor-pointer">
-                <Avatar className={cn(
-                  "size-7 sm:size-8 transition-all duration-300 ring-2 ring-primary/10 group-hover/avatar:ring-primary/40 bg-white",
-                  user.email === DATA.contact.email && "ring-purple-500/30 group-hover/avatar:ring-purple-500/60"
-                )}>
-                  <AvatarImage src={user.user_metadata?.avatar_url || ""} />
-                  <AvatarFallback className="bg-white text-primary font-black text-[8px] sm:text-[10px]">
-                    {(() => {
-                      const name = user.user_metadata?.full_name || "";
-                      if (!name) return user.email?.charAt(0).toUpperCase() || "U";
-                      const parts = name.split(" ").filter(Boolean);
-                      if (parts.length === 1) return parts[0].charAt(0).toUpperCase();
-                      return (parts[0].charAt(0) + parts[parts.length - 1].charAt(0)).toUpperCase();
-                    })()}
-                  </AvatarFallback>
-                </Avatar>
-                
-                {user.email === DATA.contact.email && (
-                  <div className="absolute -top-1 -right-1 bg-purple-500 text-[6px] font-black text-white px-0.5 py-0.5 rounded-full border border-background shadow-lg">
-                    <ShieldCheck className="size-2" />
-                  </div>
-                )}
-              </div>
-              
-              <button
-                onClick={() => signOut()}
-                className="p-1 px-2.5 sm:px-3 text-red-500 rounded-xl transition-all flex items-center gap-1.5 group hover:bg-red-500/10 active:scale-90"
-                title="Sign Out"
-              >
-                <LogOut className="size-4.5 sm:size-5 transition-transform group-hover:scale-110" />
-                
-              </button>
-            </>
-          ) : (
-            <button
-              onClick={() => setIsAuthModalOpen(true)}
-              className="p-1 px-2.5 sm:px-3 text-primary rounded-xl transition-all flex items-center gap-1.5 group hover:bg-primary/10 active:scale-90 cursor-pointer"
-              title="Click to Login"
-            >
-              <LogIn className="size-4.5 sm:size-5 transition-transform group-hover:scale-110" />
-              <span className="text-[10px] sm:text-xs font-black uppercase tracking-widest hidden xs:inline">
-                Login
-              </span>
-            </button>
-          )}
-        </div>
+
 
         {/* Center: Navigation Links (Text labels hidden on small screens) */}
         <div className="flex items-center gap-1 sm:gap-1">
@@ -330,7 +276,7 @@ export function Header() {
                     </button>
                   </div>
 
-                  <div 
+                  <div
                     className="flex-1 overflow-y-auto px-6 pb-24 scrollbar-hide"
                     data-lenis-prevent
                   >

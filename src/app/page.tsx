@@ -20,7 +20,6 @@ import { cn } from "@/lib/utils";
 import { useLoading } from "@/hooks/use-loading";
 import { CertificationCard } from "@/components/certification-card";
 import { SkillsDrawer } from "@/components/skills-drawer";
-import { TestimonialsCarousel } from "@/components/testimonials-carousel";
 import DomeGallery from "@/components/DomeGallery";
 const GithubActivity = dynamic(() => import("@/components/github-activity").then(mod => mod.GithubActivity), {
   ssr: false,
@@ -48,7 +47,6 @@ import {
   Calendar,
   Flame,
   Github,
-  BookOpen,
   Send,
   Trophy,
   History,
@@ -689,31 +687,7 @@ export default function Page() {
             </section>
             </AnimeReveal>
 
-            {/* 9. Blog / Articles */}
-            <AnimeReveal delay={500}>
-            <section id="blog" className="scroll-mt-16 px-4 max-w-[1400px] mx-auto w-full">
-              <div className="space-y-8">
-                <h2 className="text-2xl sm:text-3xl font-black flex items-center gap-3">
-                  <BookOpen className="size-6 text-primary" />
-                  Blog & Insights
-                </h2>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  {DATA.blogPosts.map((post) => (
-                    <Link key={post.title} href={post.url} className="group p-6 rounded-3xl bg-secondary/20 backdrop-blur-md border border-primary/10 hover:border-primary/30 transition-all space-y-3 shadow-lg">
-                      <div className="flex justify-between items-start">
-                        <span className="text-[10px] font-black text-primary uppercase tracking-widest px-2 py-0.5 rounded-md bg-primary/10 italic">
-                          {post.publishedAt}
-                        </span>
-                        <ArrowUpRight className="size-4 text-foreground/40 group-hover:text-primary transition-colors" />
-                      </div>
-                      <h3 className="text-lg font-bold group-hover:text-primary transition-colors leading-tight">{post.title}</h3>
-                      <p className="text-sm text-foreground/70 line-clamp-2">{post.summary}</p>
-                    </Link>
-                  ))}
-                </div>
-              </div>
-            </section>
-            </AnimeReveal>
+
 
             {/* 11. Community / Content Creator */}
             <AnimeReveal delay={550}>
@@ -779,10 +753,7 @@ export default function Page() {
                     </span>
                   </p>
 
-                  {/* Testimonials integrated inside Contact Section as requested */}
-                  <section id="testimonials" className="scroll-mt-16 overflow-hidden">
-                    <TestimonialsCarousel />
-                  </section>
+
                 </motion.div>
               </div>
             </section>
