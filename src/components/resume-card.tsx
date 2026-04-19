@@ -54,9 +54,9 @@ export const ResumeCard = ({
       role="button"
       tabIndex={0}
       >
-        {/* Logo Section - मोबाइल पर सेंटर, डेस्कटॉप पर लेफ्ट */}
-        <div className="flex-none flex justify-start mb-3 sm:mb-0">
-          <Avatar className="border size-10 sm:size-14 bg-muted-background dark:bg-foreground transition-opacity duration-300">
+        {/* Logo Section */}
+        <div className="flex-none flex justify-start sm:justify-start mb-4 sm:mb-0">
+          <Avatar className="border size-12 sm:size-14 bg-muted-background dark:bg-foreground transition-all duration-300 group-hover:border-primary/50 shadow-sm">
             <AvatarImage
               src={logoUrl}
               alt={altText}
@@ -117,7 +117,7 @@ export const ResumeCard = ({
               </div>
 
               {/* Period - मोबाइल पर लेफ्ट, डेस्कटॉप पर राइट */}
-              <div className="text-[11px] sm:text-xs tabular-nums text-foreground sm:text-right font-black tracking-tight opacity-70">
+              <div className="text-[10px] sm:text-xs tabular-nums text-primary sm:text-foreground sm:text-right font-black tracking-widest uppercase opacity-100 sm:opacity-70 bg-primary/5 sm:bg-transparent px-2 py-0.5 sm:p-0 rounded-md w-fit">
                 {period}
               </div>
             </div>

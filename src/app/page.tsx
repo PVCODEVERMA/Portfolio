@@ -56,7 +56,8 @@ import {
   User,
   MessageSquare,
   X,
-  Maximize2
+  Maximize2,
+  ChevronDown,
 } from "lucide-react";
 
 export default function Page() {
@@ -70,16 +71,6 @@ export default function Page() {
   const { startLoading } = useLoading();
   const router = useRouter();
 
-  const mouseX = useMotionValue(0);
-  const mouseY = useMotionValue(0);
-
-  function handleMouseMove(e: React.MouseEvent<HTMLElement>) {
-    const { left, top } = e.currentTarget.getBoundingClientRect();
-    mouseX.set(e.clientX - left);
-    mouseY.set(e.clientY - top);
-  }
-
-  const spotlightBackground = useMotionTemplate`radial-gradient(600px circle at ${mouseX}px ${mouseY}px, rgba(249, 112, 21, 0.12), transparent 80%)`;
 
   const openSkillsDrawer = (category: string) => {
     setActiveSkillCategory(category);
@@ -133,7 +124,7 @@ export default function Page() {
   };
 
   return (
-    <main className="flex flex-col min-h-[100dvh] space-y-12 md:space-y-20 lg:space-y-24">
+    <main className="flex flex-col min-h-[100dvh] space-y-12 md:space-y-28">
       <AnimatePresence mode="wait">
         {!showFullGallery ? (
           <motion.div
@@ -141,209 +132,219 @@ export default function Page() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="flex flex-col space-y-16 md:space-y-24"
+            className="flex flex-col space-y-20 md:space-y-28"
           >
             <AnimeReveal delay={100}>
-            {/* 1. Hero Section */}
-            <section
-              id="hero"
-              className="relative pt-6 sm:pt-10 md:pt-12 pb-8 overflow-hidden group/hero"
-              onMouseMove={handleMouseMove}
-            >
-              <motion.div
-                className="pointer-events-none absolute -inset-px opacity-0 transition duration-500 group-hover/hero:opacity-100 z-0"
-                style={{ background: spotlightBackground }}
-              />
-              <div className="mx-auto w-full max-w-4xl flex flex-col items-start gap-10 px-4 relative z-10 text-left">
-                {/* LEFT: Text & Buttons */}
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  className="flex-1 flex flex-col items-start space-y-4 sm:space-y-6 lg:space-y-8 order-2 lg:order-1"
-                >
-                  <div className="space-y-4 w-full">
-                    <div className="flex items-center justify-start gap-2">
-                      <h1 className="text-3xl sm:text-5xl font-black tracking-tighter text-foreground leading-[1.1] pb-1 text-left">
-                        {DATA.name.split(" ")[0]}{" "}
-                        <motion.span
-                          className="inline-block italic text-transparent bg-clip-text bg-gradient-to-r from-primary via-[#f97015] to-purple-500"
-                          style={{ backgroundSize: "200% auto" }}
-                          animate={{ backgroundPosition: ["0% center", "200% center"] }}
-                          transition={{ duration: 5, ease: "linear", repeat: Infinity }}
-                        >
-                          {DATA.name.split(" ")[1] ?? ""}
-                        </motion.span>
-                      </h1>
-                      <svg
-                        viewBox="0 0 24 24"
-                        aria-label="Verified account"
-                        className="size-5 sm:size-7 fill-[#00a2ff] shrink-0"
-                      >
-                        <g>
-                          <path d="M22.25 12c0-1.43-.88-2.67-2.19-3.34.46-1.39.2-2.97-.81-4.08s-2.47-1.49-3.89-1.29c-.73-1.1-1.97-1.79-3.36-1.79s-2.63.69-3.36 1.79c-1.42-.2-2.88.18-3.89 1.29s-1.27 2.69-.81 4.08C2.63 9.33 1.75 10.57 1.75 12s.88 2.67 2.19 3.34c-.46 1.39-.2 2.97.81 4.08s2.47 1.49 3.89 1.29c.73 1.1 1.97 1.79 3.36 1.79s2.63-.69 3.36-1.79c1.42.2 2.88-.18 3.89-1.29s1.27-2.69.81-4.08c1.31-.67 2.19-1.91 2.19-3.34zm-11.71 4.2L6.8 12.46l1.41-1.42 2.26 2.26 4.8-5.23 1.47 1.35-6.2 6.78z"></path>
-                        </g>
-                      </svg>
+              {/* 1. Hero Section */}
+              <section
+                id="hero"
+                className="relative min-h-[70dvh] lg:min-h-0 flex flex-col justify-start pt-8 sm:pt-10 md:pt-12 pb-4 overflow-hidden group/hero"
+              >
+                <div className="mx-auto w-full max-w-4xl flex flex-col lg:flex-row items-center lg:items-start justify-between gap-10 px-4 relative z-10 text-left">
+                  {/* LEFT: Text & Buttons */}
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    className="flex-[2] flex flex-col items-center sm:items-start space-y-4 sm:space-y-6 lg:space-y-8 order-2 lg:order-1"
+                  >
+                    <div className="space-y-4 w-full">
+                      <div className="flex flex-col items-center sm:items-start gap-1 w-full">
+                        <h1 className="text-4xl sm:text-7xl lg:text-7xl font-black tracking-tighter text-foreground leading-[1.1] text-center sm:text-left w-full">
+                          <span className="block italic sm:not-italic">Hi, I am {DATA.name} 👋</span>
+                          <span className="block lg:inline">
+                            A Software Tinkerer
+                          </span>
+                        </h1>
+                      </div>
                     </div>
-                    <p className="text-base sm:text-xl font-bold text-muted-foreground italic max-w-[600px]">
-                      {(DATA as any).role} — {(DATA as any).subtitle}
-                    </p>
-                  </div>
 
-                  <motion.div
-                    className="max-w-[700px] w-full text-[13px] sm:text-base text-foreground font-bold leading-relaxed px-0 sm:px-0 drop-shadow-sm flex flex-wrap justify-start gap-x-1 sm:gap-x-1.5 gap-y-0"
-                    initial="hidden"
-                    whileInView="visible"
-                    viewport={{ once: true }}
-                    variants={{
-                      visible: { transition: { staggerChildren: 0.03 } },
-                      hidden: {}
-                    }}
-                  >
-                    {DATA.description.split(" ").map((word, i) => (
-                      <motion.span
-                        key={i}
-                        className="inline-block"
-                        variants={{
-                          hidden: { filter: "blur(10px)", opacity: 0, y: 4 },
-                          visible: { filter: "blur(0px)", opacity: 1, y: 0, transition: { duration: 0.4 } }
-                        }}
-                      >
-                        {word}
-                      </motion.span>
-                    ))}
-                  </motion.div>
-
-                  <motion.div
-                    initial="hidden"
-                    whileInView="visible"
-                    viewport={{ once: true }}
-                    variants={{
-                      visible: { transition: { staggerChildren: 0.1, delayChildren: 0.2 } },
-                      hidden: {}
-                    }}
-                    className="flex flex-row items-center justify-start gap-1.5 sm:gap-3 pt-0 sm:pt-4 w-full px-0 sm:px-0"
-                  >
                     <motion.div
+                      className="max-w-[700px] w-full text-[13px] sm:text-base text-foreground font-bold leading-relaxed px-0 sm:px-0 drop-shadow-sm flex flex-wrap justify-center sm:justify-start gap-x-1 sm:gap-x-1.5 gap-y-0 text-center sm:text-left"
+                      initial="hidden"
+                      whileInView="visible"
+                      viewport={{ once: true }}
                       variants={{
-                        hidden: { opacity: 0, y: 20 },
-                        visible: { opacity: 1, y: 0, transition: { duration: 0.5 } }
+                        visible: { transition: { staggerChildren: 0.03 } },
+                        hidden: {}
                       }}
-                      whileHover={{ scale: 1.05, y: -2 }}
-                      whileTap={{ scale: 0.95 }}
-                      className="flex-1 sm:flex-none"
                     >
-                      <Button asChild size="default" className="rounded-full w-full px-3 sm:px-8 font-black shadow-xl shadow-primary/20 cursor-pointer h-10 sm:h-12 text-xs sm:text-base">
-                        <Link
-                          href="https://drive.google.com/file/d/1Cbbx05lspTunaePTrem1YZq6MZ_rHZAJ/view?usp=sharing"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          onClick={() => {
-                            startLoading(1500);
-                            toast.success("Opening Resume...");
+                      {DATA.description.split(" ").map((word, i) => (
+                        <motion.span
+                          key={i}
+                          className="inline-block"
+                          variants={{
+                            hidden: { filter: "blur(10px)", opacity: 0, y: 4 },
+                            visible: { filter: "blur(0px)", opacity: 1, y: 0, transition: { duration: 0.4 } }
                           }}
-                          className="flex items-center justify-center gap-1.5"
                         >
-                          Hire Me <Download className="size-3.5 sm:size-5" />
-                        </Link>
-                      </Button>
+                          {word}
+                        </motion.span>
+                      ))}
                     </motion.div>
 
                     <motion.div
+                      initial="hidden"
+                      whileInView="visible"
+                      viewport={{ once: true }}
                       variants={{
-                        hidden: { opacity: 0, y: 20 },
-                        visible: { opacity: 1, y: 0, transition: { duration: 0.5 } }
+                        visible: { transition: { staggerChildren: 0.1, delayChildren: 0.2 } },
+                        hidden: {}
                       }}
-                      whileHover={{ scale: 1.05, y: -2 }}
-                      whileTap={{ scale: 0.95 }}
-                      className="flex-1 sm:flex-none"
+                      className="grid grid-cols-3 sm:flex sm:flex-row items-center justify-center sm:justify-start gap-1.5 sm:gap-3 pt-0 sm:pt-4 w-full px-0 sm:px-0 h-10 sm:h-auto"
                     >
-                      <Button
-                        size="default"
-                        variant="outline"
-                        className="rounded-full w-full px-3 sm:px-8 font-black h-10 sm:h-12 text-xs sm:text-base border-primary/20 hover:bg-primary/5 flex items-center justify-center gap-1.5"
-                        onClick={() => setIsCommentOpen(true)}
+                      <motion.div
+                        variants={{
+                          hidden: { opacity: 0, y: 20 },
+                          visible: { opacity: 1, y: 0, transition: { duration: 0.5 } }
+                        }}
+                        whileHover={{ scale: 1.05, y: -2 }}
+                        whileTap={{ scale: 0.95 }}
+                        className="flex-1 sm:flex-none"
                       >
-                        <MessageCircle className="text-[#f97015] size-3.5 sm:size-5" /> Ask Me
-                      </Button>
+                        <Button asChild size="default" className="rounded-full w-full px-3 sm:px-8 font-black shadow-xl shadow-orange-500/20 bg-[#f97015] text-white hover:bg-[#f97015]/90 cursor-pointer h-full sm:h-12 text-[10px] sm:text-base">
+                          <Link
+                            href="https://drive.google.com/file/d/1Cbbx05lspTunaePTrem1YZq6MZ_rHZAJ/view?usp=sharing"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            onClick={() => {
+                              startLoading(1500);
+                              toast.success("Opening Resume...");
+                            }}
+                            className="flex items-center justify-center gap-1.5"
+                          >
+                            Hire Me <Download className="size-3 sm:size-5" />
+                          </Link>
+                        </Button>
+                      </motion.div>
+
+                      <motion.div
+                        variants={{
+                          hidden: { opacity: 0, y: 20 },
+                          visible: { opacity: 1, y: 0, transition: { duration: 0.5 } }
+                        }}
+                        whileHover={{ scale: 1.05, y: -2 }}
+                        whileTap={{ scale: 0.95 }}
+                        className="flex-1 sm:flex-none"
+                      >
+                        <Button
+                          size="default"
+                          variant="outline"
+                          className="rounded-full w-full px-3 sm:px-8 font-black h-full sm:h-12 text-[10px] sm:text-base border-primary/20 hover:bg-primary/5 flex items-center justify-center gap-1.5"
+                          onClick={() => setIsCommentOpen(true)}
+                        >
+                          <MessageCircle className="text-[#f97015] size-3 sm:size-5" /> Ask Me
+                        </Button>
+                      </motion.div>
+
+                      <motion.div
+                        variants={{
+                          hidden: { opacity: 0, y: 20 },
+                          visible: { opacity: 1, y: 0, transition: { duration: 0.5 } }
+                        }}
+                        whileHover={{ scale: 1.05, y: -2 }}
+                        whileTap={{ scale: 0.95 }}
+                        className="flex-1 sm:flex-none"
+                      >
+                        <Button
+                          size="default"
+                          className="rounded-full w-full px-3 sm:px-8 font-black h-full sm:h-12 text-[10px] sm:text-base bg-transparent text-[#f97015] border-2 border-[#f97015]/40 hover:bg-[#f97015]/5 transition-transform flex items-center justify-center gap-1.5"
+                          onClick={() => setShowFullGallery(true)}
+                        >
+                          <Layout className="size-3 sm:size-5" /> Gallery
+                        </Button>
+                      </motion.div>
                     </motion.div>
 
                     <motion.div
-                      variants={{
-                        hidden: { opacity: 0, y: 20 },
-                        visible: { opacity: 1, y: 0, transition: { duration: 0.5 } }
-                      }}
-                      whileHover={{ scale: 1.05, y: -2 }}
-                      whileTap={{ scale: 0.95 }}
-                      className="flex-1 sm:flex-none"
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.5 }}
+                      className="flex flex-row flex-wrap items-center justify-center sm:justify-start gap-x-4 gap-y-2 pt-4 border-t border-primary/10 mt-4 sm:mt-8 w-full max-w-2xl px-0 text-[11px] sm:text-sm"
                     >
-                      <Button
-                        size="default"
-                        className="rounded-full w-full px-3 sm:px-8 font-black shadow-xl shadow-orange-500/20 h-10 sm:h-12 text-xs sm:text-base bg-gradient-to-r from-orange-500 to-primary hover:scale-105 transition-transform flex items-center justify-center gap-1.5"
-                        onClick={() => setShowFullGallery(true)}
+                      <Link
+                        href={`mailto:${DATA.contact.email}`}
+                        className="flex items-center gap-2 group transition-all duration-300"
                       >
-                        <Layout className="size-3.5 sm:size-5" /> Gallery
-                      </Button>
+                        <div className="p-1.5 sm:p-2 rounded-xl bg-red-500/10 text-red-500 group-hover:scale-110 group-hover:bg-red-500/20 transition-all">
+                          <Mail className="size-3.5 sm:size-4" />
+                        </div>
+                        <span className="text-xs sm:text-sm font-black text-foreground group-hover:text-primary transition-colors whitespace-nowrap">
+                          {DATA.contact.email}
+                        </span>
+                      </Link>
+
+                      <div className="hidden sm:block w-[1px] h-4 bg-primary/20" />
+
+                      <Link
+                        href={`tel:${DATA.contact.tel.replace(/\s+/g, '')}`}
+                        className="flex items-center gap-2 group transition-all duration-300"
+                      >
+                        <div className="p-1.5 sm:p-2 rounded-xl bg-blue-500/10 text-blue-500 group-hover:scale-110 group-hover:bg-blue-500/20 transition-all">
+                          <Phone className="size-3.5 sm:size-4" />
+                        </div>
+                        <span className="text-xs sm:text-sm font-black text-foreground group-hover:text-primary transition-colors whitespace-nowrap">
+                          {DATA.contact.tel}
+                        </span>
+                      </Link>
+                    </motion.div>
+
+                    <motion.div
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.6 }}
+                      className="flex items-center justify-center sm:justify-start flex-wrap gap-1.5 pt-2"
+                    >
+                      {Object.entries(DATA.contact.social).map(([name, social]) => {
+                        const Icon = (social as any).icon;
+                        const cls =
+                          name === "LinkedIn" ? "si-linkedin" :
+                            name === "GitHub" ? "si-github" :
+                              name === "X" ? "si-x" :
+                                name === "Youtube" ? "si-youtube" : "";
+                        return (
+                          <a key={name} href={social.url} target="_blank" rel="noopener noreferrer" className={`social-icon-btn ${cls}`}>
+                            <span className="social-icon-tip">{name}</span>
+                            <Icon className="size-4 sm:size-5" />
+                          </a>
+                        );
+                      })}
+                    </motion.div>
+
+                    {/* Mobile Avatar Mascot */}
+                    <motion.div
+                      initial={{ opacity: 0, scale: 0.8 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      transition={{ delay: 0.8, duration: 0.5 }}
+                      className="flex sm:hidden justify-center pt-1 w-full"
+                    >
+                      <motion.div
+                        animate={{ y: [0, -10, 0] }}
+                        transition={{ repeat: Infinity, duration: 4, ease: "easeInOut" }}
+                        className="relative size-48 rounded-full shadow-[0_0_50px_rgba(59,130,246,0.3)] border-4 border-background/50 overflow-hidden group/avatar"
+                      >
+                        <img 
+                          src="/avatar.png" 
+                          alt="Pankaj Avatar" 
+                          className="w-full h-full object-cover transition-transform duration-500 group-hover/avatar:scale-110" 
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-primary/20 to-transparent opacity-60" />
+                      </motion.div>
                     </motion.div>
                   </motion.div>
 
-                  <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.5 }}
-                    className="flex flex-wrap items-center justify-start gap-x-4 gap-y-2 pt-4 border-t border-primary/10 mt-4 sm:mt-8 w-full max-w-2xl px-0"
-                  >
-                    <Link
-                      href={`mailto:${DATA.contact.email}`}
-                      className="flex items-center gap-2 group transition-all duration-300"
-                    >
-                      <div className="p-1.5 sm:p-2 rounded-xl bg-red-500/10 text-red-500 group-hover:scale-110 group-hover:bg-red-500/20 transition-all">
-                        <Mail className="size-3.5 sm:size-4" />
-                      </div>
-                      <span className="text-xs sm:text-sm font-black text-foreground group-hover:text-primary transition-colors whitespace-nowrap">
-                        {DATA.contact.email}
-                      </span>
-                    </Link>
-
-                    <div className="w-[1px] h-4 bg-primary/20" />
-
-                    <Link
-                      href={`tel:${DATA.contact.tel.replace(/\s+/g, '')}`}
-                      className="flex items-center gap-2 group transition-all duration-300"
-                    >
-                      <div className="p-1.5 sm:p-2 rounded-xl bg-blue-500/10 text-blue-500 group-hover:scale-110 group-hover:bg-blue-500/20 transition-all">
-                        <Phone className="size-3.5 sm:size-4" />
-                      </div>
-                      <span className="text-xs sm:text-sm font-black text-foreground group-hover:text-primary transition-colors whitespace-nowrap">
-                        {DATA.contact.tel}
-                      </span>
-                    </Link>
-                  </motion.div>
-
-                  <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.6 }}
-                    className="flex items-center justify-start flex-wrap gap-1.5 pt-2"
-                  >
-                    {Object.entries(DATA.contact.social).map(([name, social]) => {
-                      const Icon = (social as any).icon;
-                      const cls =
-                        name === "LinkedIn" ? "si-linkedin" :
-                          name === "GitHub" ? "si-github" :
-                            name === "X" ? "si-x" :
-                              name === "Youtube" ? "si-youtube" : "";
-                      return (
-                        <a key={name} href={social.url} target="_blank" rel="noopener noreferrer" className={`social-icon-btn ${cls}`}>
-                          <span className="social-icon-tip">{name}</span>
-                          <Icon className="size-4 sm:size-5" />
-                        </a>
-                      );
-                    })}
-                  </motion.div>
-                </motion.div>
-              </div>
-            </section>
+                  {/* RIGHT: Rocket Mascot */}
+                  <div className="hidden sm:flex lg:flex-[0.5] justify-center lg:justify-end order-1 lg:order-2 w-full lg:w-auto">
+                    <div className="relative p-4 sm:p-0">
+                      <img
+                        src="/rocket.png"
+                        alt="Rocket Mascot"
+                        className="relative hidden sm:block w-[450px] h-[450px] object-contain mix-blend-multiply dark:invert"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </section>
             </AnimeReveal>
 
             {/* Comment Modal */}
@@ -372,12 +373,12 @@ export default function Page() {
                         </p>
                       </div>
                       <button
-                        className="rounded-xl p-2 hover:bg-primary/10 transition-colors"
+                        className="rounded-full p-0 size-9 flex items-center justify-center bg-secondary/20 hover:bg-primary/10 transition-colors"
                         onClick={() => setIsCommentOpen(false)}
                         type="button"
                         aria-label="Close"
                       >
-                        <X className="size-6 text-foreground/70" />
+                        <X className="size-5 text-foreground/70" />
                       </button>
                     </div>
 
@@ -395,11 +396,19 @@ export default function Page() {
                       <div className="relative group">
                         <Mail className="absolute left-4 top-1/2 -translate-y-1/2 size-4 text-muted-foreground group-focus-within:text-primary transition-colors" />
                         <input
-                          className="w-full rounded-2xl border border-border/60 bg-background pl-11 pr-4 py-3 text-sm font-medium outline-none focus:border-primary/60 transition-all"
+                          className={cn(
+                            "w-full rounded-2xl border bg-background pl-11 pr-4 py-3 text-sm font-medium outline-none transition-all",
+                            commentForm.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(commentForm.email)
+                              ? "border-red-500"
+                              : "border-border/60 focus:border-primary/60"
+                          )}
                           placeholder="Enter Your Email"
                           value={commentForm.email}
                           onChange={(e) => setCommentForm((s) => ({ ...s, email: e.target.value }))}
                         />
+                        {commentForm.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(commentForm.email) && (
+                          <span className="text-[10px] text-red-500 font-bold ml-11 mt-1 block">Please enter a valid email address</span>
+                        )}
                       </div>
 
                       <div className="relative group">
@@ -407,9 +416,13 @@ export default function Page() {
                         <textarea
                           className="min-h-[120px] w-full rounded-2xl border border-border/60 bg-background pl-11 pr-4 py-3 text-sm font-medium outline-none focus:border-primary/60 transition-all resize-none"
                           placeholder="Write your comment..."
+                          maxLength={500}
                           value={commentForm.comment}
                           onChange={(e) => setCommentForm((s) => ({ ...s, comment: e.target.value }))}
                         />
+                        <div className="absolute right-4 bottom-3 text-[10px] font-black text-muted-foreground bg-background/80 px-2 py-0.5 rounded-full">
+                          {commentForm.comment.length} / 500
+                        </div>
                       </div>
                     </div>
 
@@ -417,8 +430,8 @@ export default function Page() {
                       <Button variant="outline" onClick={() => setIsCommentOpen(false)} className="rounded-2xl">
                         Cancel
                       </Button>
-                      <Button onClick={submitComment} className="rounded-2xl font-bold">
-                        Submit
+                      <Button onClick={submitComment} className="rounded-2xl font-black px-8 bg-[#f97015] hover:bg-[#f97015]/90 text-white">
+                        Send ↗
                       </Button>
                     </div>
                   </motion.div>
@@ -428,335 +441,314 @@ export default function Page() {
 
             {/* 2. About Section with Timeline */}
             <AnimeReveal delay={200}>
-            <section id="about" className="scroll-mt-16 px-4 max-w-[1400px] mx-auto w-full">
-              <div className="space-y-12 max-w-4xl lg:max-w-none">
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, margin: "-100px" }}
-                  transition={{ duration: 0.6 }}
-                  className="space-y-4"
-                >
-                  <h2 className="text-2xl sm:text-3xl font-black flex items-center gap-3 text-foreground">
-                    <History className="size-6 text-primary" />
-                    About & Journey
-                  </h2>
-                  <Markdown className="prose max-w-full text-pretty font-sans text-sm sm:text-base text-foreground dark:prose-invert leading-relaxed font-black">
-                    {DATA.summary}
-                  </Markdown>
-                </motion.div>
+              <section id="about" className="scroll-mt-16 px-4 max-w-4xl lg:max-w-6xl mx-auto w-full">
+                <div className="space-y-12">
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, margin: "-100px" }}
+                    transition={{ duration: 0.6 }}
+                    className="space-y-4"
+                  >
+                    <h2 className="text-2xl sm:text-3xl font-black flex items-center gap-3 text-foreground">
+                      <History className="size-6 text-primary" />
+                      About & Journey
+                    </h2>
+                    <Markdown className="prose max-w-full text-pretty font-sans text-sm sm:text-base text-foreground dark:prose-invert leading-relaxed font-black">
+                      {DATA.summary}
+                    </Markdown>
+                  </motion.div>
 
-                <div className="relative pl-8 space-y-10 before:absolute before:inset-0 before:left-0 before:h-full before:w-[2px] before:bg-gradient-to-b before:from-primary before:via-orange-400 before:to-transparent">
-                  {(DATA as any).timeline?.map((item: any, idx: number) => {
-                    const Icon = {
-                      CheckCircle2: CheckCircle2,
-                      Briefcase: Briefcase,
-                      Sparkles: Sparkles,
-                    }[item.icon as string] || Rocket;
+                  <div className="relative pl-8 space-y-10 before:absolute before:inset-0 before:left-0 before:h-full before:w-[2px] before:bg-gradient-to-b before:from-primary before:via-orange-400 before:to-transparent">
+                    {(DATA as any).timeline?.map((item: any, idx: number) => {
+                      const Icon = {
+                        CheckCircle2: CheckCircle2,
+                        Briefcase: Briefcase,
+                        Sparkles: Sparkles,
+                      }[item.icon as string] || Rocket;
 
-                    return (
-                      <motion.div
-                        key={item.year}
-                        initial={{ opacity: 0, x: -20 }}
-                        whileInView={{ opacity: 1, x: 0 }}
-                        viewport={{ once: true, margin: "-50px" }}
-                        transition={{ delay: idx * 0.1 }}
-                        className="relative"
-                      >
-                        <div className="absolute -left-[37px] top-1 size-4 rounded-full bg-background border-2 border-primary flex items-center justify-center">
-                          <div className="size-1.5 rounded-full bg-primary" />
-                        </div>
-                        <div className="space-y-1">
-                          <div className="flex items-center gap-2">
-                            <span className="text-xs font-black text-primary px-2 py-0.5 rounded-md bg-primary/10">
-                              {item.year}
-                            </span>
-                            <h3 className="text-base sm:text-lg font-black text-foreground">{item.title}</h3>
+                      return (
+                        <motion.div
+                          key={item.year}
+                          initial={{ opacity: 0, x: -20 }}
+                          whileInView={{ opacity: 1, x: 0 }}
+                          viewport={{ once: true, margin: "-50px" }}
+                          transition={{ delay: idx * 0.1 }}
+                          className="relative"
+                        >
+                          <div className="absolute -left-[37px] top-1 size-4 rounded-full bg-background border-2 border-primary flex items-center justify-center">
+                            <div className="size-1.5 rounded-full bg-primary" />
                           </div>
-                          <p className="text-xs sm:text-sm text-foreground font-bold opacity-80">
-                            {item.description}
-                          </p>
-                        </div>
-                      </motion.div>
-                    );
-                  })}
+                          <div className="space-y-1">
+                            <div className="flex items-center gap-2">
+                              <span className="text-xs font-black text-primary px-2 py-0.5 rounded-md bg-primary/10">
+                                {item.year}
+                              </span>
+                              <h3 className="text-base sm:text-lg font-black text-foreground">{item.title}</h3>
+                            </div>
+                            <p className="text-xs sm:text-sm text-foreground font-bold opacity-80">
+                              {item.description}
+                            </p>
+                          </div>
+                        </motion.div>
+                      );
+                    })}
+                  </div>
                 </div>
-              </div>
-            </section>
+              </section>
             </AnimeReveal>
 
 
             {/* 10. Certifications */}
             <AnimeReveal delay={250}>
-            <section id="certifications" className="scroll-mt-24 px-4">
-              <div className="space-y-8 py-8">
-                <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-primary/10 pb-6">
-                  <div className="space-y-1">
-                    <h2 className="text-2xl sm:text-3xl font-black text-foreground">Certifications</h2>
-                    <p className="text-sm text-foreground/70 font-medium italic">Industry recognized credentials & skill validations.</p>
+              <section id="certifications" className="scroll-mt-24 px-4">
+                <div className="space-y-8 py-8">
+                  <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-primary/10 pb-6">
+                    <div className="space-y-1">
+                      <h2 className="text-2xl sm:text-3xl font-black text-foreground">Certifications</h2>
+                      <p className="text-sm text-foreground/70 font-medium italic">Industry recognized credentials & skill validations.</p>
+                    </div>
+                    <div className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-muted-foreground px-3 py-1.5 rounded-full bg-secondary/20">
+                      <CheckCircle2 className="size-3 text-green-500 fill-green-500/10" />
+                      <span>{(DATA.certifications as readonly any[])?.filter((c) => c.status === "completed")?.length || 0} Done</span>
+                      <span className="mx-1 opacity-20">|</span>
+                      <Flame className="size-3 text-orange-500 animate-pulse" />
+                    </div>
                   </div>
-                  <div className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-muted-foreground px-3 py-1.5 rounded-full bg-secondary/20">
-                    <CheckCircle2 className="size-3 text-green-500 fill-green-500/10" />
-                    <span>{(DATA.certifications as readonly any[])?.filter((c) => c.status === "completed")?.length || 0} Done</span>
-                    <span className="mx-1 opacity-20">|</span>
-                    <Flame className="size-3 text-orange-500 animate-pulse" />
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 max-w-4xl lg:max-w-6xl mx-auto w-full">
+                    {DATA.certifications?.map((cert, id) => (
+                      <CertificationCard key={cert.title} cert={cert as any} />
+                    ))}
                   </div>
                 </div>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 max-w-[1400px] mx-auto w-full">
-                  {DATA.certifications?.map((cert, id) => (
-                    <CertificationCard key={cert.title} cert={cert as any} />
-                  ))}
-                </div>
-              </div>
-            </section>
+              </section>
             </AnimeReveal>
 
             {/* 7. Featured Projects Stage */}
             <AnimeReveal delay={300}>
-            <section id="projects" className="scroll-mt-16 px-4">
-              <div className="max-w-[1400px] mx-auto space-y-12">
-                <div className="flex flex-col md:flex-row items-center justify-between gap-6 border-b border-primary/10 pb-10">
-                  <div className="text-left space-y-2 flex-1">
-                    <h2 className="text-3xl sm:text-5xl font-[900] tracking-tighter text-foreground uppercase leading-none">
-                      Featured <span className="text-primary italic">Builds</span>
-                    </h2>
-                    <p className="text-xs sm:text-sm font-black text-muted-foreground/60 uppercase tracking-[0.3em]">
-                      Production-Ready Engineering Showcase
-                    </p>
+              <section id="projects" className="scroll-mt-16 px-4">
+                <div className="max-w-4xl lg:max-w-6xl mx-auto space-y-12">
+                  <div className="flex flex-col md:flex-row items-center justify-between gap-6 border-b border-primary/10 pb-10">
+                    <div className="text-left space-y-2 flex-1">
+                      <h2 className="text-3xl sm:text-5xl font-[900] tracking-tighter text-foreground uppercase leading-none">
+                        Featured <span className="text-primary italic">Builds</span>
+                      </h2>
+                      <p className="text-xs sm:text-sm font-black text-muted-foreground/60 uppercase tracking-[0.3em]">
+                        Production-Ready Engineering Showcase
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                    {(DATA.projects as readonly any[]).slice(0, 3).map((project, id) => (
+                      <motion.div
+                        key={project.title}
+                        initial={{ opacity: 0, scale: 0.95 }}
+                        whileInView={{ opacity: 1, scale: 1 }}
+                        viewport={{ once: true }}
+                        transition={{ delay: id * 0.1 }}
+                        className="group h-full"
+                      >
+                        <div className="relative group hover:-translate-y-2 transition-transform duration-500 h-full">
+                          <ProjectCard
+                            title={project.title}
+                            description={project.description}
+                            dates={project.dates}
+                            tags={project.technologies}
+                            image={project.image}
+                            video={project.video}
+                            links={project.links}
+                          />
+                        </div>
+                      </motion.div>
+                    ))}
+                  </div>
+
+                  <div className="flex justify-center mt-12 pb-4">
+                    <Link href="/projects">
+                      <Button variant="outline" className="rounded-2xl gap-2 font-black text-[10px] uppercase tracking-widest bg-primary/5 border-primary/20 hover:bg-primary hover:text-primary-foreground transition-all shadow-xl px-12 py-7 h-auto">
+                        View Full Archive <ArrowUpRight className="size-5" />
+                      </Button>
+                    </Link>
                   </div>
                 </div>
-
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-                  {(DATA.projects as readonly any[]).slice(0, 3).map((project, id) => (
-                    <motion.div
-                      key={project.title}
-                      initial={{ opacity: 0, scale: 0.95 }}
-                      whileInView={{ opacity: 1, scale: 1 }}
-                      viewport={{ once: true }}
-                      transition={{ delay: id * 0.1 }}
-                      className="group h-full"
-                    >
-                      <div className="relative group hover:-translate-y-2 transition-transform duration-500 h-full">
-                        <ProjectCard
-                          title={project.title}
-                          description={project.description}
-                          dates={project.dates}
-                          tags={project.technologies}
-                          image={project.image}
-                          video={project.video}
-                          links={project.links}
-                        />
-                      </div>
-                    </motion.div>
-                  ))}
-                </div>
-
-                <div className="flex justify-center mt-12 pb-4">
-                  <Link href="/projects">
-                    <Button variant="outline" className="rounded-2xl gap-2 font-black text-[10px] uppercase tracking-widest bg-primary/5 border-primary/20 hover:bg-primary hover:text-primary-foreground transition-all shadow-xl px-12 py-7 h-auto">
-                      View Full Archive <ArrowUpRight className="size-5" />
-                    </Button>
-                  </Link>
-                </div>
-              </div>
-            </section>
+              </section>
             </AnimeReveal>
 
-            
+
 
 
             {/* 7.5 Work Experience */}
             <AnimeReveal delay={400}>
-            <section id="work" className="scroll-mt-16 px-4 max-w-[1400px] mx-auto">
-              <div className="space-y-8">
-                <div className="flex items-center justify-between border-b border-primary/10 pb-4">
-                  <h2 className="text-xl sm:text-2xl font-black text-foreground uppercase tracking-tight">Work <span className="text-primary italic">History</span></h2>
-                  <Badge variant="secondary" className="bg-primary/10 text-primary font-bold text-[10px] sm:text-xs">
-                    1 year 3 months
-                  </Badge>
+              <section id="work" className="scroll-mt-16 px-4 max-w-4xl lg:max-w-6xl mx-auto">
+                <div className="space-y-8">
+                  <div className="flex items-center justify-between border-b border-primary/10 pb-4">
+                    <h2 className="text-xl sm:text-2xl font-black text-foreground uppercase tracking-tight">Work <span className="text-primary italic">History</span></h2>
+                    <Badge variant="secondary" className="bg-primary/10 text-primary font-bold text-[10px] sm:text-xs">
+                      1 year 3 months
+                    </Badge>
+                  </div>
+                  <div className="space-y-4">
+                    {DATA.work.map((work, id) => (
+                      <ResumeCard
+                        key={work.company}
+                        logoUrl={work.logoUrl}
+                        altText={work.company}
+                        title={work.company}
+                        subtitle={work.title}
+                        href={work.href}
+                        badges={work.badges}
+                        period={`${work.start} - ${work.end ?? "Present"}`}
+                        description={work.description}
+                      />
+                    ))}
+                  </div>
                 </div>
-                <div className="space-y-4">
-                  {DATA.work.map((work, id) => (
-                    <ResumeCard
-                      key={work.company}
-                      logoUrl={work.logoUrl}
-                      altText={work.company}
-                      title={work.company}
-                      subtitle={work.title}
-                      href={work.href}
-                      badges={work.badges}
-                      period={`${work.start} - ${work.end ?? "Present"}`}
-                      description={work.description}
-                    />
-                  ))}
-                </div>
-              </div>
-            </section>
+              </section>
             </AnimeReveal>
 
             {/* 6.5 Education (Integrated) */}
             <AnimeReveal delay={450}>
-            <section id="education" className="scroll-mt-16 px-4 max-w-[1400px] mx-auto">
-              <div className="space-y-8">
-                <h2 className="text-xl sm:text-2xl font-black text-foreground">Education</h2>
-                <div className="space-y-4">
-                  {DATA.education.map((education, id) => (
-                    <ResumeCard
-                      key={education.school}
-                      href={education.href}
-                      logoUrl={education.logoUrl}
-                      altText={education.school}
-                      title={education.school}
-                      subtitle={education.degree}
-                      period={`${education.start} - ${education.end}`}
-                    />
-                  ))}
+              <section id="education" className="scroll-mt-16 px-4 max-w-4xl lg:max-w-6xl mx-auto">
+                <div className="space-y-8">
+                  <h2 className="text-xl sm:text-2xl font-black text-foreground">Education</h2>
+                  <div className="space-y-4">
+                    {DATA.education.map((education, id) => (
+                      <ResumeCard
+                        key={education.school}
+                        href={education.href}
+                        logoUrl={education.logoUrl}
+                        altText={education.school}
+                        title={education.school}
+                        subtitle={education.degree}
+                        period={`${education.start} - ${education.end}`}
+                      />
+                    ))}
+                  </div>
                 </div>
-              </div>
-            </section>
+              </section>
             </AnimeReveal>
 
             {/* 7. Skills Section */}
             <AnimeReveal delay={350}>
-            <section id="skills" className="scroll-mt-24 px-4">
-              <div className="space-y-12 py-8">
-                <div className="text-left space-y-4 max-w-3xl ml-0">
-                  <h2 className="text-2xl sm:text-4xl font-black tracking-tighter text-foreground">
-                    Technical <span className="text-primary italic">Arsenal</span>
-                  </h2>
-                  <p className="text-foreground/70 text-sm sm:text-base font-medium">
-                   A comprehensive toolkit of expert skills across modern engineering domains.
-                  </p>
-                </div>
+              <section id="skills" className="scroll-mt-24 px-4">
+                <div className="space-y-12 py-8">
+                  <div className="text-left space-y-4 max-w-3xl ml-0">
+                    <h2 className="text-2xl sm:text-4xl font-black tracking-tighter text-foreground">
+                      Technical <span className="text-primary italic">Arsenal</span>
+                    </h2>
+                    <p className="text-foreground/70 text-sm sm:text-base font-medium">
+                      A comprehensive toolkit of expert skills across modern engineering domains.
+                    </p>
+                  </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 max-w-[1400px] mx-auto w-full">
-                  {Object.entries(DATA.skills).map(([category, data]: [string, any], idx) => {
-                    const Icon = {
-                      "AI / ML": Cpu,
-                      "Frontend": Layout,
-                      "Backend & Architecture": Server,
-                      "DevOps & Security": Cloud,
-                      "Databases": Database,
-                      "Testing & Tools": Wrench,
-                      "Soft Skills": Users
-                    }[category] || Cpu;
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 max-w-4xl lg:max-w-6xl mx-auto w-full">
+                    {Object.entries(DATA.skills).map(([category, data]: [string, any], idx) => {
+                      const Icon = {
+                        "AI / ML": Cpu,
+                        "Frontend": Layout,
+                        "Backend & Architecture": Server,
+                        "DevOps & Security": Cloud,
+                        "Databases": Database,
+                        "Testing & Tools": Wrench,
+                        "Soft Skills": Users
+                      }[category] || Cpu;
 
-                    return (
-                      <motion.div
-                        key={category}
-                        initial={{ opacity: 0, scale: 0.95 }}
-                        whileInView={{ opacity: 1, scale: 1 }}
-                        viewport={{ once: true }}
-                        transition={{ delay: idx * 0.05 }}
-                        onClick={() => openSkillsDrawer(category)}
-                        className="group relative p-6 rounded-3xl bg-secondary/20 backdrop-blur-md border border-primary/10 hover:border-primary/40 transition-all cursor-pointer active:scale-95 shadow-lg"
-                      >
-                        <div className="flex items-center justify-between mb-4">
-                          <div className="flex items-center gap-3">
-                            <div className="p-2.5 rounded-xl bg-primary/10 group-hover:bg-primary/20 transition-all">
-                              <Icon className="size-5 text-primary" />
+                      return (
+                        <motion.div
+                          key={category}
+                          initial={{ opacity: 0, scale: 0.95 }}
+                          whileInView={{ opacity: 1, scale: 1 }}
+                          viewport={{ once: true }}
+                          transition={{ delay: idx * 0.05 }}
+                          onClick={() => openSkillsDrawer(category)}
+                          className="group relative p-6 rounded-3xl bg-secondary/20 backdrop-blur-md border border-primary/10 border-b-2 hover:border-[#f97015] transition-all cursor-pointer active:scale-95 shadow-lg"
+                        >
+                          <div className="flex items-center justify-between mb-4">
+                            <div className="flex items-center gap-3">
+                              <div className="p-2.5 rounded-xl bg-primary/10 group-hover:bg-primary/20 transition-all">
+                                <Icon className="size-5 text-primary" />
+                              </div>
+                              <h3 className="font-bold text-lg text-foreground">{category}</h3>
                             </div>
-                            <h3 className="font-bold text-lg text-foreground">{category}</h3>
+                            <div className="flex items-center gap-2">
+                              <span className="text-[10px] font-black text-primary/60">{data.list.length} skills</span>
+                              <ArrowUpRight className="size-4 text-primary transition-opacity" />
+                            </div>
                           </div>
-                          <ArrowUpRight className="size-4 text-primary opacity-0 group-hover:opacity-100 transition-opacity" />
-                        </div>
-                        <div className="flex flex-wrap gap-2">
-                          {data.list.slice(0, 4).map((skill: any) => (
-                            <Badge key={skill.name} variant="secondary" className="px-2 py-0 text-[10px] bg-background/50 border-white/5 uppercase">
-                              {skill.name}
-                            </Badge>
-                          ))}
-                          {data.list.length > 4 && (
-                            <span className="text-[10px] font-black text-primary/60 px-2">+{data.list.length - 4} More</span>
-                          )}
-                        </div>
-                      </motion.div>
-                    );
-                  })}
+                          <div className="flex flex-wrap gap-2">
+                            {data.list.slice(0, 4).map((skill: any) => (
+                              <Badge key={skill.name} variant="secondary" className="px-2 py-0 text-[10px] bg-background/50 border-white/5 uppercase">
+                                {skill.name}
+                              </Badge>
+                            ))}
+                            {data.list.length > 4 && (
+                              <span className="text-[10px] font-black text-primary/60 px-2">+{data.list.length - 4} More</span>
+                            )}
+                          </div>
+                        </motion.div>
+                      );
+                    })}
+                  </div>
                 </div>
-              </div>
 
-              {activeSkillCategory && (
-                <SkillsDrawer
-                  isOpen={isSkillsDrawerOpen}
-                  onClose={() => setIsSkillsDrawerOpen(false)}
-                  initialCategory={activeSkillCategory}
-                  skillsData={DATA.skills as any}
-                />
-              )}
-            </section>
+                {activeSkillCategory && (
+                  <SkillsDrawer
+                    isOpen={isSkillsDrawerOpen}
+                    onClose={() => setIsSkillsDrawerOpen(false)}
+                    initialCategory={activeSkillCategory}
+                    skillsData={DATA.skills as any}
+                  />
+                )}
+              </section>
             </AnimeReveal>
 
 
 
-            {/* 11. Community / Content Creator */}
-            <AnimeReveal delay={550}>
-            <section id="community" className="scroll-mt-16 px-4 max-w-[1400px] mx-auto w-full">
-              <div className="space-y-8">
-                <div className="space-y-2">
-                  <h2 className="text-2xl sm:text-3xl font-black flex items-center gap-3">
-                    <Users className="size-6 text-primary" />
-                    Community & Content
-                  </h2>
-                  <p className="text-sm text-foreground/70 font-medium italic">Building in public and helping the next generation of engineers.</p>
-                </div>
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-                  {(DATA as any).community?.map((item: any) => (
-                    <Link key={item.platform} href={item.link} target="_blank" className="group p-6 rounded-3xl bg-secondary/20 backdrop-blur-md border border-primary/10 hover:border-primary/30 transition-all flex flex-col gap-3 shadow-lg">
-                      <div className="flex items-center justify-between">
-                        <div className="p-3 rounded-2xl bg-primary/10 group-hover:bg-primary/20 transition-all">
-                          {item.platform === "Instagram" ? <Users className="size-6 text-primary" /> :
-                            item.platform === "YouTube" ? <Icons.youtube className="size-6 text-primary" /> :
-                              <Icons.x className="size-6 text-primary" />}
-                        </div>
-                        <span className="text-[10px] font-black text-primary px-2 py-0.5 rounded-full bg-primary/10">{item.followers}</span>
-                      </div>
-                      <div className="space-y-1">
-                        <h3 className="font-extrabold text-lg text-foreground">{item.platform}</h3>
-                        <p className="text-xs font-bold text-foreground/60">{item.handle}</p>
-                        <p className="text-[10px] text-foreground/50 leading-relaxed pt-1">{item.description}</p>
-                      </div>
-                    </Link>
-                  ))}
-                </div>
-              </div>
-            </section>
-            </AnimeReveal>
 
             {/* 12. Contact Section */}
             <AnimeReveal delay={600}>
-            <section id="contact" className="scroll-mt-20 px-4">
-              <div className="grid items-center justify-center gap-4 px-4 text-center w-full py-12 sm:py-20 bg-primary/5 rounded-[3rem] border border-primary/10 mx-auto max-w-[1400px] relative overflow-hidden">
-                <div className="absolute top-0 right-0 p-12 opacity-10">
-                  <Send className="size-64 text-primary -rotate-12" />
-                </div>
-
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  viewport={{ once: true }}
-                  className="space-y-6 relative z-10"
-                >
-                  <div className="inline-block rounded-full bg-primary text-primary-foreground px-6 py-1.5 text-[10px] font-black uppercase tracking-[0.3em]">
-                    Get In Touch
+              <section id="contact" className="scroll-mt-20 px-4">
+                <div className="grid items-center justify-center gap-4 px-4 text-center w-full py-12 sm:py-20 bg-primary/5 rounded-[3rem] border border-primary/10 mx-auto max-w-4xl lg:max-w-6xl relative overflow-hidden">
+                  <div className="absolute top-0 right-0 p-12 opacity-10">
+                    <Send className="size-64 text-primary -rotate-12" />
                   </div>
 
-                  <h2 className="text-3xl sm:text-5xl font-black tracking-tight">
-                    Ready to build <span className="text-primary italic">something insane?</span>
-                  </h2>
-                  <p className="mx-auto max-w-[600px] text-foreground/70 text-base sm:text-lg font-medium leading-relaxed">
-                    Whether you have a question or just want to say hi, my inbox is always open.
-                    Let&apos;s architect the future together.
-                    <br />
-                    <span className="text-xs sm:text-sm mt-2 block opacity-80">
-                      Looking for freelancing services? Visit <a href="https://pvcode1u.ai" target="_blank" className="text-primary font-bold hover:underline">pvcode1u.ai</a>
-                    </span>
-                  </p>
+                  <motion.div
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                    viewport={{ once: true }}
+                    className="space-y-6 relative z-10"
+                  >
+                    <div className="inline-block rounded-full bg-primary text-primary-foreground px-6 py-1.5 text-[10px] font-black uppercase tracking-[0.3em]">
+                      Get In Touch
+                    </div>
 
-
-                </motion.div>
-              </div>
-            </section>
+                    <h2 className="text-3xl sm:text-5xl font-black tracking-tight">
+                      Ready to build <span className="text-primary italic">something insane?</span>
+                    </h2>
+                    <p className="mx-auto max-w-[600px] text-foreground/70 text-base sm:text-lg font-medium leading-relaxed">
+                      Whether you have a question or just want to say hi, my inbox is always open.
+                      Let&apos;s architect the future together.
+                      <br />
+                      <span className="text-xs sm:text-sm mt-2 block opacity-80">
+                        Looking for freelancing services? Visit <a href="https://pvcode1u.ai" target="_blank" className="text-primary font-bold hover:underline">pvcode1u.ai</a>
+                      </span>
+                    </p>                      <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
+                      <Button asChild className="rounded-full bg-[#f97015] hover:bg-[#f97015]/90 text-white px-8 font-black shadow-lg shadow-orange-500/20 group/email">
+                        <Link href={`mailto:${DATA.contact.email}`} className="flex items-center gap-2">
+                          ✉ Email Me
+                        </Link>
+                      </Button>
+                      <Button asChild variant="outline" className="rounded-full border-[#f97015] text-[#f97015] px-8 font-black hover:bg-[#f97015]/5 transition-all group/freelance">
+                        <a href="https://pvcode1u.ai" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2">
+                          🚀 Freelance Inquiry
+                        </a>
+                      </Button>
+                    </div>
+                  </motion.div>
+                </div>
+              </section>
             </AnimeReveal>
           </motion.div>
         ) : (
@@ -791,9 +783,10 @@ export default function Page() {
 
             {/* Zoom Controls Overlay */}
             <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-[600] flex flex-col items-center gap-4 w-[280px] sm:w-[400px] px-6 py-4 rounded-3xl bg-background/40 backdrop-blur-xl border border-primary/10 shadow-2xl">
-              <div className="flex items-center justify-between w-full text-[10px] font-black uppercase tracking-widest text-primary/70">
-                <span className="flex items-center gap-1.5"><Icons.x className="size-3" /> Minimum</span>
-                <span className="flex items-center gap-1.5">Maximum <Icons.youtube className="size-3" /></span>
+              <div className="flex items-center justify-between w-full text-[10px] font-black uppercase tracking-widest text-primary/70 mb-1">
+                <span className="flex items-center gap-1.5 uppercase tracking-widest">Compact</span>
+                <span className="flex items-center gap-1.5">Zoom: {(galleryZoom * 100).toFixed(0)}%</span>
+                <span className="flex items-center gap-1.5 uppercase tracking-widest">Full</span>
               </div>
               <div className="relative w-full h-6 flex items-center">
                 <div className="absolute inset-0 bg-primary/5 rounded-full blur-sm" />
@@ -810,8 +803,12 @@ export default function Page() {
                   }}
                 />
               </div>
-              <div className="text-[10px] font-bold text-foreground/40 uppercase tracking-tighter">
-                Current Fit: <span className="text-primary font-black">{(galleryZoom * 100).toFixed(0)}%</span>
+              <div className="flex flex-wrap items-center justify-center gap-2 mt-2">
+                {["Drag to explore", "Scroll to zoom", "ESC to exit"].map((hint) => (
+                  <Badge key={hint} variant="outline" className="text-[8px] font-black uppercase tracking-tighter border-primary/20 bg-primary/5 text-primary/70 px-2 py-0">
+                    {hint}
+                  </Badge>
+                ))}
               </div>
             </div>
 

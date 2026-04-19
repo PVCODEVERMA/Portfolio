@@ -2,16 +2,16 @@ import { Icons } from "@/components/icons";
 import { HomeIcon } from "lucide-react";
 
 export const DATA = {
-  name: "Pankaj Verma",
+  name: "Pankaj",
   initials: "PV",
   url: "https://pvcode.netlify.app",
   location: "Noida, Sector 15, Uttar Pradesh, India",
   locationLink: "https://maps.app.goo.gl/dFLbinrTMVHjkjcHA",
   role: "Developer | Tech Creator",
   subtitle: "Building the future with Code",
-  description: "Working a full-time job while actively freelancing, I build and ship modern software and intuitive digital tools that solve real problems. I document my real-world development experiences openly — helping others learn, grow, and avoid the mistakes I made along the way. Beyond building, I also help businesses strengthen their online presence through technical SEO, performance optimization, and data-driven development strategies — turning slow, invisible websites into fast, discoverable products.",
+  description: "I'm a web developer based in Delhi, India, blending aesthetics with problem-solving to craft seamless digital experiences.",
   summary:
-    "### Where it began\nGrowing up, I was always the person who wanted to understand why things worked, not just how to use them. That mindset pushed me toward Computer Science, and I pursued my B.Tech in CSE at B.N. College of Engineering and Technology, graduating in 2025.\n\n### Finding my passion\nDuring college, I didn't just study — I built. I experimented with frontend interfaces, backend systems, and databases. I realized I didn't just want to write code — I wanted to create products that people actually use and benefit from.\n\n### Entering the professional world\nMy professional journey took me through three companies in a short span — Marv Softwares India, Websbaba Technologies, and Quality Concept Pvt. Ltd. — where I currently serve as a Full Stack Developer. Across these roles, I've built corporate websites, admin panels, CRM systems, and automated workflows using tools like React, Node.js, Tailwind CSS, and n8n automation.\n\n### Going deeper into Architecture\nWhat truly changed my direction was diving into System Architecture — not just using frameworks, but understanding the core of scalable software. I've worked with distributed systems, cloud-native patterns, and performance optimization. I now design systems where scalability and security are the foundation.\n\n### Life as a builder\nToday, I work full-time while actively freelancing on the side — constantly building, experimenting, and improving. I don't believe in waiting until something is perfect before sharing it. I document my real journey — the wins, the failures, the lessons — openly on YouTube, Instagram, and X, because I believe the best way to grow is to build in public.\n\n### Why I do this\nTechnology is the greatest equalizer of our time. A developer with the right skills and the right tools can build something that reaches millions. That possibility excites me every single day. I want to be someone who not only builds those things — but also helps others believe they can too.",
+    "### What I’m About\n\nHey there, I’m Pankaj, a web developer passionate about building seamless and scalable digital experiences. My journey into the internet world started with curiosity and problem-solving, which eventually led me deep into web development, backend systems, and modern JavaScript frameworks.\n\nOver time, I’ve explored different areas of tech—from frontend design to backend logic—constantly learning and refining my skills to turn ideas into real, working products.\n\nBeyond coding, I enjoy exploring new technologies, improving my problem-solving skills through DSA, and sharing my learning journey. I’m always excited to build, experiment, and push my limits.\n\nScroll down to explore some of my work—I’d love to connect and collaborate on something meaningful.\n\nFeel free to reach out. Let’s build something amazing together. 🚀",
 
 
   avatarUrl: "/me.png",

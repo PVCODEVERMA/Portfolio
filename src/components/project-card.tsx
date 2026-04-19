@@ -86,7 +86,9 @@ export function ProjectCard({
         <CardHeader className="px-3 pt-4">
           <div className="space-y-2">
             <CardTitle className="text-base sm:text-lg group-hover:text-primary transition-colors duration-300 text-foreground font-bold tracking-tight">{title}</CardTitle>
-            <time className="font-sans text-[11px] text-foreground font-bold tracking-wide uppercase opacity-80">{dates}</time>
+            <time className="font-sans text-[10px] sm:text-[11px] text-primary sm:text-foreground font-black tracking-widest uppercase bg-primary/5 sm:bg-transparent px-2 py-0.5 sm:p-0 rounded-md w-fit inline-block">
+              {dates}
+            </time>
             <div className="hidden font-sans text-xs underline print:visible">
               {link?.replace("https://", "").replace("www.", "").replace("/", "")}
             </div>

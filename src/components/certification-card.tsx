@@ -33,9 +33,8 @@ export function CertificationCard({ cert }: CertificationCardProps) {
   return (
     <motion.div
       layout
-      className={`border border-border/40 rounded-xl p-5 hover:shadow-lg transition-all duration-300 bg-card/40 backdrop-blur-md hover:bg-card/60 hover:border-primary/30 ${
-        cert.badgeColor || ""
-      }`}
+      className={`border border-border/40 rounded-xl p-5 hover:shadow-lg transition-all duration-300 bg-card/40 backdrop-blur-md hover:bg-card/60 hover:border-primary/30 ${cert.badgeColor || ""
+        }`}
     >
       <div className="flex items-start justify-between mb-4">
         <div className="flex-1 pr-2">
@@ -54,7 +53,7 @@ export function CertificationCard({ cert }: CertificationCardProps) {
         <div className="flex flex-col items-end gap-1.5 shrink-0">
           <Badge
             variant="outline"
-            className="text-xs font-bold border-primary/40 bg-background/80 text-foreground"
+            className="text-[10px] sm:text-xs font-black border-primary/20 bg-primary/5 text-primary shrink-0 uppercase tracking-widest px-2 sm:px-2.5 py-0.5 sm:py-1"
           >
             {cert.date}
           </Badge>
@@ -74,7 +73,7 @@ export function CertificationCard({ cert }: CertificationCardProps) {
         </div>
       </div>
 
-      <p className="text-sm text-foreground mb-4 line-clamp-3 min-h-[60px] leading-relaxed font-bold">
+      <p className="text-xs sm:text-sm text-foreground/80 mb-4 line-clamp-3 min-h-[60px] leading-relaxed font-bold italic">
         {cert.description}
       </p>
 
