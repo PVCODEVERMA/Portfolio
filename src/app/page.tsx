@@ -29,7 +29,6 @@ const GithubActivity = dynamic(() => import("@/components/github-activity").then
     </div>
   )
 });
-import { MessageCircle } from "lucide-react";
 import {
   ExternalLink,
   Download,
@@ -63,10 +62,8 @@ import {
 export default function Page() {
   const [isSkillsDrawerOpen, setIsSkillsDrawerOpen] = React.useState(false);
   const [activeSkillCategory, setActiveSkillCategory] = React.useState<string | null>(null);
-  const [isCommentOpen, setIsCommentOpen] = React.useState(false);
   const [showFullGallery, setShowFullGallery] = React.useState(false);
   const [galleryZoom, setGalleryZoom] = React.useState(0.9);
-  const [commentForm, setCommentForm] = React.useState({ name: "", email: "", comment: "" });
 
   const { startLoading } = useLoading();
   const router = useRouter();
@@ -77,51 +74,6 @@ export default function Page() {
     setIsSkillsDrawerOpen(true);
   };
 
-  const submitComment = async () => {
-    const name = commentForm.name.trim();
-    const email = commentForm.email.trim();
-    const comment = commentForm.comment.trim();
-
-    if (!name) {
-      toast.error("Please enter your name.");
-      return;
-    }
-    if (!email) {
-      toast.error("Please enter your email.");
-      return;
-    }
-    // Basic email validation
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      toast.error("Please enter a valid email address.");
-      return;
-    }
-    if (!comment) {
-      toast.error("Please write your comment.");
-      return;
-    }
-
-    try {
-      const res = await fetch("/api/comment", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          page: "/",
-          name: commentForm.name,
-          email: commentForm.email,
-          comment,
-        }),
-      });
-      const data = await res.json().catch(() => ({}));
-      if (!res.ok || data?.ok === false) throw new Error(data?.error || "Failed");
-
-      toast.success("Comment submitted. Thank you!");
-      setIsCommentOpen(false);
-      setCommentForm({ name: "", email: "", comment: "" });
-    } catch (err: any) {
-      console.error("Submission error:", err);
-      toast.error(err.message || "Could not submit comment. Try again.");
-    }
-  };
 
   return (
     <main className="flex flex-col min-h-[100dvh] space-y-12 md:space-y-28">
@@ -191,7 +143,7 @@ export default function Page() {
                         visible: { transition: { staggerChildren: 0.1, delayChildren: 0.2 } },
                         hidden: {}
                       }}
-                      className="grid grid-cols-3 sm:flex sm:flex-row items-center justify-center sm:justify-start gap-1.5 sm:gap-3 pt-0 sm:pt-4 w-full px-0 sm:px-0 h-10 sm:h-auto"
+                      className="grid grid-cols-2 sm:flex sm:flex-row items-center justify-center sm:justify-start gap-1.5 sm:gap-3 pt-0 sm:pt-4 w-full px-0 sm:px-0 h-10 sm:h-auto"
                     >
                       <motion.div
                         variants={{
@@ -218,24 +170,6 @@ export default function Page() {
                         </Button>
                       </motion.div>
 
-                      <motion.div
-                        variants={{
-                          hidden: { opacity: 0, y: 20 },
-                          visible: { opacity: 1, y: 0, transition: { duration: 0.5 } }
-                        }}
-                        whileHover={{ scale: 1.05, y: -2 }}
-                        whileTap={{ scale: 0.95 }}
-                        className="flex-1 sm:flex-none"
-                      >
-                        <Button
-                          size="default"
-                          variant="outline"
-                          className="rounded-full w-full px-3 sm:px-8 font-black h-full sm:h-12 text-[10px] sm:text-base border-primary/20 hover:bg-primary/5 flex items-center justify-center gap-1.5"
-                          onClick={() => setIsCommentOpen(true)}
-                        >
-                          <MessageCircle className="text-[#f97015] size-3 sm:size-5" /> Ask Me
-                        </Button>
-                      </motion.div>
 
                       <motion.div
                         variants={{
@@ -347,97 +281,6 @@ export default function Page() {
               </section>
             </AnimeReveal>
 
-            {/* Comment Modal */}
-            <AnimatePresence>
-              {isCommentOpen && (
-                <motion.div
-                  className="fixed inset-0 z-[300] flex items-center justify-center p-4"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  onClick={() => setIsCommentOpen(false)}
-                >
-                  <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" />
-                  <motion.div
-                    className="relative w-full max-w-lg max-h-[90dvh] overflow-y-auto rounded-3xl border border-primary/20 bg-background p-6 shadow-2xl hide-scrollbar"
-                    initial={{ y: 20, scale: 0.98, opacity: 0 }}
-                    animate={{ y: 0, scale: 1, opacity: 1 }}
-                    exit={{ y: 20, scale: 0.98, opacity: 0 }}
-                    onClick={(e) => e.stopPropagation()}
-                  >
-                    <div className="flex items-start justify-between gap-3">
-                      <div>
-                        <h3 className="text-xl font-black tracking-tight">Let’s connect 🚀</h3>
-                        <p className="mt-1 text-sm text-muted-foreground font-medium">
-                          Drop your message and I’ll get back to you soon.
-                        </p>
-                      </div>
-                      <button
-                        className="rounded-full p-0 size-9 flex items-center justify-center bg-secondary/20 hover:bg-primary/10 transition-colors"
-                        onClick={() => setIsCommentOpen(false)}
-                        type="button"
-                        aria-label="Close"
-                      >
-                        <X className="size-5 text-foreground/70" />
-                      </button>
-                    </div>
-
-                    <div className="mt-5 grid gap-4">
-                      <div className="relative group">
-                        <User className="absolute left-4 top-1/2 -translate-y-1/2 size-4 text-muted-foreground group-focus-within:text-primary transition-colors" />
-                        <input
-                          className="w-full rounded-2xl border border-border/60 bg-background pl-11 pr-4 py-3 text-sm font-medium outline-none focus:border-primary/60 transition-all"
-                          placeholder="Enter Your name"
-                          value={commentForm.name}
-                          onChange={(e) => setCommentForm((s) => ({ ...s, name: e.target.value }))}
-                        />
-                      </div>
-
-                      <div className="relative group">
-                        <Mail className="absolute left-4 top-1/2 -translate-y-1/2 size-4 text-muted-foreground group-focus-within:text-primary transition-colors" />
-                        <input
-                          className={cn(
-                            "w-full rounded-2xl border bg-background pl-11 pr-4 py-3 text-sm font-medium outline-none transition-all",
-                            commentForm.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(commentForm.email)
-                              ? "border-red-500"
-                              : "border-border/60 focus:border-primary/60"
-                          )}
-                          placeholder="Enter Your Email"
-                          value={commentForm.email}
-                          onChange={(e) => setCommentForm((s) => ({ ...s, email: e.target.value }))}
-                        />
-                        {commentForm.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(commentForm.email) && (
-                          <span className="text-[10px] text-red-500 font-bold ml-11 mt-1 block">Please enter a valid email address</span>
-                        )}
-                      </div>
-
-                      <div className="relative group">
-                        <MessageSquare className="absolute left-4 top-4 size-4 text-muted-foreground group-focus-within:text-primary transition-colors" />
-                        <textarea
-                          className="min-h-[120px] w-full rounded-2xl border border-border/60 bg-background pl-11 pr-4 py-3 text-sm font-medium outline-none focus:border-primary/60 transition-all resize-none"
-                          placeholder="Write your comment..."
-                          maxLength={500}
-                          value={commentForm.comment}
-                          onChange={(e) => setCommentForm((s) => ({ ...s, comment: e.target.value }))}
-                        />
-                        <div className="absolute right-4 bottom-3 text-[10px] font-black text-muted-foreground bg-background/80 px-2 py-0.5 rounded-full">
-                          {commentForm.comment.length} / 500
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="mt-6 flex flex-wrap items-center justify-end gap-3">
-                      <Button variant="outline" onClick={() => setIsCommentOpen(false)} className="rounded-2xl">
-                        Cancel
-                      </Button>
-                      <Button onClick={submitComment} className="rounded-2xl font-black px-8 bg-[#f97015] hover:bg-[#f97015]/90 text-white">
-                        Send ↗
-                      </Button>
-                    </div>
-                  </motion.div>
-                </motion.div>
-              )}
-            </AnimatePresence>
 
             {/* 2. About Section with Timeline */}
             <AnimeReveal delay={200}>
